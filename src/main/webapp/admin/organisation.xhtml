@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="menu.xhtml">
+        <ui:define name="content">
+            <h:outputStylesheet name="./css/common.css" />
+            <p:layout id="layout">
+                <p:layoutUnit position="center" header="Informations générales" >
+                    <h:form>
+                        <p:panelGrid columnClasses="uiborder" >
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel value="Nom de l'organisme" />
+                                    <h:outputLabel value="*" class="requiredfield"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText class="textWidth" required="true" 
+                                                 disabled="#{interfaceController.disabled}"/>
+                                </p:column>
+                                <p:column>
+                                    <h:outputLabel value="Null and void an useful component" 
+                                                   style="visibility: hidden"/>
+                                </p:column>
+                                <p:column><h:outputLabel value="Numéro d'identification" /></p:column>
+                                <p:column>
+                                    <p:inputText class="textWidth" 
+                                                 disabled="#{interfaceController.disabled}"/>
+                                </p:column>
+                                <p:column>
+                                    <h:outputLabel value="Nullified empty but component" 
+                                                   style="visibility: hidden"/>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column><h:outputLabel value="Nombre de salariés" /></p:column>
+                                <p:column colspan="4"><h:outputText value="0" /></p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="6"> <hr /> </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column><h:outputLabel value="Téléphone" /></p:column>
+                                <p:column colspan="2">
+                                    <p:inputMask class="textWidth" value=""
+                                                 mask="999-999-999" slotChar="0"
+                                                 disabled="#{interfaceController.disabled}"/>
+                                </p:column>
+                                <p:column><h:outputLabel value="Fax" /></p:column>
+                                <p:column>
+                                    <p:inputText class="textWidth"
+                                                 disabled="#{interfaceController.disabled}"/>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column><h:outputLabel value="Email" /></p:column>
+                                <p:column>
+                                    <p:inputText class="textWidth"
+                                                 disabled="#{interfaceController.disabled}" />
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="6"> <hr /> </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column><h:outputLabel value="Pays" /></p:column>
+                                <p:column colspan="2">
+                                    <p:selectOneMenu style="width: 250px" 
+                                                     disabled="#{interfaceController.disabled}" />
+                                </p:column>
+                                <p:column><h:outputLabel value="État / Province" /></p:column>
+                                <p:column>
+                                    <p:inputText class="textWidth"
+                                                 disabled="#{interfaceController.disabled}" />
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column><h:outputLabel value="Ville" /></p:column>
+                                <p:column colspan="2">
+                                    <p:inputText class="textWidth"
+                                                 disabled="#{interfaceController.disabled}" />
+                                </p:column>
+                                <p:column><h:outputLabel value="Adresse" /></p:column>
+                                <p:column>
+                                    <p:inputText class="textWidth"
+                                                 disabled="#{interfaceController.disabled}" />
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </h:form>
+                    <p />
+                    <h:outputLabel value="*" style="color: red; font-size: 11px" />
+                    <h:outputLabel value="Champs requis" style="font-size: 11px"/>
+                    <f:facet name="footer">
+                        <p:commandButton value="Modifier" action="#{interfaceController.disable()}"
+                                         update="layout"
+                                         rendered="#{interfaceController.editButtonRender}"/>
+                        <p:commandButton value="Enregistrer" 
+                                         action="#{interfaceController.disable()}"
+                                         update="layout"
+                                         rendered="#{interfaceController.saveButtonRender}" />
+                    </f:facet>
+                </p:layoutUnit>
+            </p:layout>
+        </ui:define>
+    </ui:composition>
+</html>
+

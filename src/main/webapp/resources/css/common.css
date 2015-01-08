@@ -1,0 +1,65 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 04-Jan-2015, 23:04:12
+    Author     : Harvey
+*/
+
+body {
+    font: 80% "Trebuchet MS", sans-serif;
+    margin: 20px;
+}
+li {
+    list-style-type: none;
+    padding-bottom: 10px;
+}
+
+ul li{
+    float: left;
+}
+ul{
+    padding-left: 0px;
+    clear: left;
+}
+
+.pads{padding-left: 30px}
+
+.buttonpad{
+    margin-left: 20px;
+}
+.multiplesselectcolwidth{
+    width: 20px;
+}
+.textWidth{width: 242px;}
+.inputtextareawidth{
+    width: 248px;
+    height: 80px;
+}
+.requiredfield{
+    color: red; 
+    font-size: 11px;
+}
+.inputheader{
+    font-size: 11px;
+}
+
+.ui-panel .ui-panel-content{padding: 0; }
+.ui-panegrid{border-collapse: collapse;}
+.ui-panelgrid .ui-panelgrid-cell{
+    border-style: hidden;
+}
+
+.topbuttons{
+    margin-right: 20px;
+    margin-bottom: 5px;
+    margin-top: 3px;
+}
+
+.bottombuttons{
+    margin-right: 20px; 
+    margin-top: 10px; 
+    margin-bottom: 5px;
+}

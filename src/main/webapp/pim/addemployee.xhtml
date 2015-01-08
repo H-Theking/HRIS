@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="/admin/menu.xhtml">
+        <ui:define name="content">
+            <h:outputStylesheet name="./css/common.css" />
+
+            <p:layout>
+
+                <p:layoutUnit position="center" style="border: 0">
+                    <p:panel header="Ajouter un employé">
+                        <h:form id="form">
+                            <p:panelGrid id="account" >
+                                <p:row>
+                                    <p:column></p:column>
+                                    <p:column>
+                                        <p:outputLabel value="* " class="requiredfield" 
+                                                       style="font-size: 11px;"/>
+                                        <p:outputLabel value="Prénom" class="inputheader" 
+                                                       style="font-size: 11px;"/></p:column>
+                                    <p:column>
+                                        <p:outputLabel value="Nom(s) du milieu" class="inputheader" 
+                                                       style="font-size: 11px;"/></p:column>
+                                    <p:column>
+                                        <p:outputLabel value="* " class="requiredfield" 
+                                                       style="font-size: 11px;"/> 
+                                        <p:outputLabel value="Nom de famille" class="inputheader" 
+                                                       style="font-size: 11px;"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column><p:outputLabel value="Nom complet" /> </p:column>
+                                    <p:column> 
+                                        <p:inputText value="#{employeeManager.fName}" class="textWidth"/></p:column>
+                                    <p:column>
+                                        <p:inputText value="#{employeeManager.mName}" class="textWidth"/></p:column>
+                                    <p:column>
+                                        <p:inputText value="#{employeeManager.lName}" class="textWidth"/></p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column><p:outputLabel value="Identifiant" /> </p:column>
+                                    <p:column><p:inputText value="#{employeeManager.id}" class="textWidth"/></p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column><p:outputLabel value="Photo" /> </p:column>
+                                    <p:column >
+                                        <p:fileUpload mode="simple"  sizeLimit="1048576"
+                                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column></p:column>
+                                    <p:column colspan="2" >
+                                        <p:outputLabel class="inputheader"
+                                                       style="font-size: 11px;"
+                                                       value="Accepte jpg,. Png,. 
+                                                       Gif jusqu'à 1 Mo. Recommended 
+                                                       dimensions: 200px X 200px" />
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Créer Compte" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:selectBooleanCheckbox id="checkbox" 
+                                                                 value="#{interfaceController.addEmpCheckValue}">
+                                            <p:ajax event="change" update="form"/>
+                                        </p:selectBooleanCheckbox> 
+                                    </p:column>
+                                </p:row>
+                                <p:row  rendered="#{interfaceController.addEmpCheckValue}">
+                                    <p:column>
+                                        <p:outputLabel value="Nom d'utilisateur" /> 
+                                        <p:outputLabel value="*" class="requiredfield" />
+                                    </p:column>
+                                    <p:column><p:inputText class="textWidth"/></p:column>
+                                </p:row>
+                                <p:row rendered="#{interfaceController.addEmpCheckValue}">
+                                    <p:column>
+                                        <p:outputLabel value="Mot de passe" />
+                                        <p:outputLabel value="*" class="requiredfield" /> 
+                                    </p:column>
+                                    <p:column><p:password class="textWidth"/></p:column>
+                                </p:row>
+                                <p:row rendered="#{interfaceController.addEmpCheckValue}">
+                                    <p:column>
+                                        <p:outputLabel value="Confirmer Mot de passe" />
+                                        <p:outputLabel value="*" class="requiredfield" />
+                                    </p:column>
+                                    <p:column><p:password class="textWidth"/></p:column>
+                                </p:row>
+                                <p:row rendered="#{interfaceController.addEmpCheckValue}">
+                                    <p:column>
+                                        <p:outputLabel value="Statut" /> 
+                                        <p:outputLabel value="*" class="requiredfield" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:selectOneMenu style="width: 249px" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                            <p />
+                            <p:outputLabel value="*" class="requiredfield" />
+                            <p:outputLabel value="Champs requis" style="font-size: 11px;"/>
+                            <hr />
+                            <p:commandButton value="Enregistrer" class="topbuttons"
+                                             actionListener="#{employeeManager.addEmployee()}"
+                                             action="employeelist"/>
+                        </h:form>
+                    </p:panel>
+                </p:layoutUnit>
+            </p:layout>
+        </ui:define>
+    </ui:composition>
+</html>
+

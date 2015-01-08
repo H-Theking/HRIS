@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="pimTemplate.xhtml">
+        <ui:define name="centerLayoutUnit">
+            <p:layoutUnit position="center" style="border: 0">
+                <h:form id="form">
+                    <p:panel header="Modifier le contact d'urgence" 
+                             rendered="#{interfaceController.notRendered}">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Nom*" />
+                            <p:inputText class="textWidth" required="true"/> 
+
+                            <p:outputLabel value="Relation*"/>
+                            <p:inputText class="textWidth"/>
+
+                            <p:outputLabel value="Téléphone Mobile" />
+                            <p:inputMask  mask="999-999-999" slotChar="0"
+                                         class="textWidth"/>
+
+                            <p:outputLabel value="Téléphone de domicile" />
+                            <p:inputMask  mask="999-999-999" slotChar="0"
+                                         class="textWidth"/>
+
+                            <p:outputLabel value="Téléphone Professionnel" />
+                            <p:inputMask  mask="999-999-999" slotChar="0"
+                                         class="textWidth"/>
+                        </p:panelGrid>
+                        <p/>
+                        <p:outputLabel value="*Champ requis" style="font: 62.5% Trebuchet MS, sans-serif;" />
+                        <hr/>                   
+                        <p:commandButton  value="Sauvegarder" class="topbuttons"
+                                          update="form"
+                                         action="#{interfaceController.toggle}"/>
+                        <p:commandButton value="Annuler" 
+                                         update="form"
+                                         action="#{interfaceController.toggle}"/>
+                    </p:panel><p/>
+                    <p:panel header="Contacts d'urgence enregistrés">
+                        <p:commandButton class="bottombuttons"  value="Ajouter" 
+                                         update="form" 
+                                         action="#{interfaceController.toggle}"
+                                         rendered="#{interfaceController.rendered}"/>
+                        <p:commandButton  value="Supprimer" 
+                                          update="form" 
+                                          rendered="#{interfaceController.rendered}"/>
+                        <p rendered="#{interfaceController.rendered}"/>
+                        <!--Table-->
+                        <p:dataTable  scrollable="false"> <!--var="" value="" selection=""-->
+<!--                            <p:column selectionMode="multiple" style="width: 20px"/>-->
+                            <p:column headerText="Nom" style="width: 300px">
+                                <h:outputText value="" />
+                            </p:column>
+                            <p:column headerText="Relation" style="width: 120px">
+                                <h:outputText value="" />
+                            </p:column>
+                            <p:column headerText="Téléphone de domicile" style="width: 200px">
+                                <h:outputText value="" />
+                            </p:column>
+                            <p:column headerText="Portable" style="width: 90px">
+                                <h:outputText value="" />
+                            </p:column>
+                            <p:column headerText="Téléphone Professionnel" style="width: 220px">
+                                <h:outputText value="" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+                </h:form>
+            </p:layoutUnit>
+        </ui:define>
+    </ui:composition>
+</html>
+

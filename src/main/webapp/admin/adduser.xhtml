@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/admin/menu.xhtml">
+        <ui:define name="content">
+            <h:outputStylesheet name="./css/common.css" />
+            <p:layout>
+                <p:layoutUnit position="center" header="Ajouter un utilisateur">
+                    <p:panelGrid id="account" >
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Nom du salarié" /> 
+                                <p:outputLabel value="*" class="requiredfield" /> 
+                            </p:column>
+                            <p:column><p:inputText class="textWidth" required="true"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Nom d'utilisateur" />
+                                <p:outputLabel value="*" class="requiredfield" /> 
+                            </p:column>
+                            <p:column><p:inputText class="textWidth" required="true"/></p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Statut" /> 
+                                <p:outputLabel value="*" class="requiredfield" /> 
+                            </p:column>
+                            <p:column><p:selectOneMenu style="width:252px" required="true"/></p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Mot de passe" />
+                                <p:outputLabel value="*" class="requiredfield" /> 
+                            </p:column>
+                            <p:column><p:inputText class="textWidth" required="true"/></p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Confirmer Mot de passe" />
+                                <p:outputLabel value="*" class="requiredfield" />
+                            </p:column>
+                            <p:column><p:inputText class="textWidth" required="true"/></p:column>
+                        </p:row>
+                    </p:panelGrid>
+                    <p />
+                    <p:outputLabel value="*" class="requiredfield" />
+                    <p:outputLabel value="Champs requis" class="inputheader"/>
+                    <hr />
+                    <p:commandButton value="Enregistrer" type="submit"/>
+                    <p:commandButton value="Annuler" class="buttonpad"/>
+                </p:layoutUnit>
+            </p:layout>
+        </ui:define>
+    </ui:composition>
+</html>
+

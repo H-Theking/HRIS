@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/admin/menu.xhtml">
+        <ui:define name="content">
+            <h:outputStylesheet name="./css/common.css" />
+            <p:layout id="layout">
+                <p:layoutUnit position="center" header="Niveau de paye">
+                    <h:form>
+                        <p:commandButton value="Ajouter" class="bottombuttons" 
+                                         update=":layout"
+                                         action="#{interfaceController.toggle}"
+                                         rendered="#{interfaceController.rendered}"/>
+                        <p:commandButton value="Supprimer" 
+                                         rendered="#{interfaceController.rendered}"
+                                         style="margin-bottom: 15px"/>
+                    </h:form>
+                    <p />
+                    <p:dataTable id="multipleSelectionCheckbox" rows="10" resizableColumns="true">
+                        <!--<p:column selectionMode="multiple" class="multiplesselectcolwidth" />-->
+                        <p:column headerText="Niveau de paye" style="text-align: left">
+                            <h:outputText value="" />
+                        </p:column>
+                    </p:dataTable>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="north" header="Ajouter un niveau salariale"
+                              rendered="#{interfaceController.notRendered}">
+                    <p:panelGrid style="margin-top: 10px">
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Nom" /> 
+                                <p:outputLabel value="*" class="requiredfield" /> 
+                            </p:column>
+                            <p:column>
+                                <p:inputText class="textWidth" required="true" id="nom"/>
+                            </p:column>
+                            <p:column><p:message for="nom" /></p:column>
+                        </p:row>
+                    </p:panelGrid>
+                    <hr />
+                    <p:commandButton value="Enregistrer" class="topbuttons" 
+                                     update=":layout"
+                                     action="#{interfaceController.toggle}"/>
+                    <p:commandButton value="Annuler" id="buttonpad"
+                                     action="#{interfaceController.toggle}"
+                                     update=":layout">
+                    </p:commandButton>
+                </p:layoutUnit>
+
+            </p:layout>
+        </ui:define>
+    </ui:composition>
+</html>
+

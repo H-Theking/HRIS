@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="pimTemplate.xhtml">
+        <ui:define name="centerLayoutUnit">
+            <style>
+                .ui-panelgrid {width: 1084px;}
+            </style>
+            <p:layoutUnit position="center" style="border: 0"> 
+                <h:form id="form">
+                    <p:panel header="Détails personnels">
+                        <p:panelGrid id="account" >
+                            <p:row>
+                                <p:column><p:outputLabel value="Nom complet" /> </p:column>
+                                <p:column>
+                                    <p:outputLabel value="* " class="requiredfield" /> 
+                                    <p:outputLabel value="Prénom" class="inputheader" />
+                                    <br /><p:inputText class="textWidth"/>
+                                </p:column>
+                                <p:column>
+                                    <p:outputLabel value="Nom(s) du milieu" class="inputheader" />
+                                    <br /><p:inputText class="textWidth"/>
+                                </p:column>
+                                <p:column>
+                                    <p:outputLabel value="* " class="requiredfield" /> 
+                                    <p:outputLabel value="Nom de famille" class="inputheader" />
+                                    <br /><p:inputText class="textWidth"/>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="4"><hr /> </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column><p:outputLabel value="Identifiant" /> </p:column>
+                                <p:column><p:inputText class="textWidth"/></p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="4"><hr /> </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column><p:outputLabel value="Date de Naissance" /> </p:column>
+                                <p:column><p:calendar size="30"/></p:column>
+                                <p:column>
+                                    <p:outputLabel style="padding-left: 130px"  value="Lieu de Naissance" /> 
+                                </p:column>
+                                <p:column><p:inputText class="textWidth"/></p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="4"><hr /> </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column><p:outputLabel value="Sexe" /> </p:column>
+                                <p:column>
+                                    <p:selectOneRadio>
+                                        <f:selectItem itemLabel="Masculin" />
+                                        <f:selectItem  itemLabel="Feminin" />
+                                    </p:selectOneRadio>
+                                </p:column>
+                                <p:column><p:outputLabel style="padding-left: 130px" value="Etat Marital" /> </p:column>
+                                <p:column><p:selectOneMenu style="width: 248px"/></p:column>
+                            </p:row>
+                        </p:panelGrid>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Sauvegarder" />
+                        </f:facet>
+                    </p:panel>
+                </h:form>
+            </p:layoutUnit>
+        </ui:define>
+    </ui:composition>
+</html>
+
