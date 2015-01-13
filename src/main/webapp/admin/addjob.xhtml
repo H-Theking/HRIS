@@ -8,33 +8,30 @@
     <ui:composition template="menu.xhtml">
         <ui:define name="content">
             <h:outputStylesheet name="./css/common.css" />
-            <p:layout>
-                <p:layoutUnit position="center" header="Ajouter un poste">
-                    <h:form enctype="multipart/form-data" id="addjob">
-                        <p:panelGrid columns="2" columnClasses="uiborder">
-                            <h:outputLabel value="Titre du poste*" />
-                            <h:inputText class="textWidth" required="true"/> 
 
-                            <h:outputLabel value="Description du poste" />
-                            <h:inputTextarea  class="textWidth"/>
+            <p:panel header="Ajouter un poste">
+                <h:form enctype="multipart/form-data" id="addjob">
+                    <p:panelGrid columns="2" columnClasses="uiborder">
+                        <p:outputLabel value="Titre du poste*" />
+                        <p:inputText class="textWidth" required="true"/> 
 
-                            <h:outputLabel value="Fiche de poste" />
-                            <p:fileUpload value="" mode="simple" />
+                        <p:outputLabel value="Description du poste"  />
+                        <p:inputTextarea  class="textWidth" style="height: 100px"/>
+                        <p:outputLabel value="Note" />
+                        <p:inputTextarea class="textWidth"/>
+                    </p:panelGrid>
+                    <p />
+                    <p:outputLabel value="*" style="color: red; font-size: 11px" />
+                    <p:outputLabel value="Champs requis" style="font-size: 11px"/>
+                </h:form>
+                <!--use ajax to submit the form since the buttons are out of the form-->
+                <f:facet name="footer">
+                    <p:commandButton value="Enregistrer" class="bottombuttons"/>
+                    <p:commandButton value="Annuler" id="buttonpad"
+                                     action="jobtitles" immediate="true"/>
+                </f:facet>
+            </p:panel>
 
-                            <h:outputLabel value="Note" />
-                            <h:inputTextarea class="textWidth"/>
-                        </p:panelGrid>
-                        <p />
-                        <h:outputLabel value="*" style="color: red; font-size: 11px" />
-                        <h:outputLabel value="Champs requis" style="font-size: 11px"/>
-                    </h:form>
-                    <!--use ajax to submit the form since the buttons are out of the form-->
-                    <f:facet name="footer">
-                        <h:commandButton value="Enregistrer" />
-                        <h:commandButton value="Annuler" id="buttonpad"/>
-                    </f:facet>
-                </p:layoutUnit>
-            </p:layout>
         </ui:define>
     </ui:composition>
 </html>

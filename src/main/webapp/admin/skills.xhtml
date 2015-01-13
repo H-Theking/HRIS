@@ -3,40 +3,47 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="menu.xhtml">
         <ui:define name="content">
             <h:outputStylesheet name="./css/common.css" />
-            <p:layout id="layout">
-                <p:layoutUnit position="center" header="Compétences">
-                    <h:form>
-                        <p:commandButton value="Ajouter" class="bottombuttons" 
-                                         update=":layout"
-                                         action="#{interfaceController.toggle}"
-                                         rendered="#{interfaceController.rendered}"/>
-                        <p:commandButton value="Supprimer" 
-                                         rendered="#{interfaceController.rendered}"
-                                         style="margin-bottom: 15px"/>
-
-                        <p:dataTable id="multipleSelectionCheckbox" rows="10" resizableColumns="true">
-                            <!--<p:column selectionMode="multiple" class="multiplesselectcolwidth" style="text-align: left"/>-->
-                            <p:column headerText="Nom" style="text-align: left">
-                                <!--<h:outputText value="" />-->
-                            </p:column>
-                            <p:column headerText="Description" style="text-align: left">
-                                <!--<h:outputText value="" />-->
-                            </p:column>
-                        </p:dataTable>
-                    </h:form>
-                </p:layoutUnit>
-                <p:layoutUnit position="north" header="Ajouter compétence"
-                              rendered="#{interfaceController.notRendered}">
+            <p:panel id="layout" style="border: 0">
+                <p:panel header="Modifier une compétence" 
+                         rendered="#{interfaceController.modify}">
                     <h:form>
                         <p:panelGrid columns="2">
                             <p:outputLabel value="Nom*" />
-                            <h:inputText class="textWidth" required="true"/>
+                            <p:inputText class="textWidth" required="true"
+                                         value="#{skillManager.name}"/>
                             <p:outputLabel value="Description" />
-                            <p:inputTextarea class="inputtextareawidth" />
+                            <p:inputTextarea class="textWidth" value="#{skillManager.description}"/>
+                        </p:panelGrid>
+                        <p />
+                        <p:outputLabel value="*" style="color: red; font-size: 11px" />
+                        <p:outputLabel value="Champs requis" style="font-size: 11px"/>
+                        <hr />
+                        <p:commandButton value="Enregistrer" class="topbuttons" 
+                                         update=":layout" 
+                                         action="#{skillManager.addSkill}"
+                                         actionListener="#{interfaceController.unrender()}">
+                        </p:commandButton>
+
+                        <p:commandButton value="Annuler" id="buttonpad"
+                                         actionListener="#{interfaceController.unrender()}"
+                                         update=":layout" immediate="true">
+                        </p:commandButton>
+                    </h:form>
+                </p:panel>
+                <p:panel header="Ajouter une compétence"
+                         rendered="#{interfaceController.add}">
+                    <h:form>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Nom*" />
+                            <p:inputText class="textWidth" required="true"
+                                         value="#{skillManager.name}"/>
+                            <p:outputLabel value="Description" />
+                            <p:inputTextarea class="textWidth" value="#{skillManager.description}"/>
                         </p:panelGrid>
                         <p />
                         <p:outputLabel value="*" style="color: red; font-size: 11px" />
@@ -44,15 +51,49 @@
                         <hr />
                         <p:commandButton value="Enregistrer" class="topbuttons" 
                                          update=":layout"
-                                         action="#{interfaceController.toggle}"/>
+                                         action="#{interfaceController.unrender}"
+                                         actionListener="#{skillManager.addSkill()}"/>
                         <p:commandButton value="Annuler" id="buttonpad"
-                                         action="#{interfaceController.toggle}"
-                                         update=":layout">
+                                         action="#{interfaceController.unrender}"
+                                         update=":layout" immediate="true">
                         </p:commandButton>
                     </h:form>
-                </p:layoutUnit>
-            </p:layout>
+                </p:panel>
+                <p:panel style="height: 10px; border: 0" rendered="#{interfaceController.space}"/>
+                <p:panel header="Compétences">
+                    <h:form>
+                        <p:commandButton value="Ajouter" class="bottombuttons" 
+                                         update=":layout"
+                                         actionListener="#{interfaceController.toggleAddModify}"
+                                         action="#{skillManager.clearFields}"
+                                         rendered="#{interfaceController.buttons}"/>
+                        <p:commandButton value="Supprimer" 
+                                         rendered="#{interfaceController.buttons}"
+                                         action="#{skillManager.deleteSkills}"
+                                         update=":layout"
+                                         style="margin-bottom: 15px"/>
+
+                        <p:dataTable id="multipleSelectionCheckbox" rows="10" 
+                                     resizableColumns="true"    scrollable="false"
+                                     paginator="true"  pageLinks="5" rowKey="#{skill.name}"
+                                     selection="#{skillManager.selectedSkills}"
+                                     var="skill"  value="#{skillManager.allSkills}">
+                            <p:column selectionMode="multiple" class="multiplesselectcolwidth" 
+                                      rendered="#{interfaceController.buttons}"/>
+                            <p:column headerText="Nom" style="text-align: left">
+                                <p:commandLink value="#{skill.name}" update=":layout"
+                                               actionListener="#{interfaceController.toggleAddModify}">
+                                    <p:ajax listener="#{skillManager.findskill}" />
+                                    <f:param id="skill" value="#{skill.name}" />
+                                </p:commandLink>
+                            </p:column>
+                            <p:column headerText="Description" style="text-align: left">
+                                <h:outputText value="#{skill.description}" />
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </p:panel>
+            </p:panel>
         </ui:define>
     </ui:composition>
 </html>
-

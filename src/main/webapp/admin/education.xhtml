@@ -3,36 +3,44 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="menu.xhtml">
         <ui:define name="content">
             <h:outputStylesheet name="./css/common.css" />
-            <p:layout id="layout">
-                <p:layoutUnit position="center" header="Formation">
-                    <h:form>
-                        <p:commandButton value="Ajouter" class="bottombuttons" 
-                                         update=":layout"
-                                         action="#{interfaceController.toggle}"
-                                         rendered="#{interfaceController.rendered}"/>
-                        <p:commandButton value="Supprimer" 
-                                         rendered="#{interfaceController.rendered}"
-                                         style="margin-bottom: 15px"/>
-                    </h:form>
-
-                    <p:dataTable id="multipleSelectionCheckbox" rows="10" resizableColumns="true">
-                        <!--<p:column selectionMode="multiple" class="multiplesselectcolwidth" />-->
-                        <p:column headerText="Niveau" style="text-align: left">
-                            <h:outputText value="" />
-                        </p:column>
-                    </p:dataTable>
-                </p:layoutUnit>
-
-                <p:layoutUnit position="north" header="Ajouter formation"
-                              rendered="#{interfaceController.notRendered}">
+            <p:panel id="layout" style="border: 0">
+                <p:panel header="Modifier le diplome" 
+                         rendered="#{interfaceController.modify}">
                     <h:form>
                         <p:panelGrid columns="2">
-                            <p:outputLabel value="Niveau*" />
-                            <p:inputText class="textWidth" required="true"/>
+                            <p:outputLabel value="Nom*" />
+                            <p:inputText class="textWidth" required="true"
+                                         value="#{educationManager.degree}"/>
+                        </p:panelGrid>
+                        <p />
+                        <p:outputLabel value="*" style="color: red; font-size: 11px" />
+                        <p:outputLabel value="Champs requis" style="font-size: 11px"/>
+                        <hr />
+                        <p:commandButton value="Enregistrer" class="topbuttons" 
+                                         update=":layout" 
+                                         action="#{educationManager.addLevel}"
+                                         actionListener="#{interfaceController.unrender()}">
+                        </p:commandButton>
+
+
+                        <p:commandButton value="Annuler" id="buttonpad"
+                                         actionListener="#{interfaceController.unrender()}"
+                                         update=":layout" immediate="true">
+                        </p:commandButton>
+                    </h:form>
+                </p:panel>
+                <p:panel header="Ajouter un diplome"
+                         rendered="#{interfaceController.add}">
+                    <h:form>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Nom*" />
+                            <p:inputText class="textWidth" required="true"
+                                         value="#{educationManager.degree}"/>
                         </p:panelGrid>
                         <p />
                         <p:outputLabel value="*" style="color: red; font-size: 11px" />
@@ -40,16 +48,46 @@
                         <hr />
                         <p:commandButton value="Enregistrer" class="topbuttons" 
                                          update=":layout"
-                                         action="#{interfaceController.toggle}"/>
+                                         action="#{interfaceController.unrender}"
+                                         actionListener="#{educationManager.addLevel}"/>
                         <p:commandButton value="Annuler" id="buttonpad"
-                                         action="#{interfaceController.toggle}"
-                                         update=":layout">
+                                         action="#{interfaceController.unrender}"
+                                         update=":layout" immediate="true">
                         </p:commandButton>
                     </h:form>
+                </p:panel>
+                <p:panel style="height: 10px; border: 0" rendered="#{interfaceController.space}"/>
+                <p:panel header="Niveau d'éducation">
+                    <h:form>
+                        <p:commandButton value="Ajouter" class="bottombuttons" 
+                                         update=":layout"
+                                         actionListener="#{interfaceController.toggleAddModify}"
+                                         action="#{educationManager.clearFields()}"
+                                         rendered="#{interfaceController.buttons}"/>
+                        <p:commandButton value="Supprimer" 
+                                         rendered="#{interfaceController.buttons}"
+                                         action="#{educationManager.deleteLevels}"
+                                         update=":layout"
+                                         style="margin-bottom: 15px"/>
 
-                </p:layoutUnit>
-            </p:layout>
+                        <p:dataTable id="multipleSelectionCheckbox" rows="10" 
+                                     resizableColumns="true"    scrollable="false"
+                                     paginator="true"  pageLinks="5" rowKey="#{degree.level}"
+                                     selection="#{educationManager.selectedLevels}"
+                                     var="degree"  value="#{educationManager.levels}">
+                            <p:column selectionMode="multiple" class="multiplesselectcolwidth" 
+                                      rendered="#{interfaceController.buttons}"/>
+                            <p:column headerText="Diplomes" style="text-align: left">
+                                <p:commandLink value="#{degree.level}" update=":layout"
+                                               actionListener="#{interfaceController.toggleAddModify}">
+                                    <p:ajax listener="#{educationManager.findLevel}" />
+                                    <f:param name="degree" id="level" value="#{degree.level}" />
+                                </p:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </p:panel>
+            </p:panel>
         </ui:define>
     </ui:composition>
 </html>
-

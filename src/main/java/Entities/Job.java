@@ -27,13 +27,16 @@ public class Job implements Serializable {
     private String jobTitle;
     @Column(nullable = true)
     private String jobDescription;
+    @Column(nullable = true)
+    private String note;
 
     public Job() {
     }
 
-    public Job(String jobTitle, String jobDescription) {
+    public Job(String jobTitle, String jobDescription, String note) {
         this.jobTitle = jobTitle;
         this.jobDescription = jobDescription;
+        this.note = note;
     }
 
 
@@ -53,6 +56,14 @@ public class Job implements Serializable {
         this.jobDescription = jobDescription;
     }
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

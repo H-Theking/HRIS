@@ -20,8 +20,11 @@ public class Organisation implements Serializable {
      FIELDS
      ----------------------------------------------------------------
      ----------------------------------------------------------------*/
+
     @Id
+    private String registrationNumber;
     private String name;
+    private int numberOfEmployees;
     private String country;
     private String region;
     private String city;
@@ -35,8 +38,6 @@ public class Organisation implements Serializable {
      RELATIONAL MAPPING
      ----------------------------------------------------------------
      ----------------------------------------------------------------*/
-    
-    
     /*----------------------------------------------------------------
      ----------------------------------------------------------------
      CONSTRUCTORS
@@ -50,10 +51,10 @@ public class Organisation implements Serializable {
     }
 
     /*----------------------------------------------------------------
-    ----------------------------------------------------------------
-    GETTERS AND SETTERS
-    ----------------------------------------------------------------
-    ----------------------------------------------------------------*/
+     ----------------------------------------------------------------
+     GETTERS AND SETTERS
+     ----------------------------------------------------------------
+     ----------------------------------------------------------------*/
     public String getName() {
         return name;
     }
@@ -116,6 +117,22 @@ public class Organisation implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getRegistrationNumber() {
+        return registrationNumber;
+    }
+
+    public void setRegistrationNumber(String registrationNumber) {
+        this.registrationNumber = registrationNumber;
+    }
+
+    public int getNumberOfEmployees() {
+        return numberOfEmployees;
+    }
+
+    public void setNumberOfEmployees(int numberOfEmployees) {
+        this.numberOfEmployees = numberOfEmployees;
     }
 
     @Override

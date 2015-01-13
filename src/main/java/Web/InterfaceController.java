@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package EJB;
+package Web;
 
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import javax.faces.event.ActionEvent;
 
 /**
  *
@@ -45,30 +46,36 @@ public class InterfaceController implements Serializable {
      * *****************************************************
      * Employment status page
      */
-    protected String rendered = "true";
-    protected String notRendered = "false";
+    protected String space= "false";
+    protected String add = "false";
+    protected String modify = "false";
+    protected String buttons = "true";
 
-    public void toggle() {
-        this.notRendered = this.notRendered.equals("false") ? "true" : "false";
-        this.rendered = this.rendered.equals("false") ? "true" : "false";
-        System.out.println("rendered: " + rendered);
-        System.out.println("notrendered " + notRendered);
+//    public void toggle() {
+//        this.notRendered = this.notRendered.equals("false") ? "true" : "false";
+//        this.rendered = this.rendered.equals("false") ? "true" : "false";
+//        System.out.println("rendered: " + rendered);
+//        System.out.println("notrendered " + notRendered);
+//    }
+
+    public void toggleAddModify(ActionEvent event) {
+        String source = event.getComponent().getClass().toString();
+        if (source.contains("CommandButton"))  {
+            this.add = "true";
+            this.modify = "false";
+        } else {
+            this.add = "false";
+            this.modify = "true";
+        }
+        buttons = "false";
+        space = "true";
     }
 
-    public String getRendered() {
-        return rendered;
-    }
-
-    public void setRendered(String rendered) {
-        this.rendered = rendered;
-    }
-
-    public String getNotRendered() {
-        return notRendered;
-    }
-
-    public void setNotRendered(String notRendered) {
-        this.notRendered = notRendered;
+    public void unrender() {
+        this.add = "false";
+        this.modify = "false";
+        this.buttons = "true";
+        this.space = "false";
     }
 
     /**
@@ -109,6 +116,38 @@ public class InterfaceController implements Serializable {
 
     public void setSaveButtonRender(String saveButtonRender) {
         this.saveButtonRender = saveButtonRender;
+    }
+
+    public String getAdd() {
+        return add;
+    }
+
+    public void setAdd(String add) {
+        this.add = add;
+    }
+
+    public String getModify() {
+        return modify;
+    }
+
+    public void setModify(String modify) {
+        this.modify = modify;
+    }
+
+    public String getButtons() {
+        return buttons;
+    }
+
+    public void setButtons(String buttons) {
+        this.buttons = buttons;
+    }
+
+    public String getSpace() {
+        return space;
+    }
+
+    public void setSpace(String space) {
+        this.space = space;
     }
 
 }

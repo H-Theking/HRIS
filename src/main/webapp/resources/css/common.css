@@ -51,6 +51,24 @@ ul{
 .ui-panelgrid .ui-panelgrid-cell{
     border-style: hidden;
 }
+.ui-autocomplete-input{
+    width: 242px
+}
+.ui-autocomplete-panel{
+    width: 230px
+}
+ .ui-autocomplete-list-item{
+    width: 230px;
+}
+.ui-layout-unit-content{
+    height: auto;
+}
+
+.ui-selectonemenu-list-item{
+    width: 230px;
+}.ui-selectonemenu-items-wrapper{
+    width: 250px
+}
 
 .topbuttons{
     margin-right: 20px;
@@ -63,3 +81,4 @@ ul{
     margin-top: 10px; 
     margin-bottom: 5px;
 }
+

@@ -50,9 +50,9 @@ public class EducationFacade extends AbstractFacade<Education> {
 
     public void editLevel(String oLevel, String nLevel) {
         em.createQuery("UPDATE Education e"
-                + " SET e.level = " + nLevel
-                + " WHERE e.level = :degree")
-                .setParameter("degree", oLevel).executeUpdate();
+                + " SET e.level = '" + nLevel
+                + "' WHERE e.level = '" + oLevel + "'")
+                .executeUpdate();
     }
 
     /*----------------------------------------------------------------

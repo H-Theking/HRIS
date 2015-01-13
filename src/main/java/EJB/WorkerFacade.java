@@ -11,7 +11,6 @@ import Entities.EmployeeHasJob;
 import Entities.Worker;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
@@ -115,19 +114,17 @@ public class WorkerFacade extends AbstractFacade<Worker> {
                 .setParameter("status", status).getResultList();
     }
 
-    public List<String> findWorkerByName(String name) {
-        List<String> names = new ArrayList<>();
+    public List<Worker> findWorkerByName(String name) {
+        name = name.concat("%");
+        List<Worker> workers = new ArrayList<>();
         try {
-            List workers = em.createQuery("SELECT w FROM Worker w WHERE w.firstName = :name")
+            workers = em.createQuery("SELECT w FROM Worker w WHERE w.firstName LIKE :name "
+                    + "OR w.middlenames LIKE :name OR w.lastName LIKE :name")
                     .setParameter("name", name).getResultList();
-            for (Iterator iterator = workers.iterator(); iterator.hasNext();) {
-                Worker worker = (Worker) iterator.next();
-                names.add(worker.getFirstName().concat(" ").concat(worker.getLastName()));
-            }
         } catch (Exception e) {
             throw new EJBException(e.getMessage());
         }
-        return names;
+        return workers;
     }
 
     public void editPersonalDetails(String id, String firstName, String middleNames,
