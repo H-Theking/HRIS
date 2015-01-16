@@ -6,14 +6,16 @@
 package Web;
 
 import EJB.AccountFacade;
+import EJB.WorkerFacade;
 import Entities.Account;
-import Entities.Account.AccountType;
-import Entities.Account.Status;
 import Entities.Worker;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -24,29 +26,43 @@ import javax.faces.context.FacesContext;
  *
  * @author Harvey
  */
-@Named(value = "adminManager")
+@Named(value = "userManager")
 @SessionScoped
-public class AdminManager implements Serializable {
+public class UserManager implements Serializable {
 
-    /**
-     * Creates a new instance of AdminManager
-     */
     @EJB
     AccountFacade accounts;
-    AdminController adminController;
+    @EJB
+    WorkerFacade workerFacade;
     private String accountId;
-    private AccountType type;
-    private String EmployeeName;
+    private Account.AccountType type;
+    private String employeeName;
     private String userName;
     private String password;
     private String passwordConfirm;
-    private Status status;
+    private Account.Status status;
     private Account[] selectedAccounts;
     protected static final Logger logger = Logger.getGlobal();
+    private HashMap<String, String> workermap;
 
-    public AdminManager() {
-        adminController = new AdminController();
-        
+    /**
+     * Creates a new instance of UserManager
+     */
+    public UserManager() {
+    }
+
+    public List<String> suggest() {
+        List<Worker> workers = workerFacade.findWorkerByName(employeeName);
+        List<String> names = new ArrayList<>();
+        HashMap<String, String> map = new HashMap<>();
+        for (int i = 0; i < workers.size(); i++) {
+            names.add(workers.get(i).getFirstName().concat(" ")
+                    .concat(workers.get(i).getLastName()));
+            map.put(names.get(i), workers.get(i).getId());
+        }
+        workermap = map;
+        System.out.println(map);
+        return names;
     }
 
     public List<Account> getUsers() {
@@ -57,22 +73,33 @@ public class AdminManager implements Serializable {
     public void addUser() {
         try {
             logger.log(java.util.logging.Level.OFF, "AdminManager.adduser()\n"
-                    + "Creating new user with AccountId {0} and username {1}", 
-                    new Object[]{accountId, userName});
-            accountId = adminController.getWorkermap()//get the account correspnding to the 
-                    .get(adminController.getNameInput());//name entered
+                    + "Creating new user for employee {0} and username {1}",
+                    new Object[]{employeeName, userName});
+//            if (adminController.getNames().contains(employeeName)) {
+//                logger.log(Level.INFO, "{0} found", new Object[]{employeeName});
+//            } else {
+//                logger.log(Level.WARNING, "{0} not found",  new Object[]{employeeName});
+//            }
+            try {
+                System.out.println(getWorkermap());
+                accountId = getWorkermap()//get the account correspnding to the 
+                        .get(employeeName);//name entered
+            } catch (NullPointerException e) {
+                throw new NullPointerException("ID Not found");
+            }
+
             accounts.createAccount(accountId, type, userName, password, status);
             logger.log(java.util.logging.Level.OFF, "Created new user with "
-                    + "AccountId {0} and username {1}", 
+                    + "AccountId {0} and username {1}",
                     new Object[]{accountId, userName});
 
         } catch (EJBException e) {
             throw new EJBException(e.getMessage());
         }
     }
-    
-    public void deleteUser(){
-        
+
+    public void deleteUser() {
+
     }
 
     public void matchPasswords() {
@@ -102,11 +129,11 @@ public class AdminManager implements Serializable {
         this.accountId = accountId;
     }
 
-    public AccountType getType() {
+    public Account.AccountType getType() {
         return type;
     }
 
-    public void setType(AccountType type) {
+    public void setType(Account.AccountType type) {
         this.type = type;
     }
 
@@ -126,20 +153,20 @@ public class AdminManager implements Serializable {
         this.password = password;
     }
 
-    public Status getStatus() {
+    public Account.Status getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(Account.Status status) {
         this.status = status;
     }
 
     public String getEmployeeName() {
-        return EmployeeName;
+        return employeeName;
     }
 
     public void setEmployeeName(String EmployeeName) {
-        this.EmployeeName = EmployeeName;
+        this.employeeName = EmployeeName;
     }
 
     public String getPasswordConfirm() {
@@ -157,5 +184,21 @@ public class AdminManager implements Serializable {
     public void setSelectedworkers(Account[] selectedworkers) {
         this.selectedAccounts = selectedworkers;
     }
-    
+
+    public Account[] getSelectedAccounts() {
+        return selectedAccounts;
+    }
+
+    public void setSelectedAccounts(Account[] selectedAccounts) {
+        this.selectedAccounts = selectedAccounts;
+    }
+
+    public HashMap<String, String> getWorkermap() {
+        return workermap;
+    }
+
+    public void setWorkermap(HashMap<String, String> workermap) {
+        this.workermap = workermap;
+    }
+
 }
