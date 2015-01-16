@@ -44,10 +44,10 @@ public class JobFacade extends AbstractFacade<Job> {
 
     public void editJob(String oldName, String jobTitle, String description, String note) 
             throws EJBException {
-        em.createQuery("UPDATE Job j SET j.jobTitle = " + jobTitle 
-                + "j.jobDescription = " + description
-                + "j.note" + note 
-                + "WHERE j.jobtitle = " + oldName).executeUpdate();
+        em.createQuery("UPDATE Job j SET j.jobTitle = '" + jobTitle 
+                + "', j.jobDescription = '" + description
+                + "', j.note = '" + note 
+                + "' WHERE j.jobTitle = '" + oldName + "'").executeUpdate();
     }
     
     public void deleteJob(String jobTitle){

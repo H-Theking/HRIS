@@ -53,6 +53,16 @@ public class Location implements Serializable {
     public Location() {
     }
 
+    public Location(String name, String country, String region, String city, String street, String telepone, String fax, String email) {
+        this.name = name;
+        this.country = country;
+        this.region = region;
+        this.city = city;
+        this.street = street;
+        this.telepone = telepone;
+        this.fax = fax;
+        this.email = email;
+    }
     /*----------------------------------------------------------------
     ----------------------------------------------------------------
     GETTERS AND SETTERS

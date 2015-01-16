@@ -15,12 +15,13 @@
                         <p:panelGrid columnClasses="uiborder" >
                             <p:row>
                                 <p:column>
-                                    <h:outputLabel value="Nom de l'organisme" />
+                                    <h:outputLabel value="Nom de l'organisation" />
                                     <h:outputLabel value="*" class="requiredfield"/>
                                 </p:column>
                                 <p:column>
                                     <p:inputText class="textWidth" required="true" 
-                                                 disabled="#{interfaceController.disabled}"/>
+                                                 disabled="#{interfaceController.disabled}"
+                                                 value="#{organisationManager.name}"/>
                                 </p:column>
                                 <p:column>
                                     <h:outputLabel value="Null and void an useful component" 
@@ -29,7 +30,8 @@
                                 <p:column><h:outputLabel value="Numéro d'identification" /></p:column>
                                 <p:column>
                                     <p:inputText class="textWidth" 
-                                                 disabled="#{interfaceController.disabled}"/>
+                                                 disabled="#{interfaceController.disabled}"
+                                                 value="#{organisationManager.registrationNumber}"/>
                                 </p:column>
                                 <p:column>
                                     <h:outputLabel value="Nullified empty but component" 
@@ -38,7 +40,10 @@
                             </p:row>
                             <p:row>
                                 <p:column><h:outputLabel value="Nombre de salariés" /></p:column>
-                                <p:column colspan="4"><h:outputText value="0" /></p:column>
+                                <p:column colspan="4">
+                                    <h:outputText 
+                                        value="#{organisationManager.numberOfEmployees}" />
+                                </p:column>
                             </p:row>
                             <p:row>
                                 <p:column colspan="6"> <hr /> </p:column>
@@ -48,19 +53,22 @@
                                 <p:column colspan="2">
                                     <p:inputMask class="textWidth" value=""
                                                  mask="999-999-999" slotChar="0"
-                                                 disabled="#{interfaceController.disabled}"/>
+                                                 disabled="#{interfaceController.disabled}"
+                                                 value="#{organisationManager.telephone}"/>
                                 </p:column>
                                 <p:column><h:outputLabel value="Fax" /></p:column>
                                 <p:column>
                                     <p:inputText class="textWidth"
-                                                 disabled="#{interfaceController.disabled}"/>
+                                                 disabled="#{interfaceController.disabled}"
+                                                 value="#{organisationManager.fax}"/>
                                 </p:column>
                             </p:row>
                             <p:row>
                                 <p:column><h:outputLabel value="Email" /></p:column>
                                 <p:column>
                                     <p:inputText class="textWidth"
-                                                 disabled="#{interfaceController.disabled}" />
+                                                 disabled="#{interfaceController.disabled}" 
+                                                 value="#{organisationManager.email}"/>
                                 </p:column>
                             </p:row>
                             <p:row>
@@ -70,24 +78,28 @@
                                 <p:column><h:outputLabel value="Pays" /></p:column>
                                 <p:column colspan="2">
                                     <p:selectOneMenu style="width: 250px" 
-                                                     disabled="#{interfaceController.disabled}" />
+                                                     disabled="#{interfaceController.disabled}" 
+                                                     value="#{organisationManager.country}"/>
                                 </p:column>
                                 <p:column><h:outputLabel value="État / Province" /></p:column>
                                 <p:column>
                                     <p:inputText class="textWidth"
-                                                 disabled="#{interfaceController.disabled}" />
+                                                 disabled="#{interfaceController.disabled}" 
+                                                 value="#{organisationManager.region}"/>
                                 </p:column>
                             </p:row>
                             <p:row>
                                 <p:column><h:outputLabel value="Ville" /></p:column>
                                 <p:column colspan="2">
                                     <p:inputText class="textWidth"
-                                                 disabled="#{interfaceController.disabled}" />
+                                                 disabled="#{interfaceController.disabled}" 
+                                                 value="#{organisationManager.city}"/>
                                 </p:column>
                                 <p:column><h:outputLabel value="Adresse" /></p:column>
                                 <p:column>
                                     <p:inputText class="textWidth"
-                                                 disabled="#{interfaceController.disabled}" />
+                                                 disabled="#{interfaceController.disabled}" 
+                                                 value="#{organisationManager.street}"/>
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
@@ -97,12 +109,14 @@
                     <h:outputLabel value="Champs requis" style="font-size: 11px"/>
                     <f:facet name="footer">
                         <p:commandButton value="Modifier" action="#{interfaceController.disable()}"
+                                         actionListener="#{organisationManager.storeId()}"
                                          update="layout"
                                          rendered="#{interfaceController.editButtonRender}"/>
                         <p:commandButton value="Enregistrer" 
                                          action="#{interfaceController.disable()}"
                                          update="layout"
-                                         rendered="#{interfaceController.saveButtonRender}" />
+                                         rendered="#{interfaceController.saveButtonRender}" 
+                                         actionListener="#{organisationManager.editInformation}"/>
                     </f:facet>
                 </p:layoutUnit>
             </p:layout>

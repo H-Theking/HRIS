@@ -8,20 +8,51 @@
     <ui:composition template="menu.xhtml">
         <ui:define name="content" >
             <h:outputStylesheet name="./css/common.css" />
-            <p:panel id="content" style="border: 0">
-                <p:panel header="Ajouter/Modifier un poste" rendered="#{interfaceController.notRendered}">
-                    <h:form id="addjob">
+            <p:panel id="layout" style="border: 0">
+                <p:panel header="Modifier le poste" 
+                         rendered="#{interfaceController.modify}">
+                    <h:form>
                         <p:panelGrid columns="2" columnClasses="uiborder">
                             <p:outputLabel value="Titre du poste*" />
                             <p:inputText class="textWidth" required="true"
-                                         value="#{adminManager.title}"/> 
+                                         value="#{jobManager.title}"/> 
 
                             <p:outputLabel value="Description du poste"  />
                             <p:inputTextarea  class="textWidth" style="height: 100px"
-                                              value="#{adminManager.description}"/>
+                                              value="#{jobManager.description}"/>
                             <p:outputLabel value="Note" />
                             <p:inputTextarea class="textWidth"
-                                             value="#{adminManager.note}"/>
+                                             value="#{jobManager.note}"/>
+                        </p:panelGrid>
+                        <p />
+                        <p:outputLabel value="*" style="color: red; font-size: 11px" />
+                        <p:outputLabel value="Champs requis" style="font-size: 11px"/>
+                        <hr />
+                        <p:commandButton value="Enregistrer" class="topbuttons" 
+                                         update=":layout" 
+                                         action="#{jobManager.addJob}"
+                                         actionListener="#{interfaceController.unrender()}">
+                        </p:commandButton>
+
+                        <p:commandButton value="Annuler" id="buttonpad"
+                                         actionListener="#{interfaceController.unrender()}"
+                                         update=":layout" immediate="true">
+                        </p:commandButton>
+                    </h:form>
+                </p:panel>
+                <p:panel header="Ajouter un poste" rendered="#{interfaceController.add}">
+                    <h:form >
+                        <p:panelGrid columns="2" columnClasses="uiborder">
+                            <p:outputLabel value="Titre du poste*" />
+                            <p:inputText class="textWidth" required="true"
+                                         value="#{jobManager.title}"/> 
+
+                            <p:outputLabel value="Description du poste"  />
+                            <p:inputTextarea  class="textWidth" style="height: 100px"
+                                              value="#{jobManager.description}"/>
+                            <p:outputLabel value="Note" />
+                            <p:inputTextarea class="textWidth"
+                                             value="#{jobManager.note}"/>
                         </p:panelGrid>
                         <p />
                         <p:outputLabel value="*" style="color: red; font-size: 11px" />
@@ -30,40 +61,39 @@
                     <!--use ajax to submit the form since the buttons are out of the form-->
                     <f:facet name="footer">
                         <p:commandButton value="Enregistrer" class="bottombuttons"
-                                         action="#{interfaceController.toggle}"
-                                         actionListener="#{adminManager.addJob()}"
-                                         update=":content"/>
+                                         action="#{interfaceController.unrender()}"
+                                         actionListener="#{jobManager.addJob()}"
+                                         update=":layout"/>
                         <p:commandButton value="Annuler" id="buttonpad"
-                                         update=":content"
-                                         action="#{interfaceController.toggle}"
+                                         update=":layout"
+                                         action="#{interfaceController.unrender()}"
                                          immediate="true"/>
                     </f:facet>
                 </p:panel>
-                <p:panel style="height: 15px; border: 0" rendered="#{interfaceController.notRendered}"/>
+                <p:panel style="height: 15px; border: 0" rendered="#{interfaceController.space}"/>
                 <p:panel header="Postes">
                     <h:form>
                         <p:commandButton value="Ajouter" class="bottombuttons" 
-                                         update=":content"
-                                         action="#{interfaceController.toggle}"
-                                         actionListener="#{adminManager.clearFields}"
-                                         rendered="#{interfaceController.rendered}"/>
-                        <p:commandButton value="Supprimer" update=":content"
-                                         rendered="#{interfaceController.rendered}"
-                                         action="#{adminManager.deleteJobs}"/>
+                                         update=":layout"
+                                         actionListener="#{interfaceController.toggleAddModify}"
+                                         action="#{jobManager.clearFields}"
+                                         rendered="#{interfaceController.buttons}"/>
+                        <p:commandButton value="Supprimer" update=":layout"
+                                         rendered="#{interfaceController.buttons}"
+                                         action="#{jobManager.deleteJobs}"/>
 
                         <p:panel style="height: 10px; border: 0"/>
                         <p:dataTable id="multipleSelectionCheckbox"  rows="10" 
                                      resizableColumns="true"    scrollable="false"
                                      paginator="true"  pageLinks="5" rowKey="#{job.jobTitle}"
-                                     selection="#{adminManager.selectedJobs}"
-                                     var="job"  value="#{adminManager.jobs}">
+                                     selection="#{jobManager.selectedJobs}"
+                                     var="job"  value="#{jobManager.jobs}">
                             <p:column  selectionMode="multiple" class="multiplesselectcolwidth" 
-                                       rendered="#{interfaceController.rendered}"/>
+                                       rendered="#{interfaceController.buttons}"/>
                             <p:column headerText="Titre du poste" style="text-align: left">
-                                <p:commandLink value="#{job.jobTitle}" 
-                                               action="#{interfaceController.toggle}"
-                                               actionListener="#{adminManager.findJob}"
-                                               update=":content">
+                                <p:commandLink value="#{job.jobTitle}" immediate="true"
+                                               actionListener="#{interfaceController.toggleAddModify}">
+                                    <p:ajax listener="#{jobManager.findJob}" update=":layout"/>
                                     <f:param name="jobId" id="jobId" value="#{job.jobTitle}" />
                                 </p:commandLink>
                             </p:column>

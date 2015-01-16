@@ -3,58 +3,109 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="menu.xhtml">
         <ui:define name="content">
             <h:outputStylesheet name="./css/common.css" />
-            <p:layout id="layout">
-                <p:layoutUnit position="center" header="Statut d'emploi">
-                    <h:form>
-                        <p:commandButton value="Ajouter" class="bottombuttons" 
-                                         update=":layout"
-                                         action="#{interfaceController.toggle}"
-                                         rendered="#{interfaceController.rendered}"/>
-                        <p:commandButton value="Supprimer" 
-                                         rendered="#{interfaceController.rendered}"
-                                         style="margin-bottom: 15px"/>
-                    </h:form>
-                    <p:dataTable id="multipleSelectionCheckbox" >
-                        <p:column headerText="Statut d'emploi">
-                            <h:outputText value="this" />
-                        </p:column>
-                    </p:dataTable>
-
-                </p:layoutUnit>
-
-                <p:layoutUnit position="north" header="Ajouter un statut" 
-                              rendered="#{interfaceController.notRendered}">
+            <p:panel id="layout" style="border: 0">
+                <p:panel header="Modifier le statut " 
+                         rendered="#{interfaceController.modify}">
                     <h:form style="margin-top: 10px">
-                        <p:panelGrid columnClasses="uiborder">
+                        <p:panelGrid>
                             <p:row>
-                                <p:column><p:outputLabel value="Nom*" /></p:column>
                                 <p:column>
-                                    <p:inputText id="name" class="textWidth" required="true"/>  
+                                    <p:outputLabel value="Nom" />
+                                    <p:outputLabel value="*" style="color: red; font-size: 11px"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="name" class="textWidth" required="true"
+                                                 value="#{employmentStatusManager.name}"/>  
                                 </p:column>
                                 <p:column><p:message for="name" /></p:column>
                             </p:row>
-
-
-
                         </p:panelGrid>
-                        <p />
-                        <p:outputLabel value="*" style="color: red; font-size: 11px" />
-                        <p:outputLabel value="Champs requis" style="font-size: 11px"/>
-                        <hr id="line" />
+                    </h:form>
+                    <p />
+                    <p:outputLabel value="*" style="color: red; font-size: 11px" />
+                    <p:outputLabel value="Champs requis" style="font-size: 11px"/>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Enregistrer" class="topbuttons" 
+                                         update=":layout" 
+                                         action="#{employmentStatusManager.addEditStatus()}"
+                                         actionListener="#{interfaceController.unrender}"/>
+                        <p:commandButton value="Annuler" 
+                                         actionListener="#{interfaceController.unrender}"
+                                         update=":layout" immediate="true">
+                        </p:commandButton>
+                    </f:facet>
+                </p:panel>
+
+                <p:panel header="Ajouter un statut" 
+                         rendered="#{interfaceController.add}">
+                    <h:form style="margin-top: 10px">
+                        <p:panelGrid columnClasses="uiborder">
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel value="Nom" />
+                                    <p:outputLabel value="*" style="color: red; font-size: 11px"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="name" class="textWidth" required="true"
+                                                 value="#{employmentStatusManager.name}"/>  
+                                </p:column>
+                                <p:column><p:message for="name" /></p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </h:form>
+                    <p />
+                    <p:outputLabel value="*" style="color: red; font-size: 11px" />
+                    <p:outputLabel value="Champs requis" style="font-size: 11px"/>
+
+                    <f:facet name="footer">
                         <p:commandButton value="Enregistrer" class="topbuttons" 
                                          update=":layout"
-                                         action="#{interfaceController.toggle}"/>
+                                         action="#{employmentStatusManager.addEditStatus}"
+                                         actionListener="#{interfaceController.unrender()}"/>
                         <p:commandButton value="Annuler" id="buttonpad"
-                                         action="#{interfaceController.toggle}"
-                                         update=":layout">
+                                         actionListener="#{interfaceController.unrender}"
+                                         update=":layout" immediate="true">
                         </p:commandButton>
+                    </f:facet>
+                </p:panel>
+                <p:panel style="height: 10px; border: 0" rendered="#{interfaceController.space}"/>
+                <p:panel header="Statut d'emploi">
+                    <h:form>
+                        <p:commandButton value="Ajouter" class="bottombuttons" 
+                                         update=":layout"
+                                         action="#{employmentStatusManager.clearFields}"
+                                         actionListener="#{interfaceController.toggleAddModify}"
+                                         rendered="#{interfaceController.buttons}"/>
+                        <p:commandButton value="Supprimer" update=":layout"
+                                         action="#{employmentStatusManager.deleteStatus}"
+                                         rendered="#{interfaceController.buttons}"
+                                         style="margin-bottom: 15px"/>
                     </h:form>
-                </p:layoutUnit>
-            </p:layout>
+                    <p:panel style="height: 10px; border: 0" rendered="#{interfaceController.space}"/>
+                    <p:dataTable id="multipleSelectionCheckbox" rows="10" 
+                                 resizableColumns="true"    scrollable="false"
+                                 paginator="true"  pageLinks="5" rowKey="#{status.status}"
+                                 selection="#{employmentStatusManager.selectedStatus}"
+                                 var="status"  value="#{employmentStatusManager.statusList}">
+                        <p:column selectionMode="multiple" class="multiplesselectcolwidth" 
+                                  rendered="#{interfaceController.buttons}"/>
+                        <p:column headerText="Nom" style="text-align: left">
+                            <p:commandLink value="#{status.status}" update=":layout"
+                                           actionListener="#{interfaceController.toggleAddModify}">
+                                <p:ajax listener="#{employmentStatusManager.findStatus}"
+                                        update="true" />
+                                <f:param id="status" value="#{status.status}" />
+                            </p:commandLink>
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>
+            </p:panel>
         </ui:define>
     </ui:composition>
 </html>

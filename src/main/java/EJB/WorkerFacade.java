@@ -51,19 +51,31 @@ public class WorkerFacade extends AbstractFacade<Worker> {
 
     public void editWorkerDetails(String id, String firstName, String middleNames,
             String lastName, Date birthDate, String placeOfBirth, Worker.Gender gender,
-            Worker.CivilStatus civilStatus, String nationality, String numberOfChildren) {
+            Worker.CivilStatus civilStatus, String nationality, int numberOfChildren) {
         try {
-            int executeUpdate = em.createQuery("UPDATE Worker w SET w.firstName = " + firstName
-                    + ", w.middlenames = " + middleNames
-                    + ", w.lastName = " + lastName
-                    + ", w.birthDate = " + birthDate
-                    + ", w.placeOfBirth = " + placeOfBirth
-                    + ", w.nationality = " + nationality
-                    + ", w.gender =" + gender
-                    + ", w.civilStatus = " + civilStatus
-                    + ", w.numberOfChildren = " + numberOfChildren
-                    + " WHERE w.id = :id")
-                    .setParameter("id", id).executeUpdate();
+            Worker find = em.find(Worker.class, id);
+            find.setFirstName(firstName);
+            find.setMiddlenames(middleNames);
+            find.setLastName(lastName);
+            find.setPlaceOfBirth(placeOfBirth);
+            find.setBirthDate(birthDate);
+            find.setGender(gender);
+            find.setCivilStatus(civilStatus);
+            find.setNationality(nationality);
+            find.setNumberOfChildren(numberOfChildren);
+            em.persist(find);
+//            int executeUpdate = em.createQuery("UPDATE Worker w SET"
+//                    + " w.firstName = '" + firstName
+//                    + "', w.middlenames = '" + middleNames
+//                    + "', w.lastName = '" + lastName
+//                    + "', w.birthDate = '" + birthDate
+//                    + "', w.placeOfBirth = '" + placeOfBirth
+//                    + "', w.nationality = '" + nationality
+//                    + "', w.gender = '" + gender
+//                    + "', w.civilStatus = '" + civilStatus
+//                    + "', w.numberOfChildren = '" + numberOfChildren
+//                    + "' WHERE w.id = :id")
+//                    .setParameter("id", id).executeUpdate();
         } catch (EJBException e) {
             throw new EJBException(e);
         }

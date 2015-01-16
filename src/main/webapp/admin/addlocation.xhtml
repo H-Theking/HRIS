@@ -5,43 +5,61 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <ui:composition template="pimTemplate.xhtml">
-        <ui:define name="centerLayoutUnit">
+    <ui:composition template="menu.xhtml">
+        <ui:define name="content">
+            <h:outputStylesheet name="./css/common.css" />
             <p:layoutUnit position="center" style="border: 0">
                 <h:form>
                     <p:panel header="Ajouter un site">
                         <p:panelGrid columns="2" >
                             <p:outputLabel value="Nom*" />
-                            <p:inputText class="textWidth" required="true"/> 
+                            <p:inputText class="textWidth" required="true"
+                                         value="#{locationManager.name}"
+                                         requiredMessage="Valeur requis"/> 
 
                             <h:outputLabel value="Pays" />
-                            <p:selectOneMenu class="textWidth"/>
+                            <p:selectOneMenu 
+                                value="#{locationManager.country}">
+                                <f:selectItem itemLabel="--Selectioner--" itemValue="" />
+                                <f:selectItem itemLabel="Cameroon" itemValue="Cameroon"/>
+                                <f:selectItem itemLabel="Ghana" itemValue="Ghana"/> 
+                            </p:selectOneMenu>
 
                             <p:outputLabel value="État / Province" />
-                            <p:inputText class="textWidth"/>
-                            
+                            <p:inputText class="textWidth"
+                                         value="#{locationManager.region}"/>
+
                             <p:outputLabel value="Ville" />
-                            <p:inputText class="textWidth"/>
+                            <p:inputText class="textWidth"
+                                         value="#{locationManager.city}"/>
 
                             <p:outputLabel value="Adresse" />
-                            <p:inputTextarea class="textWidth"/>
+                            <p:inputTextarea class="textWidth"
+                                             value="#{locationManager.street}"/>
 
                             <p:outputLabel value="Téléphone" />
-                            <p:inputMask value="" mask="999-999-999" slotChar="0" class="textWidth"/>
+                            <p:inputMask mask="999-999-999" slotChar="0" 
+                                         class="textWidth" 
+                                         value="#{locationManager.telephone}"/>
 
                             <p:outputLabel value="Fax" />
-                            <p:inputText value=""  class="textWidth"/>
+                            <p:inputText class="textWidth"
+                                         value="#{locationManager.fax}"/>
 
                             <p:outputLabel value="Email" />
-                            <p:inputText value=""  class="textWidth"/>
-
-                            <p:outputLabel value="Email" />
-                            <p:inputText class="textWidth"/>
+                            <p:inputText class="textWidth"
+                                         value="#{locationManager.email}"/>
                         </p:panelGrid>
 
                         <f:facet name="footer">
-                            <p:commandButton value="Enregistrer" />
-                            <p:commandButton value="Annuler"
+                            <p:commandButton value="Enregistrer" class="topbuttons"  
+                                             action="locations"
+                                             actionListener="#{locationManager.addLocation}">
+                            </p:commandButton>
+
+                            <p:commandButton value="Annuler" id="buttonpad"
+                                             action="locations" immediate="true">
+                            </p:commandButton>
                         </f:facet>
                     </p:panel>
                 </h:form>

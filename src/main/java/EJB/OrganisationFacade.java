@@ -17,6 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class OrganisationFacade extends AbstractFacade<Organisation> {
+
     @PersistenceContext(unitName = "SampleAppPU")
     private EntityManager em;
 
@@ -29,18 +30,19 @@ public class OrganisationFacade extends AbstractFacade<Organisation> {
         super(Organisation.class);
     }
 
-    public void editOrganisationDetails(String companyName, String registrationNumber, 
-            int numberOfEmployees, String phoneNumber, String fax, String email, 
+    public void editOrganisationDetails(String id, String companyName, String registrationNumber,
+            int numberOfEmployees, String phoneNumber, String fax, String email,
             String country, String region, String city, String address) throws EJBException {
-        em.createQuery("UPDATE Organisation o SET o.name = '" + companyName
-                + "', o.registrationNumber = " + registrationNumber
-                + "', o.numberOfEmployees = " + numberOfEmployees
-                + "', o.country = " + country
-                + "', o.region = " + region
-                + "', o.city = " + city
-                + "', o.street = " + address
-                + "', o.telepone = " + phoneNumber
-                + "', o.fax = " + fax
-                + "', o.email" + email);
+        Organisation find = em.find(Organisation.class, id);
+        find.setName(companyName);
+        find.setRegistrationNumber(registrationNumber);
+        find.setCountry(country);
+        find.setRegion(region);
+        find.setCity(city);
+        find.setStreet(address);
+        find.setTelepone(phoneNumber);
+        find.setFax(fax);
+        find.setEmail(email);
+        em.merge(find);
     }
 }

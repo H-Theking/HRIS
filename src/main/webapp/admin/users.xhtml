@@ -8,43 +8,9 @@
     <ui:composition template="/admin/menu.xhtml">
         <ui:define name="content">
             <h:outputStylesheet name="./css/common.css" />
-            <p:layout id="layout">
-                <p:layoutUnit position="center" header="Liste d'employees">
-                    <p:panel style="border: 0">
-                        <h:form>
-                            <p:commandButton value="Ajouter" class="bottombuttons" 
-                                             update=":layout"
-                                             action="#{interfaceController.toggle}"
-                                             rendered="#{interfaceController.rendered}"/>
-                            <p:commandButton value="Supprimer" 
-                                             rendered="#{interfaceController.rendered}"
-                                             immediate="true"
-                                             style="margin-bottom: 15px"/>
-                        </h:form> 
-                    </p:panel>
-                    <p:dataTable id="multipleSelectionCheckbox" rows="10" 
-                                 resizableColumns="true"    scrollable="false"
-                                 paginator="true"  pageLinks="5" var="users"
-                                 value="#{adminManager.users}"  >
-                        <!--<p:column selectionMode="multiple" class="multiplesselectcolwidth" />-->
-                        <p:column headerText="Nom de l'utilisateur" style="text-align: left">
-                            <h:outputText value="#{users.userName}" />
-                        </p:column>
-                        <p:column headerText="Type de compte" style="text-align: left">
-                            <h:outputText value="#{users.type}" />
-                        </p:column>
-                        <p:column headerText="Nom de l'employé" style="text-align: left">
-                            <h:outputText value="#{users.worker.firstName} " />
-                            <h:outputText value="#{users.worker.lastName}" />
-                        </p:column>
-                        <p:column headerText="Statut" style="text-align: left">
-                            <h:outputText value="#{users.status}" />
-                        </p:column>
-                    </p:dataTable>
-                </p:layoutUnit>
-
-                <p:layoutUnit position="north" header="Ajouter un utilisateur"
-                              rendered="#{interfaceController.notRendered}">
+            <p:panel id="layout" style="border: 0">
+                <p:panel header="Ajouter un utilisateur"
+                         rendered="#{interfaceController.add}">
                     <p:panelGrid id="account" >
                         <p:row>
                             <p:column>
@@ -53,7 +19,7 @@
                             </p:column>
                             <p:column>
                                 <p:autoComplete id="autocomplete"
-                                                 forceSelection="true"
+                                                forceSelection="true"
                                                 completeMethod="#{adminController.suggest}"
                                                 value="#{adminController.nameInput}"/>
                             </p:column>
@@ -71,9 +37,9 @@
                                              class="textWidth" required="true"
                                              value="#{adminManager.userName}"/>
                             </p:column>
-<!--                            <p:column>
+                            <p:column>
                                 <p:message for="username" />
-                            </p:column>-->
+                            </p:column>
                         </p:row>
                         <p:row>
                             <p:column>
@@ -90,9 +56,9 @@
                                                   itemValue="Desactive" />
                                 </p:selectOneMenu>
                             </p:column>
-                            <!--                            <p:column>
-                                                            <p:message for="status" />
-                                                        </p:column>-->
+                            <p:column>
+                                <p:message for="status" />
+                            </p:column>
                         </p:row>
                         <p:row>
                             <p:column>
@@ -104,9 +70,9 @@
                                             class="textWidth" required="true"
                                             value="#{adminManager.password}"/>
                             </p:column>
-<!--                            <p:column>
+                            <p:column>
                                 <p:message for="password" />
-                            </p:column>-->
+                            </p:column>
                         </p:row>
                         <p:row>
                             <p:column>
@@ -118,9 +84,9 @@
                                             class="textWidth" required="true"
                                             value="#{adminManager.passwordConfirm}"/>
                             </p:column>
-<!--                            <p:column>
+                            <p:column>
                                 <p:message for="confirm"/>
-                            </p:column>-->
+                            </p:column>
                         </p:row>
                     </p:panelGrid>
                     <p />
@@ -129,14 +95,50 @@
                     <hr />
                     <p:commandButton value="Enregistrer" class="topbuttons" 
                                      update=":layout"
-                                     action="#{interfaceController.toggle}"
+                                     action="#{interfaceController.unrender()}"
                                      actionListener="#{adminManager.addUser}"/>
                     <p:commandButton value="Annuler" id="buttonpad"
-                                     action="#{interfaceController.toggle}"
+                                     action="#{interfaceController.unrender}"
                                      update=":layout" immediate="true">
                     </p:commandButton>
-                </p:layoutUnit>
-            </p:layout>
+                </p:panel>
+            </p:panel>
+            <p:panel style="height: 10px; border: 0" rendered="#{interfaceController.space}"/>
+            
+            <p:panel header="Liste d'employees">
+                <p:panel style="border: 0">
+                    <h:form>
+                        <p:commandButton value="Ajouter" class="bottombuttons" 
+                                         update=":layout"
+                                         actionListener="#{interfaceController.toggleAddModify}"
+                                         rendered="#{interfaceController.buttons}"/>
+                        <p:commandButton value="Supprimer" update=":layout"
+                                         rendered="#{interfaceController.buttons}"
+                                         immediate="true"
+                                         style="margin-bottom: 15px"/>
+                    </h:form> 
+                </p:panel>
+                <p:dataTable id="multipleSelectionCheckbox" rows="10" 
+                             resizableColumns="true"    scrollable="false"
+                             rowKey="#{users.accountId}" selection="#{adminManager.selectedAccounts}"
+                             paginator="true"  pageLinks="5" var="users"
+                             value="#{adminManager.users}"  >
+                    <p:column selectionMode="multiple" class="multiplesselectcolwidth" />
+                    <p:column headerText="Nom de l'utilisateur" style="text-align: left">
+                        <h:outputText value="#{users.userName}" />
+                    </p:column>
+                    <p:column headerText="Type de compte" style="text-align: left">
+                        <h:outputText value="#{users.type}" />
+                    </p:column>
+                    <p:column headerText="Nom de l'employé" style="text-align: left">
+                        <h:outputText value="#{users.worker.firstName} " />
+                        <h:outputText value="#{users.worker.lastName}" />
+                    </p:column>
+                    <p:column headerText="Statut" style="text-align: left">
+                        <h:outputText value="#{users.status}" />
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
         </ui:define>
     </ui:composition>
 </html>

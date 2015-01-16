@@ -74,8 +74,8 @@ public class InterfaceController implements Serializable {
     public void unrender() {
         this.add = "false";
         this.modify = "false";
-        this.buttons = "true";
         this.space = "false";
+        this.buttons = "true";
     }
 
     /**

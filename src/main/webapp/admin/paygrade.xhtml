@@ -3,56 +3,118 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/admin/menu.xhtml">
         <ui:define name="content">
             <h:outputStylesheet name="./css/common.css" />
-            <p:layout id="layout">
-                <p:layoutUnit position="center" header="Niveau de paye">
+            <p:panel id="layout" style="border: 0">
+                <p:panel header="Modifier le niveau de paye" 
+                         rendered="#{interfaceController.modify}">
                     <h:form>
-                        <p:commandButton value="Ajouter" class="bottombuttons" 
-                                         update=":layout"
-                                         action="#{interfaceController.toggle}"
-                                         rendered="#{interfaceController.rendered}"/>
-                        <p:commandButton value="Supprimer" 
-                                         rendered="#{interfaceController.rendered}"
-                                         style="margin-bottom: 15px"/>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Nom*" />
+                            <p:inputText class="textWidth" required="true"
+                                         value="#{payGradeManager.name}"/>
+                            <p:outputLabel value="Salaire minimum" />
+                            <p:inputText class="textWidth" 
+                                         value="#{payGradeManager.min}"/>
+                            <p:outputLabel value="Salaire maximum" />
+                            <p:inputText class="textWidth" 
+                                         value="#{payGradeManager.max}"/>
+                            <p:outputLabel value="Monnaie" />
+                            <p:inputText class="textWidth" 
+                                         value="#{payGradeManager.currency}"/>
+                        </p:panelGrid>
                     </h:form>
                     <p />
-                    <p:dataTable id="multipleSelectionCheckbox" rows="10" resizableColumns="true">
-                        <!--<p:column selectionMode="multiple" class="multiplesselectcolwidth" />-->
+                    <p:outputLabel value="*" style="color: red; font-size: 11px" />
+                    <p:outputLabel value="Champs requis" style="font-size: 11px"/>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Enregistrer" class="topbuttons" 
+                                         update=":layout" 
+                                         action="#{payGradeManager.addPayGrade}"
+                                         actionListener="#{interfaceController.unrender()}">
+                        </p:commandButton>
+
+                        <p:commandButton value="Annuler" 
+                                         actionListener="#{interfaceController.unrender()}"
+                                         update=":layout" immediate="true">
+                        </p:commandButton>
+                    </f:facet>
+                </p:panel>
+
+                <p:panel header="Ajouter un niveau salariale"
+                         rendered="#{interfaceController.add}">
+                    <h:form>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Nom*" />
+                            <p:inputText class="textWidth" required="true"
+                                         value="#{payGradeManager.name}"/>
+                            <p:outputLabel value="Salaire minimum" />
+                            <p:inputText class="textWidth" 
+                                         value="#{payGradeManager.min}"/>
+                            <p:outputLabel value="Salaire maximum" />
+                            <p:inputText class="textWidth" 
+                                         value="#{payGradeManager.max}"/>
+                            <p:outputLabel value="Monnaie" />
+                            <p:inputText class="textWidth" 
+                                         value="#{payGradeManager.currency}"/>
+                        </p:panelGrid>
+                    </h:form>
+                    <p />
+                    <p:outputLabel value="*" style="color: red; font-size: 11px" />
+                    <p:outputLabel value="Champs requis" style="font-size: 11px"/>
+                    <f:facet name="footer">
+                        <p:commandButton value="Enregistrer" class="topbuttons" 
+                                         update=":layout" 
+                                         action="#{payGradeManager.addPayGrade}"
+                                         actionListener="#{interfaceController.unrender}"/>
+                        <p:commandButton value="Annuler" id="buttonpad"
+                                         action="#{interfaceController.unrender}"
+                                         update=":layout" immediate="true">
+                        </p:commandButton>
+                    </f:facet>
+                </p:panel>
+                <p:panel style="height: 10px; border: 0" rendered="#{interfaceController.space}"/>
+                <p:panel header="Niveau de paye">
+                    <h:form>
+                        <p:commandButton value="Ajouter" class="bottombuttons" 
+                                         update=":layout" action="#{payGradeManager.clearFields}"
+                                         actionListener="#{interfaceController.toggleAddModify}"
+                                         rendered="#{interfaceController.buttons}"/>
+                        <p:commandButton value="Supprimer" update=":layout"
+                                         rendered="#{interfaceController.buttons}"
+                                         style="margin-bottom: 15px"/>
+                    </h:form>
+                    <p:panel style="height: 10px; border: 0" rendered="#{interfaceController.space}"/>
+                    <p:dataTable id="multipleSelectionCheckbox" rows="10" 
+                                 resizableColumns="true"    scrollable="false"
+                                 paginator="true"  pageLinks="5" rowKey="#{level.name}"
+                                 selection="#{payGradeManager.selectedPayGrades}"
+                                 var="level"  value="#{payGradeManager.payGrades}">
+                        <p:column selectionMode="multiple" class="multiplesselectcolwidth" 
+                                  rendered="#{interfaceController.buttons}"/>
                         <p:column headerText="Niveau de paye" style="text-align: left">
-                            <h:outputText value="" />
+                            <p:commandLink value="#{level.name}" update=":layout"
+                                           actionListener="#{interfaceController.toggleAddModify}">
+                                <p:ajax listener="#{payGradeManager.findPayGrade}" update=":layout"/>
+                                <f:param id="paygrade" value="#{level.name}" />
+                            </p:commandLink>
+                        </p:column>
+                        <p:column headerText="Monnaie" style="text-align: left">
+                            <h:outputText value="#{level.currency}" />
+                        </p:column>
+                        <p:column headerText="Salaire minimum" style="text-align: left">
+                            <h:outputText value="#{level.minimum}" />
+                        </p:column>
+                        <p:column headerText="Salaire maximum" style="text-align: left">
+                            <h:outputText value="#{level.maximum}" />
                         </p:column>
                     </p:dataTable>
-                </p:layoutUnit>
-
-                <p:layoutUnit position="north" header="Ajouter un niveau salariale"
-                              rendered="#{interfaceController.notRendered}">
-                    <p:panelGrid style="margin-top: 10px">
-                        <p:row>
-                            <p:column>
-                                <p:outputLabel value="Nom" /> 
-                                <p:outputLabel value="*" class="requiredfield" /> 
-                            </p:column>
-                            <p:column>
-                                <p:inputText class="textWidth" required="true" id="nom"/>
-                            </p:column>
-                            <p:column><p:message for="nom" /></p:column>
-                        </p:row>
-                    </p:panelGrid>
-                    <hr />
-                    <p:commandButton value="Enregistrer" class="topbuttons" 
-                                     update=":layout"
-                                     action="#{interfaceController.toggle}"/>
-                    <p:commandButton value="Annuler" id="buttonpad"
-                                     action="#{interfaceController.toggle}"
-                                     update=":layout">
-                    </p:commandButton>
-                </p:layoutUnit>
-
-            </p:layout>
+                </p:panel>
+            </p:panel>
         </ui:define>
     </ui:composition>
 </html>
-

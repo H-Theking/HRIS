@@ -41,12 +41,18 @@ public class AccountFacade extends AbstractFacade<Account> {
     
     public void editAccount(String accoutId, AccountType type, String userName,
             String password, Status status){
-        em.createQuery("UPDATE Account a SET"
-                + "  a.type = " + type
-                + ", a.status = " + status
-                + ", a.userName = " + userName
-                + ", a.password = " + password
-                + " WHERE a.accountId = :id")
-                .setParameter("id", accoutId).executeUpdate();
+        Account find = em.find(Account.class, accoutId);
+        find.setUserName(userName);
+        find.setPassword(password);
+        find.setStatus(status);
+        find.setType(type);
+        em.merge(find);
+//        em.createQuery("UPDATE Account a SET"
+//                + "  a.type = " + type
+//                + ", a.status = " + status
+//                + ", a.userName = " + userName
+//                + ", a.password = " + password
+//                + " WHERE a.accountId = :id")
+//                .setParameter("id", accoutId).executeUpdate();
     }
 }

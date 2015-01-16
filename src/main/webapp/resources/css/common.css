@@ -66,19 +66,19 @@ ul{
 
 .ui-selectonemenu-list-item{
     width: 230px;
-}.ui-selectonemenu-items-wrapper{
+}
+.ui-selectonemenu-items-wrapper{
     width: 250px
 }
 
 .topbuttons{
     margin-right: 20px;
     margin-bottom: 5px;
-    margin-top: 3px;
+    margin-top: 10px;
 }
 
 .bottombuttons{
     margin-right: 20px; 
     margin-top: 10px; 
-    margin-bottom: 5px;
 }
 

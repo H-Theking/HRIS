@@ -3,35 +3,49 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="menu.xhtml">
         <ui:define name="content">
             <h:outputStylesheet name="./css/common.css" />
-            <p:layout>
-                <p:layoutUnit position="center" header="Emplacements">
-                    <p:commandButton value="Ajouter" style="margin-right: 20px" id="addbutton"/>
-                    <p:commandButton value="Supprimer" id="deletebutton"/>
+            <p:panel header="Emplacements">
+                <h:form>
+                    <p:commandButton value="Ajouter" style="margin-right: 20px" 
+                                     actionListener="#{locationManager.clearFields()}" 
+                                    class="topbuttons" action="addlocation"/>
+                    <p:commandButton value="Supprimer" update="@form" 
+                                     action="#{locationManager.deleteLocations}"/>
                     <hr id="line"/>
-                    <p:dataTable id="multipleSelectionCheckbox" resizableColumns="true">
-                        <p:column selectionMode="multiple" class="multiplesselectcolwidth" />
+                    <p:dataTable id="multipleSelectionCheckbox" rows="10" 
+                                 resizableColumns="true"    scrollable="false"
+                                 paginator="true"  pageLinks="5" rowKey="#{location.name}"
+                                 selection="#{locationManager.selectedLocations}"
+                                 var="location"  value="#{locationManager.locations}"
+                                 style="margin-top: 10px">
+                        <p:column selectionMode="multiple" class="multiplesselectcolwidth" 
+                                  resizable="false" />
                         <p:column headerText="Nom">
-                            <h:outputText value="" />
+                            <p:commandLink value="#{location.name}"
+                                           action="addlocation" >
+                                <p:ajax listener="#{locationManager.findLocation}" />
+                                <f:param id="location" value="#{location.branchId}" />
+                            </p:commandLink>
                         </p:column>
                         <p:column headerText="Ville">
-                            <h:outputText value="" />
+                            <h:outputText value="#{location.city}" />
                         </p:column>
                         <p:column headerText="Pays">
-                            <h:outputText value="" />
+                            <h:outputText value="#{location.country}" />
                         </p:column>
                         <p:column headerText="Téléphone">
-                            <h:outputText value="" />
+                            <h:outputText value="#{location.telepone}" />
                         </p:column>
                         <p:column headerText="Nombre d'employées">
                             <h:outputText value="" />
                         </p:column>
                     </p:dataTable>
-                </p:layoutUnit>
-            </p:layout>
+                </h:form>
+            </p:panel>
         </ui:define>
     </ui:composition>
 </html>

@@ -6,24 +6,19 @@
 package Web;
 
 import EJB.AccountFacade;
-import EJB.JobFacade;
-import EJB.LanguagesFacade;
 import Entities.Account;
 import Entities.Account.AccountType;
 import Entities.Account.Status;
-import Entities.Job;
-import Entities.Languages;
+import Entities.Worker;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
-//import static com.sun.xml.ws.security.addressing.impl.policy.Constants.logger;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIParameter;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 /**
  *
@@ -46,9 +41,12 @@ public class AdminManager implements Serializable {
     private String password;
     private String passwordConfirm;
     private Status status;
+    private Account[] selectedAccounts;
+    protected static final Logger logger = Logger.getGlobal();
 
     public AdminManager() {
         adminController = new AdminController();
+        
     }
 
     public List<Account> getUsers() {
@@ -58,19 +56,23 @@ public class AdminManager implements Serializable {
 
     public void addUser() {
         try {
-//            logger.log(java.util.logging.Level.OFF, "AdminManager.adduser()\n"
-//                    + "Creating new user with AccountId {0} and username {1}", 
-//                    new Object[]{accountId, userName});
+            logger.log(java.util.logging.Level.OFF, "AdminManager.adduser()\n"
+                    + "Creating new user with AccountId {0} and username {1}", 
+                    new Object[]{accountId, userName});
             accountId = adminController.getWorkermap()//get the account correspnding to the 
                     .get(adminController.getNameInput());//name entered
             accounts.createAccount(accountId, type, userName, password, status);
-//            logger.log(java.util.logging.Level.OFF, "Created new user with "
-//                    + "AccountId {0} and username {1}", 
-//                    new Object[]{accountId, userName});
+            logger.log(java.util.logging.Level.OFF, "Created new user with "
+                    + "AccountId {0} and username {1}", 
+                    new Object[]{accountId, userName});
 
         } catch (EJBException e) {
             throw new EJBException(e.getMessage());
         }
+    }
+    
+    public void deleteUser(){
+        
     }
 
     public void matchPasswords() {
@@ -148,105 +150,12 @@ public class AdminManager implements Serializable {
         this.passwordConfirm = passwordConfirm;
     }
 
-    /**
-     * ************************************************************************
-     * JOBS
-     */
-    @EJB
-    JobFacade jobFacade;
-    private String oldTitle;
-    private String title;
-    private String description;
-    private String note;
-    private Job[] selectedJobs;
-    private List<Languages> languages;
-
-    public void addJob() throws EJBException {
-        jobFacade.addJob(title, description, note);
-        title = description = note = null;
+    public Account[] getSelectedworkers() {
+        return selectedAccounts;
     }
 
-    public void deleteJobs() {
-        System.out.println("Selected: " + selectedJobs.length);
-        for (Job selectedJob : selectedJobs) {
-            jobFacade.remove(selectedJob);
-        }
+    public void setSelectedworkers(Account[] selectedworkers) {
+        this.selectedAccounts = selectedworkers;
     }
-
-    public void findJob(ActionEvent event) {
-        try {
-            UIParameter param = (UIParameter) event.getComponent().findComponent("jobId");
-            String jobTitle = param.getValue().toString();
-            Job find = jobFacade.find(jobTitle);
-            System.out.println("Found job :" + find);
-            title = find.getJobTitle();
-            description = find.getJobDescription();
-            note = find.getNote();
-            oldTitle = title;
-        } catch (Exception e) {
-        }
-    }
-
-    public void clearFields() {
-        this.title = null;
-        this.description = null;
-        this.note = null;
-    }
-
-    public List<Job> getJobs() {
-        return jobFacade.getJobs();
-    }
-
-    public void editJob() throws EJBException {
-        jobFacade.editJob(oldTitle, title, description, note);
-        title = description = note = oldTitle = null;
-    }
-
-    public JobFacade getJobFacade() {
-        return jobFacade;
-    }
-
-    public void setJobFacade(JobFacade jobFacade) {
-        this.jobFacade = jobFacade;
-    }
-
-    public String getOldTitle() {
-        return oldTitle;
-    }
-
-    public void setOldTitle(String oldTitle) {
-        this.oldTitle = oldTitle;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public Job[] getSelectedJobs() {
-        return selectedJobs;
-    }
-
-    public void setSelectedJobs(Job[] selectedJobs) {
-        this.selectedJobs = selectedJobs;
-    }
+    
 }
