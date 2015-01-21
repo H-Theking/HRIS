@@ -3,15 +3,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
         <style>
             tab{
                 padding: 0;
+                
             }
             tabView{
-                border: 0
+                border: 0;
             }
         </style>
     </h:head>
@@ -25,27 +27,31 @@
                 background-color: inherit;
             }
         </style>
-        <p:tabView style="border: 0" id="tabview">
+
+        <p:tabView style="border: 0" id="tabview" >
             <p:tab title="Admin" id="tab1">
                 <p:menubar autoDisplay="true" style="margin: 0" id="menubar">
-                    <p:submenu label="Gestion D'utilisateurs" id="manageusers">
-                        <p:menuitem value="Utilisateurs" url="/faces/admin/users.xhtml"/>
-                    </p:submenu>
-                    <p:submenu label="Emploi" id="job">
-                        <p:menuitem value="Titres de postes" url="/faces/admin/jobtitles.xhtml" />
-                        <p:menuitem value="Niveaux de paye" url="/faces/admin/paygrade.xhtml" />
-                        <p:menuitem value="Statut d'emploi" url="/faces/admin/employmentstatus.xhtml" />
-                    </p:submenu>
-                    <p:submenu label="Entreprise" id="org">
-                        <p:menuitem value="Informations générales" url="/faces/admin/organisation.xhtml" />
-                        <p:menuitem value="Sucursales" url="/faces/admin/locations.xhtml" />
-                    </p:submenu>
-                    <p:submenu label="Qualifications" id="qualifications">
-                        <p:menuitem value="Compétences" url="/faces/admin/skills.xhtml" />
-                        <p:menuitem value="Formations" url="/faces/admin/education.xhtml" />
-                        <p:menuitem value="Langues" url="/faces/admin/languages.xhtml" />
-                    </p:submenu>
+                    <f:ajax event="click"  listener="#{interfaceController.reset}">
+                        <p:submenu label="Gestion D'utilisateurs" id="manageusers">
+                            <p:menuitem value="Utilisateurs" url="/faces/admin/users.xhtml"/>
+                        </p:submenu>
+                        <p:submenu label="Emploi" id="job">
+                            <p:menuitem value="Titres de postes" url="/faces/admin/jobtitles.xhtml" />
+                            <p:menuitem value="Niveaux de paye" url="/faces/admin/paygrade.xhtml" />
+                            <p:menuitem value="Statut d'emploi" url="/faces/admin/employmentstatus.xhtml" />
+                        </p:submenu>
+                        <p:submenu label="Entreprise" id="org">
+                            <p:menuitem value="Informations générales" url="/faces/admin/organisation.xhtml" />
+                            <p:menuitem value="Sucursales" url="/faces/admin/locations.xhtml" />
+                        </p:submenu>
+                        <p:submenu label="Qualifications" id="qualifications">
+                            <p:menuitem value="Compétences" url="/faces/admin/skills.xhtml" />
+                            <p:menuitem value="Formations" url="/faces/admin/education.xhtml" />
+                            <p:menuitem value="Langues" url="/faces/admin/languages.xhtml" />
+                        </p:submenu>
+                    </f:ajax>
                 </p:menubar>
+
             </p:tab>
             <p:tab title="MIP" id="tab2">
                 <p:menubar autoDisplay="true" style="margin: 0" >

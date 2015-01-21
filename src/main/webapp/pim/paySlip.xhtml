@@ -1,0 +1,247 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:layout>
+            <p:layoutUnit position="north" style="border: 0">
+                <p:layout>
+                    <p:layoutUnit position="west">
+                        <p:panel>
+                            <p:panelGrid>
+                                <p:row>
+                                    <p:column colspan="2">
+                                        <h:outputText value="MEYOU ET CIE SARL" />
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <h:outputText value="Yaounde" />
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <h:outputText value="B.P.1225" />
+                                    </p:column>
+                                </p:row>
+                                <p />
+                                <p:row>
+                                    <p:column>
+                                        <h:outputText value="Etablissement: " />
+                                    </p:column>
+                                    <p:column><h:outputText value="MEUMI HOTEL"</p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column><h:outputLabel value="SIREST" /></p:column>
+                                    <p:column><h:outputText value="" /></p:column>
+                                    <p:column><h:outputLabel value="APE: " /></p:column>
+                                    <p:column><h:outputText value="" /></p:column>                           
+                                </p:row>
+                                <p:row>
+                                    <p:column><h:outputLabel value="APE: " /></p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:panel>
+                        <p  />
+                        <p:panel>
+                            <p:panelGrid>
+                                <p:row>
+                                    <p:column><h:outputLabel value="Code Salarié" /></p:column>
+                                    <p:column><h:outputText value="" /></p:column> 
+                                    <p:column><h:outputLabel value="N° S.S: " /></p:column>
+                                    <p:column><h:outputText value="" /></p:column> 
+                                </p:row>
+                                <p:row>
+                                    <p:column><h:outputLabel value="Emploi" /></p:column>
+                                    <p:column><h:outputText value="" /></p:column>                          
+                                </p:row>
+                                <p:row>
+                                    <p:column><h:outputLabel value="Qualification" /></p:column>
+                                    <p:column><h:outputText value="" /></p:column>                          
+                                </p:row>
+                                <p:row>
+                                    <p:column><h:outputLabel value="Echelon" /></p:column>
+                                    <p:column><h:outputText value="" /></p:column>   
+                                    <p:column><h:outputLabel value="Coef: " /></p:column>
+                                    <p:column><h:outputText value="" /></p:column> 
+                                </p:row>
+                            </p:panelGrid>
+                        </p:panel>
+                    </p:layoutUnit>
+
+                    <p:layoutUnit position="east" style="border: 0">
+                        <p:panel style="height: 40px">
+                            <p:outputLabel value="BULLETIN DE PAYE EN EUROS" />
+                        </p:panel>
+                        <p />
+
+                        <p:panel>
+                            <p:panelGrid>
+                                <p:row>
+                                    <p:column><h:outputLabel value="Période" /></p:column>
+                                    <p:column>
+                                        <p:outputLabel value="Du " />
+                                        <h:outputText value="  " />
+                                        <p:outputLabel value="au " />
+                                        <h:outputText value=" " />
+                                    </p:column> 
+                                </p:row>
+                                <p:row>
+                                    <p:column><h:outputLabel value="Paiement" /></p:column>
+                                    <p:column>
+                                        <h:outputLabel value="Par Espèces le" />
+                                        <h:outputText value=" " />
+                                    </p:column> 
+                                </p:row>
+                                <p:row>
+                                    <p:column><h:outputLabel value="Plafond du mois" /></p:column>
+                                    <p:column><h:outputText value="" /></p:column> 
+                                </p:row>
+                            </p:panelGrid>
+                        </p:panel>
+
+                        <p:panel style="border: 0">
+                            <p:outputLabel>
+                                <h:outputText value="BELL DIPOKO MARC CEDRIC" />
+                            </p:outputLabel>
+                        </p:panel>
+                    </p:layoutUnit>
+                </p:layout>
+            </p:layoutUnit>
+
+            <!--CENTER PANEL CONTAINS TABLE WITH SALARY COMPONENTS-->
+
+            <p:layoutUnit position="center" style="border: 0">
+                <p:panelGrid>
+                    <p:row>
+                        <p:column><p:outputLabel value="Date d’ancienneté: " /></p:column>
+                        <p:column><h:outputText value="" /></p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column><p:outputLabel value="Convention collective: " /></p:column>
+                        <p:column>
+                            <h:outputLabel value="Durée des congés  payés: 
+                                           Code du travail, ART. L223-2 à 8" />
+                            <br />
+                            <h:outputLabel value="Durée du préavis : Code du travail, ART. L122-6 à 8."/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+
+                <p/>
+
+                <p:panelGrid>
+                    <p:row>
+                        <p:column><p:outputLabel value="Elément"/></p:column>
+                        <p:column><p:outputLabel value="Libellé"/></p:column>
+                        <p:column><p:outputLabel value="Base"/></p:column>
+                        <p:column><p:outputLabel value="Tx. SAL."/></p:column>
+                        <p:column><p:outputLabel value="Mt. SAL."/></p:column>
+                        <p:column><p:outputLabel value="Tx. PAT."/></p:column>
+                        <p:column><p:outputLabel value="Mt. PAT."/></p:column>
+                    </p:row>
+                    <p:row id="basic">
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value="SALAIRE DE BASE"/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                    </p:row>
+
+                    <p:row id="rawSal">
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value="SALAIRE DE BASE"/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                    </p:row>
+
+                    <p:row id="retained">
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value="TOTAL RETENUES"/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                    </p:row>
+                    <p:row id="net">
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value="NET IMPOSABLE"/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                    </p:row>
+
+                    <p:row id="total">
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value="NET A PAYER"/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                        <p:column><p:outputLabel value=""/></p:column>
+                    </p:row>
+                </p:panelGrid>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="south" style="border: 0">
+                <p:layout>
+                    <p:layoutUnit position="north">
+                        
+                        <p:panelGrid>
+                            <p:row>
+                                <p:column colspan="4"><p:outputLabel value="NET IMPOSABLE"/></p:column>
+                            </p:row>
+                            
+                            <p:row>
+                                <p:column><h:outputText value=""/></p:column>
+                                <p:column><p:outputLabel value="EUR"/></p:column>
+                                <p:column><h:outputText value=""/></p:column>
+                                <p:column><p:outputLabel value="FCFA"/></p:column>
+                            </p:row>
+
+                        </p:panelGrid>
+                    </p:layoutUnit>
+
+                    <p:layoutUnit position="south">
+                        <p:panelGrid>
+                            <p:row>
+                                <p:column colspan="6">
+                                    <p:outputLabel value="CUMULS" />
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column><p:outputLabel value="Brut" /></p:column>
+                                <p:column><p:outputLabel value="Cotisation" /></p:column>
+                                <p:column><p:outputLabel value="Net Imposant" /></p:column>
+                                <p:column><p:outputLabel value="Hrs Trav" /></p:column>
+                                <p:column><p:outputLabel value="Part Patronal" /></p:column>
+                            </p:row>
+                            
+                            <p:row>
+                                <p:column></p:column>
+                                <p:column></p:column>
+                                <p:column></p:column>
+                                <p:column></p:column>
+                                <p:column></p:column>
+                                <p:column></p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </p:layoutUnit>
+                </p:layout>
+            </p:layoutUnit>
+        </p:layout>
+    </h:body>
+</html>
+

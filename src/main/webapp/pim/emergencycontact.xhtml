@@ -3,72 +3,138 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui" 
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="pimTemplate.xhtml">
-        <ui:define name="centerLayoutUnit">
+        <ui:define name="centerLayoutUnit" id="def">
             <p:layoutUnit position="center" style="border: 0">
-                <h:form id="form">
+                <p:panel style="border: 0" id="layout">
                     <p:panel header="Modifier le contact d'urgence" 
-                             rendered="#{interfaceController.notRendered}">
-                        <p:panelGrid columns="2">
-                            <p:outputLabel value="Nom*" />
-                            <p:inputText class="textWidth" required="true"/> 
+                             rendered="#{interfaceController.modify}" >
+                        <h:form>
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Nom*" />
+                                <p:inputText class="textWidth" required="true"
+                                             value="#{eCManager.contactName}"/> 
 
-                            <p:outputLabel value="Relation*"/>
-                            <p:inputText class="textWidth"/>
+                                <p:outputLabel value="Relation*"/>
+                                <p:inputText class="textWidth" 
+                                             value="#{eCManager.relationship}"/>
 
-                            <p:outputLabel value="Téléphone Mobile" />
-                            <p:inputMask  mask="999-999-999" slotChar="0"
-                                         class="textWidth"/>
+                                <p:outputLabel value="Téléphone Mobile" />
+                                <p:inputMask  mask="999-999-999" slotChar="0"
+                                              class="textWidth"
+                                              value="#{eCManager.mobilePhone}"/>
 
-                            <p:outputLabel value="Téléphone de domicile" />
-                            <p:inputMask  mask="999-999-999" slotChar="0"
-                                         class="textWidth"/>
+                                <p:outputLabel value="Téléphone de domicile" />
+                                <p:inputMask  mask="999-999-999" slotChar="0"
+                                              class="textWidth"
+                                              value="#{eCManager.homePhone}"/>
 
-                            <p:outputLabel value="Téléphone Professionnel" />
-                            <p:inputMask  mask="999-999-999" slotChar="0"
-                                         class="textWidth"/>
-                        </p:panelGrid>
+                                <p:outputLabel value="Téléphone Professionnel" />
+                                <p:inputMask  mask="999-999-999" slotChar="0"
+                                              class="textWidth"
+                                              value="#{eCManager.workPhone}"/>
+                            </p:panelGrid>
+                        </h:form>
                         <p/>
-                        <p:outputLabel value="*Champ requis" style="font: 62.5% Trebuchet MS, sans-serif;" />
-                        <hr/>                   
-                        <p:commandButton  value="Sauvegarder" class="topbuttons"
-                                          update="form"
-                                         action="#{interfaceController.toggle}"/>
-                        <p:commandButton value="Annuler" 
-                                         update="form"
-                                         action="#{interfaceController.toggle}"/>
-                    </p:panel><p/>
-                    <p:panel header="Contacts d'urgence enregistrés">
-                        <p:commandButton class="bottombuttons"  value="Ajouter" 
-                                         update="form" 
-                                         action="#{interfaceController.toggle}"
-                                         rendered="#{interfaceController.rendered}"/>
-                        <p:commandButton  value="Supprimer" 
-                                          update="form" 
-                                          rendered="#{interfaceController.rendered}"/>
-                        <p rendered="#{interfaceController.rendered}"/>
-                        <!--Table-->
-                        <p:dataTable  scrollable="false"> <!--var="" value="" selection=""-->
-<!--                            <p:column selectionMode="multiple" style="width: 20px"/>-->
-                            <p:column headerText="Nom" style="width: 300px">
-                                <h:outputText value="" />
-                            </p:column>
-                            <p:column headerText="Relation" style="width: 120px">
-                                <h:outputText value="" />
-                            </p:column>
-                            <p:column headerText="Téléphone de domicile" style="width: 200px">
-                                <h:outputText value="" />
-                            </p:column>
-                            <p:column headerText="Portable" style="width: 90px">
-                                <h:outputText value="" />
-                            </p:column>
-                            <p:column headerText="Téléphone Professionnel" style="width: 220px">
-                                <h:outputText value="" />
-                            </p:column>
-                        </p:dataTable>
+                        <p:outputLabel value="*" style="font-size: 11px; color: red" />
+                        <p:outputLabel value="Champ requis" style="font-size: 11px" />
+                        <f:facet name="footer">
+                            <p:commandButton value="Enregistrer" action="#{interfaceController.unrender()}"
+                                             actionListener="#{eCManager.addEC}"
+                                             update=":def:layout"/>
+                            <p:commandButton value="Annuler" 
+                                             action="#{interfaceController.unrender()}"
+                                             update=":def:layout" immediate="true" />
+                        </f:facet>
                     </p:panel>
-                </h:form>
+
+                    <p:panel header="Ajoutez un contact a appleler en cas d'urgence"
+                             rendered="#{interfaceController.add}" >
+                        <h:form>
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Nom*" />
+                                <p:inputText class="textWidth" required="true"
+                                             value="#{eCManager.contactName}"/> 
+
+                                <p:outputLabel value="Relation*"/>
+                                <p:inputText class="textWidth" 
+                                             value="#{eCManager.relationship}"/>
+
+                                <p:outputLabel value="Téléphone Mobile" />
+                                <p:inputMask  mask="999-999-999" slotChar="0"
+                                              class="textWidth"
+                                              value="#{eCManager.mobilePhone}"/>
+
+                                <p:outputLabel value="Téléphone de domicile" />
+                                <p:inputMask  mask="999-999-999" slotChar="0"
+                                              class="textWidth"
+                                              value="#{eCManager.homePhone}"/>
+
+                                <p:outputLabel value="Téléphone Professionnel" />
+                                <p:inputMask  mask="999-999-999" slotChar="0"
+                                              class="textWidth"
+                                              value="#{eCManager.workPhone}"/>
+                            </p:panelGrid>
+                            <p />
+                            <p:outputLabel value="*" style="color: red; font-size: 11px" />
+                            <p:outputLabel value="Champs requis" style="font-size: 11px"/>
+                            <hr />
+                            <p:commandButton value="Enregistrer" class="topbuttons" 
+                                             actionListener="#{eCManager.addEC}"
+                                             update=":layout"
+                                             action="#{interfaceController.unrender}"
+                                             />
+                            <p:commandButton value="Annuler" id="buttonpad"
+                                             action="#{interfaceController.unrender}"
+                                             update=":layout" immediate="true">
+                            </p:commandButton>
+                        </h:form>
+                    </p:panel>
+
+                    <p:panel style="height: 10px; border: 0" rendered="#{interfaceController.space}"/>
+
+                    <p:panel header="Contacts d'urgence enregistrés" rendered="true">
+                        <h:form>
+                            <p:commandButton class="bottombuttons"  value="Ajouter" 
+                                             update=":layout" 
+                                             actionListener="#{interfaceController.toggleAddModify}"
+                                             rendered="#{interfaceController.buttons}"/>
+                            <p:commandButton value="Supprimer" update=":layout"
+                                             rendered="#{interfaceController.buttons}"/>
+                            <p:panel style="height: 10px; border: 0" rendered="#{interfaceController.buttons}"/>
+                            <!--Table-->
+                            <p:dataTable  id="multipleSelectionCheckbox" rows="10" 
+                                          resizableColumns="true"    scrollable="false"
+                                          paginator="true"  pageLinks="5" rowKey="#{ec.contactId}"
+                                          selection="#{eCManager.selectedContacts}"
+                                          var="ec"  value="#{eCManager.ECs}"> 
+                                <p:column selectionMode="multiple" class="multiplesselectcolwidth" 
+                                          rendered="#{interfaceController.buttons}"/>
+                                <p:column headerText="Nom" style="width: 300px">
+                                    <p:commandLink value="#{ec.name}" update=":layout"
+                                                   actionListener="#{interfaceController.toggleAddModify}">
+                                        <f:ajax listener="#{eCManager.findEC}" />
+                                        <f:param id="ec" value="#{ec.contactId}" />
+                                    </p:commandLink>
+                                </p:column>
+                                <p:column headerText="Relation" style="width: 120px">
+                                    <h:outputText value="#{ec.relationship}" />
+                                </p:column>
+                                <p:column headerText="Téléphone de domicile" style="width: 200px">
+                                    <h:outputText value="#{ec.homeNumber}" />
+                                </p:column>
+                                <p:column headerText="Portable" style="width: 90px">
+                                    <h:outputText value="#{ec.mobileNumber}" />
+                                </p:column>
+                                <p:column headerText="Téléphone Professionnel" style="width: 220px">
+                                    <h:outputText value="#{ec.workNumber}" />
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </p:panel>
+                </p:panel>
             </p:layoutUnit>
         </ui:define>
     </ui:composition>

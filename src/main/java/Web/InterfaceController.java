@@ -9,6 +9,7 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 
 /**
  *
@@ -46,21 +47,20 @@ public class InterfaceController implements Serializable {
      * *****************************************************
      * Employment status page
      */
-    protected String space= "false";
+    protected String space = "false";
     protected String add = "false";
     protected String modify = "false";
     protected String buttons = "true";
 
-//    public void toggle() {
-//        this.notRendered = this.notRendered.equals("false") ? "true" : "false";
-//        this.rendered = this.rendered.equals("false") ? "true" : "false";
-//        System.out.println("rendered: " + rendered);
-//        System.out.println("notrendered " + notRendered);
-//    }
+    public void reset() {
+        space = add = modify = saveButtonRender = "false";
+        buttons = editButtonRender = "true";
+        disabled = true;
+    }
 
     public void toggleAddModify(ActionEvent event) {
         String source = event.getComponent().getClass().toString();
-        if (source.contains("CommandButton"))  {
+        if (source.contains("CommandButton")) {
             this.add = "true";
             this.modify = "false";
         } else {

@@ -4,72 +4,115 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui" 
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:fnc="http://myco.co.uk/fnc">
     <ui:composition template="pimTemplate.xhtml">
         <ui:define name="centerLayoutUnit">
             <style>
-                .ui-panelgrid {width: 1084px;}
+                .ui-panelgrid {width: 1081px;}
             </style>
             <p:layoutUnit position="center" style="border: 0"> 
-                <h:form id="form">
-                    <p:panel header="Détails personnels">
-                        <p:panelGrid id="account" >
-                            <p:row>
-                                <p:column><p:outputLabel value="Nom complet" /> </p:column>
-                                <p:column>
-                                    <p:outputLabel value="* " class="requiredfield" /> 
-                                    <p:outputLabel value="Prénom" class="inputheader" />
-                                    <br /><p:inputText class="textWidth"/>
-                                </p:column>
-                                <p:column>
-                                    <p:outputLabel value="Nom(s) du milieu" class="inputheader" />
-                                    <br /><p:inputText class="textWidth"/>
-                                </p:column>
-                                <p:column>
-                                    <p:outputLabel value="* " class="requiredfield" /> 
-                                    <p:outputLabel value="Nom de famille" class="inputheader" />
-                                    <br /><p:inputText class="textWidth"/>
-                                </p:column>
-                            </p:row>
-                            <p:row>
-                                <p:column colspan="4"><hr /> </p:column>
-                            </p:row>
-                            <p:row>
-                                <p:column><p:outputLabel value="Identifiant" /> </p:column>
-                                <p:column><p:inputText class="textWidth"/></p:column>
-                            </p:row>
-                            <p:row>
-                                <p:column colspan="4"><hr /> </p:column>
-                            </p:row>
-                            <p:row>
-                                <p:column><p:outputLabel value="Date de Naissance" /> </p:column>
-                                <p:column><p:calendar size="30"/></p:column>
-                                <p:column>
-                                    <p:outputLabel style="padding-left: 130px"  value="Lieu de Naissance" /> 
-                                </p:column>
-                                <p:column><p:inputText class="textWidth"/></p:column>
-                            </p:row>
-                            <p:row>
-                                <p:column colspan="4"><hr /> </p:column>
-                            </p:row>
-                            <p:row>
-                                <p:column><p:outputLabel value="Sexe" /> </p:column>
-                                <p:column>
-                                    <p:selectOneRadio>
-                                        <f:selectItem itemLabel="Masculin" />
-                                        <f:selectItem  itemLabel="Feminin" />
-                                    </p:selectOneRadio>
-                                </p:column>
-                                <p:column><p:outputLabel style="padding-left: 130px" value="Etat Marital" /> </p:column>
-                                <p:column><p:selectOneMenu style="width: 248px"/></p:column>
-                            </p:row>
-                        </p:panelGrid>
+                <p:panel style="border: 0">
+                    <h:form id="form">
+                        <p:panel header="Détails personnels" id="layout">
+                            <fnc:disablePanel disabled="#{interfaceController.disabled}">
+                                <p:panelGrid id="account" >
+                                    <p:row>
+                                        <p:column><p:outputLabel value="Nom complet" /> </p:column>
+                                        <p:column>
+                                            <p:outputLabel value="* " class="requiredfield" /> 
+                                            <p:outputLabel value="Prénom(s)" class="inputheader" />
+                                            <br /><p:inputText class="textWidth"
+                                                               value="#{employeeManager.firstName}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel value="Nom(s) du milieu" class="inputheader" />
+                                            <br /><p:inputText class="textWidth"
+                                                               value="#{employeeManager.middleNames}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel value="* " class="requiredfield" /> 
+                                            <p:outputLabel value="Nom de famille" class="inputheader" />
+                                            <br /><p:inputText class="textWidth"
+                                                               value="#{employeeManager.lastName}"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="4"><hr /> </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="Identifiant" /> 
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputText class="textWidth" disabled="true"
+                                                         value="#{employeeManager.identity}"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="4"><hr /> </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="Date de Naissance" /> 
+                                        </p:column>
+                                        <p:column>
+                                            <p:calendar size="30" locale="fr" navigator="true"
+                                                        value="#{employeeManager.birthDate}">
+                                                <f:convertDateTime pattern="dd/MM/YY" />
+                                            </p:calendar>
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel style="padding-left: 130px"  
+                                                           value="Lieu de Naissance" /> 
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputText class="textWidth" 
+                                                         value="#{employeeManager.placeOfBirth}"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="4"><hr /> </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:outputLabel value="Sexe" /> </p:column>
+                                        <p:column>
+                                            <p:selectOneMenu style="width: 248px" 
+                                                             value="#{employeeManager.gender}">
+                                                <f:selectItems value="#{employeeManager.genderList}"
+                                                               var="gender" itemLabel="#{gender}"
+                                                               itemValue="#{gender}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel style="padding-left: 130px" 
+                                                           value="Etat Marital" /> 
+                                        </p:column>
+                                        <p:column>
+                                            <p:selectOneMenu style="width: 248px" 
+                                                             value="#{employeeManager.civilStatus}">
+                                                <f:selectItems value="#{employeeManager.statusList}"
+                                                               var="status" itemLabel="#{status}"
+                                                               itemValue="#{status}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </fnc:disablePanel>
+                            <f:facet name="footer">
+                                <p:commandButton value="Modifier" action="#{interfaceController.disable()}"
+                                                 update="layout"
+                                                 rendered="#{interfaceController.editButtonRender}"/>
+                                <p:commandButton value="Enregistrer" 
+                                                 action="#{interfaceController.disable()}"
+                                                 update="layout"
+                                                 rendered="#{interfaceController.saveButtonRender}" 
+                                                 actionListener="#{employeeManager.editEmployeeDetails()}"/>
 
-                        <f:facet name="footer">
-                            <p:commandButton value="Sauvegarder" />
-                        </f:facet>
-                    </p:panel>
-                </h:form>
+                            </f:facet>
+                        </p:panel>
+                    </h:form>
+                </p:panel>
             </p:layoutUnit>
         </ui:define>
     </ui:composition>

@@ -35,6 +35,7 @@ public class AccountFacade extends AbstractFacade<Account> {
             String password, Status status){
         Worker worker = em.find(Worker.class, workerId);
         Account account =  new Account(type, userName, password, status);
+        account.setAccountId(workerId);
         account.setWorker(worker);
         em.persist(account);
     }

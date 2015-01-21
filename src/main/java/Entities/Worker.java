@@ -40,8 +40,8 @@ public class Worker implements Serializable {
 
     public enum Gender {
 
-        MALE,
-        FEMELLE
+        Homme,
+        Femme
     }
     /*----------------------------------------------------------------
      ----------------------------------------------------------------

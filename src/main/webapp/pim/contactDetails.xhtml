@@ -4,43 +4,61 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui" 
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:fnc="http://myco.co.uk/fnc">
     <ui:composition template="pimTemplate.xhtml">
         <ui:define name="centerLayoutUnit">
-            <p:layoutUnit position="center" style="border: 0">
-                <h:form>
-                    <p:panel header="Coordonées">
-                        <p:panelGrid columns="2" >
-                            <p:outputLabel value="Pays" />
-                            <p:inputText class="textWidth"/> 
+            <p:layoutUnit position="center" style="border: 0" >
+                <p:panel style="border: 0">
+                    <p:panel header="Coordonées" id="layout">
+                        <h:form>
+                            <fnc:disablePanel disabled="#{interfaceController.disabled}">
+                                <p:panelGrid columns="2" >
+                                    <p:outputLabel value="Pays" />
+                                    <p:selectOneMenu value="#{contactsManager.country}"
+                                                     style="width: 250px">
+                                        <f:selectItem itemLabel="Cameroon" itemValue="Cameroon" />
+                                        <f:selectItem itemLabel="Ghana" itemValue="Cameroon" />
+                                    </p:selectOneMenu> 
 
-                            <h:outputLabel value="Région" />
-                            <p:inputText class="textWidth"/>
+                                    <h:outputLabel value="Région" />
+                                    <p:inputText class="textWidth" value="#{contactsManager.region}"/>
 
-                            <p:outputLabel value="Ville" />
-                            <p:inputText class="textWidth"/>
+                                    <p:outputLabel value="Ville" />
+                                    <p:inputText class="textWidth" value="#{contactsManager.city}"/>
 
-                            <p:outputLabel value="Adresse" />
-                            <p:inputText class="textWidth"/>
+                                    <p:outputLabel value="Adresse" />
+                                    <p:inputText class="textWidth" value="#{contactsManager.street}"/>
 
-                            <p:outputLabel value="Téléphone Mobile" />
-                            <p:inputMask value="" mask="999-999-999" slotChar="0" class="textWidth"/>
+                                    <p:outputLabel value="Téléphone Mobile" />
+                                    <p:inputMask value="#{contactsManager.mobilePhone}" 
+                                                 mask="999-999-999" slotChar="0" class="textWidth" />
 
-                            <p:outputLabel value="Téléphone de domicile" />
-                            <p:inputMask value="" mask="999-999-999" slotChar="0" class="textWidth"/>
+                                    <p:outputLabel value="Téléphone de domicile" />
+                                    <p:inputMask value="#{contactsManager.homePhone}" 
+                                                 mask="999-999-999" slotChar="0" class="textWidth"/>
 
-                            <p:outputLabel value="Téléphone Professionnel" />
-                            <p:inputMask value="" mask="999-999-999" slotChar="0" class="textWidth"/>
+                                    <p:outputLabel value="Téléphone Professionnel" />
+                                    <p:inputMask value="#{contactsManager.workPhone}" 
+                                                 mask="999-999-999" slotChar="0" class="textWidth"/>
 
-                            <p:outputLabel value="Email" />
-                            <p:inputText class="textWidth"/>
-                        </p:panelGrid>
-
+                                    <p:outputLabel value="Email" />
+                                    <p:inputText class="textWidth" value="#{contactsManager.email}"/>
+                                </p:panelGrid>
+                            </fnc:disablePanel>
+                        </h:form>
                         <f:facet name="footer">
-                            <p:commandButton value="Modifier" />
+                            <p:commandButton value="Modifier" action="#{interfaceController.disable()}"
+                                             update="layout"
+                                             rendered="#{interfaceController.editButtonRender}"/>
+                            <p:commandButton value="Enregistrer" 
+                                             actionListener="#{contactsManager.editContact}"
+                                             action="#{interfaceController.disable()}"
+                                             update="layout"
+                                             rendered="#{interfaceController.saveButtonRender}" />
                         </f:facet>
                     </p:panel>
-                </h:form>
+                </p:panel>
             </p:layoutUnit>
         </ui:define>
     </ui:composition>

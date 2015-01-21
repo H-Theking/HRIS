@@ -49,17 +49,17 @@ public class OrganisationManager implements Serializable {
     private String name;
 
     public OrganisationManager() {
-        Organisation find = organisationFacade.find(id);
-        name = find.getName();
-        registrationNumber = find.getRegistrationNumber();
-        numberOfEmployees = find.getNumberOfEmployees();//to calculate
-        country = find.getCountry();
-        region = find.getRegion();
-        city = find.getCity();
-        street = find.getStreet();
-        telephone = find.getTelepone();
-        fax = find.getFax();
-        email = find.getEmail();
+//        Organisation find = organisationFacade.find(id);
+//        name = find.getName();
+//        registrationNumber = find.getRegistrationNumber();
+//        numberOfEmployees = find.getNumberOfEmployees();//to calculate
+//        country = find.getCountry();
+//        region = find.getRegion();
+//        city = find.getCity();
+//        street = find.getStreet();
+//        telephone = find.getTelepone();
+//        fax = find.getFax();
+//        email = find.getEmail();
     }
 
     public void editInformation() {

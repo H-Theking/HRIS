@@ -3,48 +3,93 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/admin/menu.xhtml">
         <ui:define name="content">
             <h:outputStylesheet name="./css/common.css" />
-            <p:layout id="layout">
-                <p:layoutUnit position="center" header="Raisons de résiliation">
+            <p:panel id="layout" style="border: 0">
+                <p:panel header="Modifier Raison de Résiliation" 
+                         rendered="#{interfaceController.modify}">
+                    <h:form>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Nom*" />
+                            <p:inputText class="textWidth" required="true"
+                                         value="#{terminationReasonManager.addEditReason}"/>
+                        </p:panelGrid>
+                    </h:form>
+                    <p />
+                    <p:outputLabel value="*" style="color: red; font-size: 11px" />
+                    <p:outputLabel value="Champs requis" style="font-size: 11px"/>
+                    <f:facet name="footer">
+                        <p:commandButton value="Enregistrer" class="topbuttons" 
+                                         update=":layout" 
+                                         action="#{terminationReasonManager.addEditReason}"
+                                         actionListener="#{interfaceController.unrender()}">
+                        </p:commandButton>
+
+                        <p:commandButton value="Annuler" id="buttonpad"
+                                         actionListener="#{interfaceController.unrender}"
+                                         update=":layout" immediate="true">
+                        </p:commandButton>
+                    </f:facet>
+
+                </p:panel>
+
+                <p:panel header="Ajouter Raison de Résiliation"
+                         rendered="#{interfaceController.add}">
+                    <h:form>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Nom*" />
+                            <p:inputText class="textWidth" required="true"
+                                         value="#{terminationReasonManager.reason}"/>
+                        </p:panelGrid>
+                    </h:form>
+                    <p />
+                    <p:outputLabel value="*" style="color: red; font-size: 11px" />
+                    <p:outputLabel value="Champs requis" style="font-size: 11px"/>
+                    <f:facet name="footer">
+                        <p:commandButton value="Enregistrer" update=":layout"
+                                         action="#{interfaceController.unrender()}"
+                                         actionListener="#{terminationReasonManager.addEditReason}">
+                            <f:ajax listener="#{terminationReasonManager.clearFields}" />
+                        </p:commandButton>
+                        <p:commandButton value="Annuler" class="buttonpad" update=":layout"
+                                         action="#{interfaceController.unrender()}"
+                                         immediate="true"/>
+                    </f:facet>
+                </p:panel>
+
+                <p:panel style="height: 10px; border: 0" rendered="#{interfaceController.space}"/>
+
+                <p:panel header ="Raisons de résiliation">
                     <h:form>
                         <p:commandButton value="Ajouter" class="bottombuttons"
                                          update=":layout"
-                                         action="#{interfaceController.toggle}"
-                                         rendered="#{interfaceController.rendered}"/>
+                                         actionListener="#{interfaceController.toggleAddModify}"
+                                         rendered="#{interfaceController.buttons}"/>
                         <p:commandButton value="Supprimer" 
-                                         rendered="#{interfaceController.rendered}"/>
-                        <p />
-                        <p:dataTable id="multipleSelectionCheckbox" rows="10" resizableColumns="true">
-                            <!--<p:column selectionMode="multiple" class="multiplesselectcolwidth" />-->
+                                         action="#{terminationReasonManager.deleteReasons}"
+                                         rendered="#{interfaceController.buttons}"/>
+                        <p:panel style="height: 10px; border: 0" />
+                        <p:dataTable id="multipleSelectionCheckbox" rows="10" 
+                                     resizableColumns="true"    scrollable="false"
+                                     paginator="true"  pageLinks="5" rowKey="#{reason.id}"
+                                     selection="#{terminationReasonManager.selectedReasons}"
+                                     var="reason"  value="#{terminationReasonManager.reasons}">
+                            <p:column selectionMode="multiple" class="multiplesselectcolwidth" 
+                                      rendered="#{interfaceController.buttons}"/>
                             <p:column headerText="Nom" style="text-align: left">
-                                <!--<h:outputText value="" />-->
+                                <p:commandLink value="#{reason.reason}"
+                                               actionListener="#{interfaceController.toggleAddModify}">
+                                    <f:param id="reason" value="#{reason.id}" />
+                                    <f:ajax listener="#{terminationReasonManager.findReason}" />
+                                </p:commandLink>
                             </p:column>
                         </p:dataTable>
                     </h:form>
-                </p:layoutUnit>
-
-                <p:layoutUnit position="north" header="Ajouter Raison Résiliation"
-                              rendered="#{interfaceController.notRendered}">
-                    <h:form>
-                        <p:panelGrid columns="2">
-                            <p:outputLabel value="Niveau*" />
-                            <p:inputText class="textWidth" required="true"/>
-                        </p:panelGrid>
-                        <p />
-                        <p:outputLabel value="*" style="color: red; font-size: 11px" />
-                        <p:outputLabel value="Champs requis" style="font-size: 11px"/>
-                        <hr />
-                        <p:commandButton value="Enregistrer" update=":layout"
-                                         action="#{interfaceController.toggle}"/>
-                        <p:commandButton value="Annuler" class="buttonpad" update=":layout"
-                                         action="#{interfaceController.toggle}"/>
-                    </h:form>
-                </p:layoutUnit>
-            </p:layout>
+                </p:panel>
+            </p:panel>
         </ui:define>
     </ui:composition>
 </html>
-

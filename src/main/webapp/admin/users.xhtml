@@ -9,8 +9,8 @@
         <ui:define name="content">
             <h:outputStylesheet name="./css/common.css" />
             <p:panel id="layout" style="border: 0">
-                <p:panel header="Ajouter un utilisateur"
-                         rendered="#{interfaceController.add}">
+                <p:panel header="Modifier un utilisateur"
+                         rendered="#{interfaceController.modify}">
                     <h:form>
                         <p:panelGrid id="account" >
                             <p:row>
@@ -21,7 +21,7 @@
                                 <p:column>
                                     <p:autoComplete id="autocomplete"
                                                     forceSelection="true"
-                                                    completeMethod="#{userManager.suggest()}"
+                                                    completeMethod="#{userManager.autoComplete}"
                                                     value="#{userManager.employeeName}"/>
                                 </p:column>
                                 <p:column>
@@ -44,12 +44,26 @@
                             </p:row>
                             <p:row>
                                 <p:column>
+                                    <p:outputLabel value="Type" />
+                                    <p:outputLabel value="*" class="requiredfield" /> 
+                                </p:column>
+                                <p:column>
+                                    <p:selectOneMenu style="width: 250px"
+                                                     value="#{userManager.type}">
+                                        <f:selectItems value="#{userManager.types}" 
+                                                       var="item" itemLabel="#{item}"
+                                                       itemValue="#{item}"/>
+                                    </p:selectOneMenu>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
                                     <p:outputLabel value="Statut" /> 
                                     <p:outputLabel value="*" class="requiredfield" /> 
                                 </p:column>
                                 <p:column>
                                     <p:selectOneMenu id="status"  
-                                                     style="width:251px" 
+                                                     style="width:250px" 
                                                      value="#{userManager.status}">
                                         <f:selectItem itemLabel="Actif" 
                                                       itemValue="Actif" />
@@ -94,15 +108,127 @@
                     <p />
                     <p:outputLabel value="*" class="requiredfield" />
                     <p:outputLabel value="Champs requis" class="inputheader"/>
-                    <hr />
-                    <p:commandButton value="Enregistrer" class="topbuttons" 
-                                     update=":layout"
-                                     action="#{interfaceController.unrender()}"
-                                     actionListener="#{userManager.addUser}"/>
-                    <p:commandButton value="Annuler" id="buttonpad"
-                                     action="#{interfaceController.unrender}"
-                                     update=":layout" immediate="true">
-                    </p:commandButton>
+                    <f:facet name="footer">
+                        <p:commandButton value="Enregistrer" class="topbuttons" 
+                                         update=":layout"
+                                         action="#{interfaceController.unrender()}"
+                                         actionListener="#{userManager.addUser}"/>
+                        <p:commandButton value="Annuler" class="topbuttons"
+                                         action="#{interfaceController.unrender}"
+                                         update=":layout" immediate="true">
+                        </p:commandButton>
+                    </f:facet>
+                </p:panel>
+
+                <p:panel header="Ajouter un utilisateur"
+                         rendered="#{interfaceController.add}">
+                    <h:form>
+                        <p:panelGrid id="account" >
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel value="Nom du salarié" /> 
+                                    <p:outputLabel value="*" class="requiredfield" /> 
+                                </p:column>
+                                <p:column>
+                                    <p:autoComplete id="autocomplete"
+                                                    forceSelection="true"
+                                                    completeMethod="#{userManager.autoComplete}"
+                                                    value="#{userManager.employeeName}"/>
+                                </p:column>
+                                <p:column>
+                                    <p:message for="autocomplete" />
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel value="Nom d'utilisateur" />
+                                    <p:outputLabel value="*" class="requiredfield" /> 
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="username"
+                                                 class="textWidth" required="true"
+                                                 value="#{userManager.userName}"/>
+                                </p:column>
+                                <p:column>
+                                    <p:message for="username" />
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel value="Type" />
+                                    <p:outputLabel value="*" class="requiredfield" /> 
+                                </p:column>
+                                <p:column>
+                                    <p:selectOneMenu style="width: 250px"
+                                                     value="#{userManager.type}">
+                                        <f:selectItems value="#{userManager.types}" 
+                                                       var="item" itemLabel="#{item}"
+                                                       itemValue="#{item}"/>
+                                    </p:selectOneMenu>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel value="Statut" /> 
+                                    <p:outputLabel value="*" class="requiredfield" /> 
+                                </p:column>
+                                <p:column>
+                                    <p:selectOneMenu id="status"  
+                                                     style="width:250px" 
+                                                     value="#{userManager.status}">
+                                        <f:selectItem itemLabel="Actif" 
+                                                      itemValue="Actif" />
+                                        <f:selectItem itemLabel="Desactive" 
+                                                      itemValue="Desactive" />
+                                    </p:selectOneMenu>
+                                </p:column>
+                                <p:column>
+                                    <p:message for="status" />
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel value="Mot de passe" />
+                                    <p:outputLabel value="*" class="requiredfield" /> 
+                                </p:column>
+                                <p:column>
+                                    <p:password id="password" 
+                                                class="textWidth" required="true"
+                                                value="#{userManager.password}"/>
+                                </p:column>
+                                <p:column>
+                                    <p:message for="password" />
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel value="Confirmer Mot de passe" />
+                                    <p:outputLabel value="*" class="requiredfield" />
+                                </p:column>
+                                <p:column>
+                                    <p:password id="confirm" 
+                                                class="textWidth" required="true"
+                                                value="#{userManager.passwordConfirm}"/>
+                                </p:column>
+                                <p:column>
+                                    <p:message for="confirm"/>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </h:form>
+                    <p />
+                    <p:outputLabel value="*" class="requiredfield" />
+                    <p:outputLabel value="Champs requis" class="inputheader"/>
+                    <f:facet name="footer">
+                        <p:commandButton value="Enregistrer" class="topbuttons" 
+                                         update=":layout"
+                                         action="#{interfaceController.unrender()}"
+                                         actionListener="#{userManager.addUser}"/>
+                        <p:commandButton value="Annuler" id="buttonpad"
+                                         action="#{interfaceController.unrender}"
+                                         update=":layout" immediate="true">
+                        </p:commandButton>
+                    </f:facet>
                 </p:panel>
 
                 <p:panel style="height: 10px; border: 0" rendered="#{interfaceController.space}"/>
@@ -127,7 +253,11 @@
                                  value="#{userManager.users}"  >
                         <p:column selectionMode="multiple" class="multiplesselectcolwidth" />
                         <p:column headerText="Nom de l'utilisateur" style="text-align: left">
-                            <h:outputText value="#{users.userName}" />
+                            <p:commandLink value="#{users.userName}" update=":layout"
+                                           actionListener="#{interfaceController.toggleAddModify}">
+                                <p:ajax listener="#{userManager.findAccount}" />
+                                <f:param id="user" value="#{users.accountId}" />
+                            </p:commandLink>
                         </p:column>
                         <p:column headerText="Type de compte" style="text-align: left">
                             <h:outputText value="#{users.type}" />

@@ -6,7 +6,7 @@
 package Web;
 
 import EJB.AccountFacade;
-import EJB.WorkerFacade;
+import EJB.EmployeeFacade;
 import Entities.Account;
 import Entities.Worker;
 import javax.inject.Named;
@@ -15,12 +15,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIParameter;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 
 /**
  *
@@ -33,9 +34,10 @@ public class UserManager implements Serializable {
     @EJB
     AccountFacade accounts;
     @EJB
-    WorkerFacade workerFacade;
+    EmployeeFacade workerFacade;
     private String accountId;
     private Account.AccountType type;
+    private List<String> types;
     private String employeeName;
     private String userName;
     private String password;
@@ -49,10 +51,18 @@ public class UserManager implements Serializable {
      * Creates a new instance of UserManager
      */
     public UserManager() {
+        types = new ArrayList<>(2);
+        types.add(Account.AccountType.Administrateur.toString());
+        types.add(Account.AccountType.Superviseur.toString());
+    }
+    
+    public void clearFields(AjaxBehaviorEvent event){
+        type = null;
+        userName = accountId = null;
     }
 
-    public List<String> suggest() {
-        List<Worker> workers = workerFacade.findWorkerByName(employeeName);
+    public List<String> autoComplete(String input) {
+        List<Worker> workers = workerFacade.findWorkerByName(input);
         List<String> names = new ArrayList<>();
         HashMap<String, String> map = new HashMap<>();
         for (int i = 0; i < workers.size(); i++) {
@@ -75,11 +85,6 @@ public class UserManager implements Serializable {
             logger.log(java.util.logging.Level.OFF, "AdminManager.adduser()\n"
                     + "Creating new user for employee {0} and username {1}",
                     new Object[]{employeeName, userName});
-//            if (adminController.getNames().contains(employeeName)) {
-//                logger.log(Level.INFO, "{0} found", new Object[]{employeeName});
-//            } else {
-//                logger.log(Level.WARNING, "{0} not found",  new Object[]{employeeName});
-//            }
             try {
                 System.out.println(getWorkermap());
                 accountId = getWorkermap()//get the account correspnding to the 
@@ -87,7 +92,10 @@ public class UserManager implements Serializable {
             } catch (NullPointerException e) {
                 throw new NullPointerException("ID Not found");
             }
-
+            logger.log(java.util.logging.Level.INFO, "Creating new user with "
+                    + "AccountId {0}\n type: {1}\n username: {2}\n password: {3}\n"
+                    + "status: {4}\n",
+                    new Object[]{accountId, type, userName, password, status});
             accounts.createAccount(accountId, type, userName, password, status);
             logger.log(java.util.logging.Level.OFF, "Created new user with "
                     + "AccountId {0} and username {1}",
@@ -96,6 +104,24 @@ public class UserManager implements Serializable {
         } catch (EJBException e) {
             throw new EJBException(e.getMessage());
         }
+    }
+    
+    public void deleteAccount(){
+        for (Account selectedAccount: selectedAccounts) {
+            accounts.remove(selectedAccount);
+        }
+    }
+    
+    public void findAccount(AjaxBehaviorEvent event){
+        UIParameter parameter = (UIParameter) event.getComponent().findComponent("user");
+        String selectedUser = parameter.getValue().toString();
+        Account find = accounts.find(selectedUser);
+        userName = find.getUserName();
+        password = find.getPassword();
+        status = find.getStatus();
+        type = find.getType();
+        employeeName = find.getWorker().getFirstName().concat(" ")
+                .concat(find.getWorker().getLastName());
     }
 
     public void deleteUser() {
@@ -199,6 +225,14 @@ public class UserManager implements Serializable {
 
     public void setWorkermap(HashMap<String, String> workermap) {
         this.workermap = workermap;
+    }
+
+    public List<String> getTypes() {
+        return types;
+    }
+
+    public void setTypes(List<String> types) {
+        this.types = types;
     }
 
 }

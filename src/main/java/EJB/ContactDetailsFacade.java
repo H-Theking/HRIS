@@ -6,9 +6,6 @@
 package EJB;
 
 import Entities.ContactDetails;
-import Entities.EmergencyContact;
-import Entities.Worker;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,23 +16,35 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class ContactDetailsFacade extends AbstractFacade<ContactDetails> {
+    
     @PersistenceContext(unitName = "SampleAppPU")
     private EntityManager em;
-
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-
+    
     public ContactDetailsFacade() {
         super(ContactDetails.class);
     }
     
-    public List<EmergencyContact> getEmergencyContact(String id){
-        Worker worker =  em.find(Worker.class, id);
-        List<EmergencyContact> ec = em.createQuery("SELECT w FROM EmergencyContact w"
-                + " WHERE w.worker.id = :id").setParameter("id", id).getResultList();
-        return ec;
+    public void editContactDetails(String id, String country, String region, String city,
+            String street, String mobileNumber, String homePhone,
+            String workPhone, String email) {
+        ContactDetails contactDetails = em.find(ContactDetails.class, id);
+        contactDetails.setCountry(country);
+        contactDetails.setRegion(region);
+        contactDetails.setCity(city);
+        contactDetails.setStreetAddress(street);
+        contactDetails.setMobileNumber(mobileNumber);
+        contactDetails.setHomeNumber(homePhone);
+        contactDetails.setWorkNumber(workPhone);
+        contactDetails.setEmail(email);
+        em.merge(contactDetails);
     }
     
+    public ContactDetails getContactDetails(String id) {
+        return em.find(ContactDetails.class, id);        
+    }
 }

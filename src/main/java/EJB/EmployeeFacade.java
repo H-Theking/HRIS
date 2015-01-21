@@ -22,7 +22,7 @@ import javax.persistence.PersistenceContext;
  * @author Harvey
  */
 @Stateless
-public class WorkerFacade extends AbstractFacade<Worker> {
+public class EmployeeFacade extends AbstractFacade<Worker> {
 
     @PersistenceContext(unitName = "SampleAppPU")
     private EntityManager em;
@@ -32,7 +32,7 @@ public class WorkerFacade extends AbstractFacade<Worker> {
         return em;
     }
 
-    public WorkerFacade() {
+    public EmployeeFacade() {
         super(Worker.class);
     }
 
