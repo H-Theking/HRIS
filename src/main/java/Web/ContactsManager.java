@@ -7,11 +7,9 @@ package Web;
 
 import EJB.ContactDetailsFacade;
 import Entities.ContactDetails;
-import Entities.EmergencyContact;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.component.UIParameter;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -36,6 +34,12 @@ public class ContactsManager implements Serializable {
     private String street;
 
     String employeeId;
+    
+    /**
+     * Creates a new instance of ContactsManager
+     */
+    public ContactsManager() {
+    }
 
     private String email;
     private String mobilePhone;
@@ -200,12 +204,4 @@ public class ContactsManager implements Serializable {
     public void setHomePhone(String homePhone) {
         this.homePhone = homePhone;
     }
-
-    
-    /**
-     * Creates a new instance of ContactsManager
-     */
-    public ContactsManager() {
-    }
-
 }

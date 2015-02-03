@@ -37,6 +37,8 @@ public class EmployeeHasEducation implements Serializable {
     @Column(nullable = true)
     private String institute;
     @Column(nullable = true)
+    private String specialty;
+    @Column(nullable = true)
     private Year gradYear;
     @Column(nullable = true)
     private String score;
@@ -67,6 +69,10 @@ public class EmployeeHasEducation implements Serializable {
      ----------------------------------------------------------------*/
 
     public EmployeeHasEducation() {
+    }
+
+    public EmployeeHasEducation(Education degree) {
+        this.degree = degree;
     }
     
     public Long getId() {
@@ -131,6 +137,14 @@ public class EmployeeHasEducation implements Serializable {
 
     public void setWorker(Worker worker) {
         this.worker = worker;
+    }
+
+    public String getSpecialty() {
+        return specialty;
+    }
+
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
     }
 
     @Override

@@ -68,21 +68,21 @@ public class EmployeeHasJob implements Serializable {
      RELATIONAL MAPPING
      ----------------------------------------------------------------
      ----------------------------------------------------------------*/
-    @OneToOne
+    @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "DEPARTMENT", referencedColumnName = "DEPARTMENTNAME",
             insertable = false, updatable = false)
     private Department department;
 
-    @OneToOne
+    @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "JOBTITLE", referencedColumnName = "JOBTITLE",
             insertable = false, updatable = false)
     private Job job;
     
-    @OneToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name="EMPLOYEEID",insertable=false,updatable=false)
     private Worker worker;
     
-    @OneToOne
+    @OneToOne(orphanRemoval = true)
     @JoinColumn(insertable = false, updatable = false)
     private Location location;
 

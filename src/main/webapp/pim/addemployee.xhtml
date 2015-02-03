@@ -8,7 +8,6 @@
     <ui:composition template="/admin/menu.xhtml">
         <ui:define name="content">
             <h:outputStylesheet name="./css/common.css" />
-
             <p:panel header="Ajouter un employé">
                 <h:form id="form">
                     <p:panelGrid id="account" >
@@ -45,7 +44,7 @@
                         <p:row>
                             <p:column><p:outputLabel value="Photo" /> </p:column>
                             <p:column >
-                                <p:fileUpload mode="simple"  sizeLimit="1048576"
+                                <p:fileUpload mode="simple"  sizeLimit="4194304"
                                               allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
                             </p:column>
                         </p:row>

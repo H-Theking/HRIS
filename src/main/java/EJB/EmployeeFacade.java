@@ -8,6 +8,7 @@ package EJB;
 import Entities.ContactDetails;
 import Entities.EmergencyContact;
 import Entities.EmployeeHasJob;
+import Entities.EmployeeImage;
 import Entities.Worker;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,9 +40,11 @@ public class EmployeeFacade extends AbstractFacade<Worker> {
     public void createWorker(String id, String firstName, String middleNames, String lastName) {
         try {
             Worker worker = new Worker(id, firstName, middleNames, lastName);
+            EmployeeImage image = new EmployeeImage(id);
             EmployeeHasJob job = new EmployeeHasJob(id);
             ContactDetails contactDetails = new ContactDetails(id);
             em.persist(worker);
+            em.persist(image);
             em.persist(contactDetails);
             em.persist(job);
         } catch (Exception ex) {

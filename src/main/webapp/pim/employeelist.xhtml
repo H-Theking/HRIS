@@ -34,6 +34,9 @@
                                     <p:ajax listener="#{employeeManager.findEmployee}" />
                                     <p:ajax listener="#{contactsManager.findEmployeeContact}" />
                                     <p:ajax listener="#{eCManager.findEmployeeContact}" />
+                                    <p:ajax listener="#{imageManager.getEmployee}" />
+                                    <p:ajax listener="#{qualifications.getEmployee}" />
+                                    <p:ajax listener="#{empEdu.getEmployee}" />
                                 </p:commandLink>
                             </p:column>
                             <p:column headerText="Nom de famille" style="text-align: left">

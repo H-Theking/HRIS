@@ -20,9 +20,9 @@
                             <h:outputLabel value="Pays" />
                             <p:selectOneMenu 
                                 value="#{locationManager.country}">
-                                <f:selectItem itemLabel="--Selectioner--" itemValue="" />
-                                <f:selectItem itemLabel="Cameroon" itemValue="Cameroon"/>
-                                <f:selectItem itemLabel="Ghana" itemValue="Ghana"/> 
+                                <f:selectItems value="#{countryController.coutries}"
+                                               var="pays"  itemLabel="#{pays.country}"
+                                               itemValue="#{pays.country}"
                             </p:selectOneMenu>
 
                             <p:outputLabel value="État / Province" />

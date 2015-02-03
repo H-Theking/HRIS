@@ -7,7 +7,6 @@ package Entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -63,6 +62,11 @@ public class WorkExperience implements Serializable {
     public WorkExperience() {
     }
 
+    public WorkExperience(String company, String jobtitle) {
+        this.company = company;
+        this.jobtitle = jobtitle;
+    }
+
     /*----------------------------------------------------------------
      ----------------------------------------------------------------
      GETTERS AND SETTERS
@@ -114,6 +118,14 @@ public class WorkExperience implements Serializable {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Worker getWorker() {
+        return worker;
+    }
+
+    public void setWorker(Worker worker) {
+        this.worker = worker;
     }
     @Override
     public int hashCode() {

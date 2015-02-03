@@ -1,0 +1,593 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="pimTemplate.xhtml">
+        <h:outputScript name="./javascript/calendar.js" />
+        <ui:define name="centerLayoutUnit">
+            <p:layoutUnit position="center" style="border: 0" id="lu">
+                <p:panel id="layout" style="border: 0">
+                    <p:panel header="Modifier expérience professionnelle" 
+                             rendered="#{experience.controller.modify}">
+                        <h:form style="margin-top: 10px">
+                            <p:panelGrid>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Entreprise" />
+                                        <p:outputLabel value="*" style="color: red; font-size: 11px"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText id="company" class="textWidth" required="true"
+                                                     value="#{experience.company}"/>  
+                                    </p:column>
+                                    <p:column><p:message for="company" /></p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Titre du Poste" />
+                                        <p:outputLabel value="*" style="color: red; font-size: 11px"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText id="title" class="textWidth" required="true"
+                                                     value="#{experience.jobTitle}"/>  
+                                    </p:column>
+                                    <p:column><p:message for="title" /></p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Date de debut" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:calendar id="start" size="30" locale="fr" navigator="true"
+                                                    value="#{experience.startdate}"/>  
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Date de fin" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:calendar id="end" size="30" locale="fr" navigator="true"
+                                                    value="#{experience.endDate}"/>  
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column >
+                                        <p:outputLabel value="Commentaires" />
+                                    </p:column>
+                                    <p:column >
+                                        <p:inputTextarea class="textWidth" id="comment"
+                                                         value="#{experience.comment}"/>  
+                                    </p:column>
+                                    <p:column><p:message for="comment" /></p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </h:form>
+                        <p />
+                        <p:outputLabel value="*" style="color: red; font-size: 11px" />
+                        <p:outputLabel value="Champs requis" style="font-size: 11px"/>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Enregistrer" class="topbuttons" 
+                                             update=":layout" 
+                                             action="#{experience.editExperience}"
+                                             actionListener="#{experience.controller.unrender}"/>
+                            <p:commandButton value="Annuler" 
+                                             actionListener="#{experience.controller.unrender}"
+                                             update=":layout" immediate="true">
+                            </p:commandButton>
+                        </f:facet>
+                    </p:panel>
+
+                    <p:panel header="Ajouter une expérience professionnelle" 
+                             rendered="#{experience.controller.add}">
+                        <h:form style="margin-top: 10px">
+                            <p:panelGrid>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Entreprise" />
+                                        <p:outputLabel value="*" style="color: red; font-size: 11px"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText id="company" class="textWidth" required="true"
+                                                     value="#{experience.company}"/>  
+                                    </p:column>
+                                    <p:column><p:message for="company" /></p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Titre du Poste" />
+                                        <p:outputLabel value="*" style="color: red; font-size: 11px"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText id="title" class="textWidth" required="true"
+                                                     value="#{experience.jobTitle}"/>  
+                                    </p:column>
+                                    <p:column><p:message for="title" /></p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Date de debut" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:calendar id="start" class="textWidth" size="30"
+                                                    value="#{experience.startdate}"/>  
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Date de fin" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:calendar id="end" class="textWidth" size="30"
+                                                    value="#{experience.endDate}"/>  
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Commentaires" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputTextarea class="textWidth" id="comment"
+                                                         value="#{experience.comment}"/>  
+                                    </p:column>
+                                    <p:column><p:message for="comment" /></p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </h:form>
+                        <p />
+                        <p:outputLabel value="*" style="color: red; font-size: 11px" />
+                        <p:outputLabel value="Champs requis" style="font-size: 11px"/>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Enregistrer" class="topbuttons" 
+                                             update=":layout" 
+                                             action="#{experience.addWorkExperience}"
+                                             actionListener="#{experience.controller.unrender}"/>
+                            <p:commandButton value="Annuler" 
+                                             actionListener="#{experience.controller.unrender}"
+                                             update=":layout" immediate="true">
+                            </p:commandButton>
+                        </f:facet>
+                    </p:panel>
+
+                    <p:panel style="height: 10px; border: 0" rendered="#{experience.controller.space}"/>
+                    <p:panel header="Expérience professionnelle">
+                        <h:form>
+                            <p:commandButton value="Ajouter" class="bottombuttons" 
+                                             update=":layout"
+                                             action="#{experience.clearFields}"
+                                             actionListener="#{experience.controller.toggleAddModify}"
+                                             rendered="#{experience.controller.buttons}"/>
+                            <p:commandButton value="Supprimer" update=":layout"
+                                             action="#{experience.removeWorkExperience}"
+                                             rendered="#{experience.controller.buttons}"
+                                             style="margin-bottom: 15px"/>
+
+                            <p:panel style="height: 10px; border: 0" rendered="#{experience.controller.space}"/>
+                            <p:dataTable id="multipleSelectionCheckbox" rows="10" 
+                                         resizableColumns="true"    scrollable="false"
+                                         paginator="true"  pageLinks="5" rowKey="#{xp.id}"
+                                         selection="#{experience.selectedExps}"
+                                         var="xp"  value="#{experience.experiences}">
+                                <p:column selectionMode="multiple" class="multiplesselectcolwidth" 
+                                          rendered="#{experience.controller.buttons}"/>
+                                <p:column headerText="Entreprise" style="text-align: left">
+                                    <p:commandLink value="#{xp.company}" update=":layout"
+                                                   actionListener="#{experience.controller.toggleAddModify}">
+                                        <p:ajax listener="#{experience.findExperience}"
+                                                update=":layout" />
+                                        <f:param id="xp" value="#{xp}" />
+                                    </p:commandLink>
+                                </p:column>
+                                <p:column headerText="Titre du poste" style="text-align: left">
+                                    <h:outputText value="#{xp.jobtitle}" />
+                                </p:column>
+                                <p:column headerText="Debut" style="text-align: left">
+                                    <h:outputText value="#{xp.startDate}"  />
+                                </p:column>
+                                <p:column headerText="Fin" style="text-align: left">
+                                    <h:outputText value="#{xp.endDate}" />
+                                </p:column>
+                                <p:column headerText="Commentaires" style="text-align: left">
+                                    <h:outputText value="#{xp.comment}" />
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </p:panel>
+
+                    <p:panel style="height: 10px; border: 0" />
+                    <!--Education-->
+
+                    <p:panel header="Modifier formation scholaire" 
+                             rendered="#{empEdu.controller.modify}">
+                        <h:form style="margin-top: 10px">
+                            <p:panelGrid>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Niveau" />
+                                        <p:outputLabel value="*" style="color: red; font-size: 11px"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:selectOneMenu class="textWidth" required="true"
+                                                         value="#{empEdu.level.level}"/>  
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Etablissement" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText  class="textWidth"
+                                                      value="#{empEdu.school}"/>  
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Spécialisation" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText class="textWidth"
+                                                     value="#{empEdu.specialty}"/>  
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Année" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputTextarea class="textWidth"
+                                                         value="#{empEdu.year}"/>  
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Date de début" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:calendar id="start" class="textWidth" 
+                                                    value="#{empEdu.startDate}"/>  
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Date de fin" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:calendar id="end" class="textWidth"
+                                                    value="#{empEdu.endDate}"/>  
+                                    </p:column>
+                                </p:row>
+
+                            </p:panelGrid>
+                        </h:form>
+                        <p />
+                        <p:outputLabel value="*" style="color: red; font-size: 11px" />
+                        <p:outputLabel value="Champs requis" style="font-size: 11px"/>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Enregistrer" class="topbuttons" 
+                                             update=":layout"
+                                             action="#{empEdu.editdegreee()}"
+                                             actionListener="#{empEdu.controller.unrender()}"/>
+                            <p:commandButton value="Annuler" 
+                                             actionListener="#{empEdu.controller.unrender}"
+                                             update=":layout" immediate="true">
+                            </p:commandButton>
+                        </f:facet>
+                    </p:panel>
+
+                    <p:panel header="Ajouter une formation scholaire" 
+                             rendered="#{empEdu.controller.add}">
+                        <h:form style="margin-top: 10px">
+                            <p:panelGrid>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Niveau" />
+                                        <p:outputLabel value="*" style="color: red; font-size: 11px"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:selectOneMenu class="textWidth" required="true"
+                                                         value="#{empEdu.level.level}"/>  
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Etablissement" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText  class="textWidth"
+                                                      value="#{empEdu.school}"/>  
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Spécialisation" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText class="textWidth"
+                                                     value="#{empEdu.specialty}"/>  
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Année" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputTextarea class="textWidth"
+                                                         value="#{empEdu.year}"/>  
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Date de début" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:calendar id="start" class="textWidth" 
+                                                    value="#{empEdu.startDate}"/>  
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Date de fin" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:calendar id="end" class="textWidth"
+                                                    value="#{empEdu.endDate}"/>  
+                                    </p:column>
+                                </p:row>
+
+                            </p:panelGrid>
+                        </h:form>
+                        <p />
+                        <p:outputLabel value="*" style="color: red; font-size: 11px" />
+                        <p:outputLabel value="Champs requis" style="font-size: 11px"/>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Enregistrer" class="topbuttons" 
+                                             update=":layout"
+                                             action="#{empEdu.addDegree()}"
+                                             actionListener="#{empEdu.controller.unrender()}"/>
+                            <p:commandButton value="Annuler" id="buttonpad"
+                                             actionListener="#{empEdu.controller.unrender}"
+                                             update=":layout" immediate="true">
+                            </p:commandButton>
+                        </f:facet>
+                    </p:panel>
+                    <p:panel style="height: 10px; border: 0" rendered="#{empEdu.controller.space}"/>
+                    <p:panel header="Formations Scholaires">
+                        <h:form>
+                            <p:commandButton value="Ajouter" class="bottombuttons" 
+                                             update=":layout"
+                                             action="#{empEdu.clearFields()}"
+                                             actionListener="#{empEdu.controller.toggleAddModify}"
+                                             rendered="#{empEdu.controller.buttons}"/>
+                            <p:commandButton value="Supprimer" update=":layout"
+                                             action="#{empEdu.removeDegree()}"
+                                             rendered="#{empEdu.controller.buttons}"
+                                             style="margin-bottom: 15px"/>
+                        </h:form>
+                        <p:panel style="height: 10px; border: 0" rendered="#{empEdu.controller.space}"/>
+                        <p:dataTable id="multipleSelectionCheckbox" rows="10" 
+                                     resizableColumns="true"    scrollable="false"
+                                     paginator="true"  pageLinks="5" rowKey="#{deg.id}"
+                                     selection="#{empEdu.selectedDegrees}"
+                                     var="deg"  value="#{empEdu.degrees}">
+                            <p:column selectionMode="multiple" class="multiplesselectcolwidth" 
+                                      rendered="#{empEdu.controller.buttons}"/>
+                            <p:column headerText="Niveau" style="text-align: left">
+                                <p:commandLink value="#{deg.degree}" update=":layout"
+                                               actionListener="#{empEdu.controller.toggleAddModify}">
+                                    <p:ajax listener="#{empEdu.findDegree}"
+                                            update="true" />
+                                    <f:param id="status" value="#{deg.id}" />
+                                </p:commandLink>
+                            </p:column>
+                            <p:column headerText="Année" style="text-align: left">
+                                <h:outputText value="#{empEdu.year}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+
+
+                </p:panel>
+            </p:layoutUnit>
+        </ui:define>
+    </ui:composition>
+</html>
+<!--
+
+                    Competences
+
+                    <p:panel header="Ajouter compétences" 
+                             rendered="#{empEdu.controller.add}">
+                        <h:form style="margin-top: 10px">
+                            <p:panelGrid>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Compétence" />
+                                        <p:outputLabel value="*" style="color: red; font-size: 11px"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:selectOneMenu class="textWidth" required="true"
+                                                         value="#{}"/>  
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Années d'expérience" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText  class="textWidth"
+                                                      value="#{}"/>  
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Commentaires" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputTextarea class="textWidth"
+                                                         value="#{}"/>  
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </h:form>
+                        <p />
+                        <p:outputLabel value="*" style="color: red; font-size: 11px" />
+                        <p:outputLabel value="Champs requis" style="font-size: 11px"/>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Enregistrer" class="topbuttons" 
+                                             update=":layout"
+                                             action="#{}"
+                                             actionListener="#{empEdu.controller.unrender()}"/>
+                            <p:commandButton value="Annuler" id="buttonpad"
+                                             actionListener="#{empEdu.controller.unrender}"
+                                             update=":layout" immediate="true">
+                            </p:commandButton>
+                        </f:facet>
+                    </p:panel>
+                    <p:panel style="height: 10px; border: 0" rendered="#{empEdu.controller.space}"/>
+                    <p:panel header="Compétences">
+                        <h:form>
+                            <p:commandButton value="Ajouter" class="bottombuttons" 
+                                             update=":layout"
+                                             action="#{}"
+                                             actionListener="#{empEdu.controller.toggleAddModify}"
+                                             rendered="#{empEdu.controller.buttons}"/>
+                            <p:commandButton value="Supprimer" update=":layout"
+                                             action="#{}"
+                                             rendered="#{empEdu.controller.buttons}"
+                                             style="margin-bottom: 15px"/>
+                        </h:form>
+                        <p:panel style="height: 10px; border: 0" rendered="#{empEdu.controller.space}"/>
+                        <p:dataTable id="multipleSelectionCheckbox" rows="10" 
+                                     resizableColumns="true"    scrollable="false"
+                                     paginator="true"  pageLinks="5" rowKey="#{}"
+                                     selection="#{}"
+                                     var="xp"  value="#{}">
+                            <p:column selectionMode="multiple" class="multiplesselectcolwidth" 
+                                      rendered="#{empEdu.controller.buttons}"/>
+                            <p:column headerText="Compétence" style="text-align: left">
+                                <p:commandLink value="#{}" update=":layout"
+                                               actionListener="#{empEdu.controller.toggleAddModify}">
+                                    <p:ajax listener="#{}"
+                                            update="true" />
+                                    <f:param id="status" value="#{}" />
+                                </p:commandLink>
+                            </p:column>
+                            <p:column headerText="Années d'expérience" style="text-align: left">
+                                <h:outputText value="#{}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+
+                    Langues
+
+                    <p:panel header="Ajouter une langue" 
+                             rendered="#{empEdu.controller.add}">
+                        <h:form style="margin-top: 10px">
+                            <p:panelGrid>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Langue" />
+                                        <p:outputLabel value="*" style="color: red; font-size: 11px"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:selectOneMenu class="textWidth" required="true"
+                                                         value="#{}"/>  
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Aisance" />
+                                        <p:outputLabel value="*" style="color: red; font-size: 11px"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:selectOneMenu  class="textWidth" required="true"
+                                                      value="#{}"/>  
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Compétence " />
+                                        <p:outputLabel value="*" style="color: red; font-size: 11px"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:selectOneMenu class="textWidth" required="true"
+                                                         value="#{}"/>  
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Commentaires " />
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputTextarea class="textWidth"
+                                                         value="#{}"/>  
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </h:form>
+                        <p />
+                        <p:outputLabel value="*" style="color: red; font-size: 11px" />
+                        <p:outputLabel value="Champs requis" style="font-size: 11px"/>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Enregistrer" class="topbuttons" 
+                                             update=":layout"
+                                             action="#{}"
+                                             actionListener="#{empEdu.controller.unrender()}"/>
+                            <p:commandButton value="Annuler" id="buttonpad"
+                                             actionListener="#{empEdu.controller.unrender}"
+                                             update=":layout" immediate="true">
+                            </p:commandButton>
+                        </f:facet>
+                    </p:panel>
+                    <p:panel style="height: 10px; border: 0" rendered="#{empEdu.controller.space}"/>
+                    <p:panel header="Langues">
+                        <h:form>
+                            <p:commandButton value="Ajouter" class="bottombuttons" 
+                                             update=":layout"
+                                             action="#{}"
+                                             actionListener="#{empEdu.controller.toggleAddModify}"
+                                             rendered="#{empEdu.controller.buttons}"/>
+                            <p:commandButton value="Supprimer" update=":layout"
+                                             action="#{}"
+                                             rendered="#{empEdu.controller.buttons}"
+                                             style="margin-bottom: 15px"/>
+                        </h:form>
+                        <p:panel style="height: 10px; border: 0" rendered="#{empEdu.controller.space}"/>
+                        <p:dataTable id="multipleSelectionCheckbox" rows="10" 
+                                     resizableColumns="true"    scrollable="false"
+                                     paginator="true"  pageLinks="5" rowKey="#{}"
+                                     selection="#{}"
+                                     var="xp"  value="#{}">
+                            <p:column selectionMode="multiple" class="multiplesselectcolwidth" 
+                                      rendered="#{empEdu.controller.buttons}"/>
+                            <p:column headerText="Langue" style="text-align: left">
+                                <p:commandLink value="#{}" update=":layout"
+                                               actionListener="#{empEdu.controller.toggleAddModify}">
+                                    <p:ajax listener="#{}"
+                                            update="true" />
+                                    <f:param id="status" value="#{}" />
+                                </p:commandLink>
+                            </p:column>
+                            <p:column headerText="Aisance" style="text-align: left">
+                                <h:outputText value="#{}" />
+                            </p:column>
+                             <p:column headerText="Aisance" style="text-align: left">
+                                <h:outputText value="#{}" />
+                            </p:column>
+                             <p:column headerText="Compétence" style="text-align: left">
+                                <h:outputText value="#{}" />
+                            </p:column>
+                             <p:column headerText="Commetaires" style="text-align: left">
+                                <h:outputText value="#{}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>-->

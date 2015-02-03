@@ -17,8 +17,9 @@
                                     <p:outputLabel value="Pays" />
                                     <p:selectOneMenu value="#{contactsManager.country}"
                                                      style="width: 250px">
-                                        <f:selectItem itemLabel="Cameroon" itemValue="Cameroon" />
-                                        <f:selectItem itemLabel="Ghana" itemValue="Cameroon" />
+                                        <f:selectItems value="#{countryController.coutries}"
+                                                       var="crt" itemLabel="#{crt.country}"
+                                                       itemValue="#{crt.nationality}" />
                                     </p:selectOneMenu> 
 
                                     <h:outputLabel value="Région" />

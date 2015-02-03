@@ -7,6 +7,7 @@ package Entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,6 +15,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.validation.constraints.Past;
@@ -103,6 +105,8 @@ public class Worker implements Serializable {
      ----------------------------------------------------------------
      ----------------------------------------------------------------*/
             
+    @OneToMany(mappedBy = "worker")
+    private List<WorkExperience> experiences;
 //    @OneToMany
 //    @JoinColumn
 //    private List<EmployeeHasEducation> degrees;
@@ -201,6 +205,14 @@ public class Worker implements Serializable {
 
     public void setNumberOfChildren(int numberOfChildren) {
         this.numberOfChildren = numberOfChildren;
+    }
+
+    public List<WorkExperience> getExperiences() {
+        return experiences;
+    }
+
+    public void setExperiences(List<WorkExperience> experiences) {
+        this.experiences = experiences;
     }
 
     @Override

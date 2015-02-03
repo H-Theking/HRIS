@@ -7,6 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
+        
         <style>
             tab{
                 padding: 0;
@@ -18,6 +19,8 @@
         </style>
     </h:head>
     <h:body>
+        <h:outputStylesheet name="common.css" library="css"/>
+        <h:outputScript name="calendar.js" library="javascript" />
         <style>
             .ui-tabs .ui-tabs-panel {
                 padding: 0px;
@@ -27,7 +30,6 @@
                 background-color: inherit;
             }
         </style>
-
         <p:tabView style="border: 0" id="tabview" >
             <p:tab title="Admin" id="tab1">
                 <p:menubar autoDisplay="true" style="margin: 0" id="menubar">
@@ -49,6 +51,7 @@
                             <p:menuitem value="Formations" url="/faces/admin/education.xhtml" />
                             <p:menuitem value="Langues" url="/faces/admin/languages.xhtml" />
                         </p:submenu>
+                        <p:menuitem value="Nationalités" url="/faces/admin/countries.xhtml" />
                     </f:ajax>
                 </p:menubar>
 
