@@ -1,0 +1,191 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/admin/menu.xhtml">
+        <ui:define name="content">
+            <h:outputStylesheet name="./css/common.css" />
+            <p:panel id="layout" style="border: 0">
+                <h:form>
+                    <p:panel header="Modifier la Periode de Congé" 
+                             rendered="#{leaveManager.controller.modify}">
+
+                        <p:panelGrid >
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel value="Nom" /> 
+                                    <p:outputLabel value="*" class="requiredfield" /> 
+                                </p:column>
+                                <p:column>
+                                    <p:inputText disabled="true" value="#{leaveManager.worker.firstName}  
+                                                 #{leaveManager.worker.lastName}"/>
+                                </p:column>
+                                <p:column>
+                                    <p:outputLabel value="Type de congé" /> 
+                                </p:column>
+                                <p:column>
+                                    <p:selectOneMenu value="#{leaveManager.type}">
+
+                                    </p:selectOneMenu>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel value="Debut de Congé" />
+                                </p:column>
+                                <p:column>
+                                    <p:calendar  size="30" locale="fr" 
+                                                 yearRange="c-70:c+10" navigator="true"
+                                                 value="#{leaveManager.startDate}"/>  
+                                </p:column>
+
+                                <p:column>
+                                    <p:outputLabel value="Fin de Conge" />
+                                </p:column>
+                                <p:column>
+                                    <p:calendar  size="30" locale="fr" 
+                                                 yearRange="c-70:c+10" navigator="true"
+                                                 value="#{leaveManager.endDate}"/>  
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                        <p />
+                        <p:outputLabel value="*" style="color: red; font-size: 11px" />
+                        <p:outputLabel value="Champs requis" style="font-size: 11px"/>
+                        <!--<hr />-->
+                        <f:facet name="footer">
+                            <p:commandButton value="Enregistrer" action="#{leaveManager.editLeave()}"
+                                             update="layout"
+                                             actionListener="#{leaveManager.controller.unrender()}"/>
+                            <p:commandButton value="Annuler"
+                                             action="#{leaveManager.controller.unrender()}"
+                                             update="layout"/>
+
+                        </f:facet>
+
+                    </p:panel>
+                </h:form>
+
+
+                <p:panel header="Attribuer un Congé" 
+                         rendered="#{leaveManager.controller.add}">
+                    <h:form>
+                        <p:panelGrid >
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel value="Nom du salarié" /> 
+                                    <p:outputLabel value="*" class="requiredfield" /> 
+                                </p:column>
+                                <p:column>
+                                    <p:autoComplete id="autocomplete"
+                                                    completeMethod="#{leaveManager.autoComplete}"
+                                                    forceSelection="true"
+                                                    value="#{leaveManager.name}"/>
+                                </p:column>
+                                <p:column>
+                                    <p:outputLabel value="Type de congé" /> 
+                                </p:column>
+                                <p:column>
+                                    <p:selectOneMenu  value="#{leaveManager.type}" 
+                                                      style="width: 250px">
+
+                                    </p:selectOneMenu>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel value="Debut de Congé" />
+                                </p:column>
+                                <p:column>
+                                    <p:calendar size="30" locale="fr" 
+                                                yearRange="c-70:c+10" navigator="true"
+                                                value="#{leaveManager.startDate}"/>  
+                                </p:column>
+
+                                <p:column>
+                                    <p:outputLabel value="Fin de Conge" />
+                                </p:column>
+                                <p:column>
+                                    <p:calendar size="30" locale="fr" 
+                                                yearRange="c-70:c+10" navigator="true"
+                                                value="#{leaveManager.endDate}"/>  
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </h:form>
+                    <p />
+                    <p:outputLabel value="*" style="color: red; font-size: 11px" />
+                    <p:outputLabel value="Champs requis" style="font-size: 11px"/>
+
+                    <f:facet name="footer">
+                        <p:commandButton action="#{leaveManager.addLeave()}"
+                                         value="Enregistrer" update=":layout"
+                                         actionListener="#{leaveManager.controller.unrender()}"/>
+                        <p:commandButton value="Annuler" class="buttonpad"
+                                         action="#{leaveManager.controller.unrender()}"
+                                         update=":layout"/>
+                    </f:facet>
+
+                </p:panel>
+
+                <p:panel style="height: 10px; border: 0" rendered="#{leaveManager.controller.space}"/>
+
+                <p:panel header="Congés Atribués">
+                    <h:form>
+                        <p:commandButton value="Ajouter" class="bottombuttons" 
+                                         update=":layout"
+                                         action="#{leaveManager.clearFields}"
+                                         actionListener="#{leaveManager.controller.toggleAddModify}"
+                                         rendered="#{leaveManager.controller.buttons}"/>
+                        <p:commandButton value="Supprimer" 
+                                         rendered="#{leaveManager.controller.buttons}"
+                                         action="#{leaveManager.controller.unrender}"
+                                         update=":layout"
+                                         style="margin-bottom: 15px"/>
+                        <p:panel style="height: 10px; border: 0" rendered="#{leaveManager.controller.space}"/>
+                        <p:dataTable id="multipleSelectionCheckbox" rows="10" 
+                                     resizableColumns="true"    scrollable="false"
+                                     paginator="true" rowKey="#{leave.id}"
+                                     selection="#{leaveManager.selectedLeaves}"
+                                     var="leave"  value="#{leaveManager.leaves}">
+
+                            <p:column selectionMode="multiple" class="multiplesselectcolwidth" 
+                                      rendered="#{leaveManager.controller.buttons}"/>
+
+                            <p:column headerText="Nom du salarié" style="text-align: left"
+                                      sortBy="#{leave.worker.firstName} #{leave.worker.middlenames}
+                                      #{leave.worker.lastName}">
+                                <p:commandLink value="#{leave.worker.firstName} 
+                                               #{leave.worker.middlenames} 
+                                               #{leave.worker.lastName}" 
+                                               update=":layout"
+                                               actionListener="#{abs}">
+                                    <p:ajax listener="#{leaveManager.findLeave}" />
+                                    <f:param id="abs" value="#{leave.id}" />
+                                </p:commandLink>
+                            </p:column>
+
+                            <p:column headerText="Type de Congé" style="text-align: left" sortBy="#{leave.type}" filterBy="#{leave.type}">
+                                <p:outputLabel value="#{leave.type}"/>
+                            </p:column>
+
+                            <p:column headerText="Début de congé" sortBy="#{leave.startDate}" 
+                                      filterBy="#{leave.startDate}">
+                                <p:outputLabel value="#{leave.startDate}"/>
+                            </p:column>
+
+                            <p:column headerText="Fin de congé " style="text-align: left"
+                                      sortBy="#{leave.endDate}"
+                                      filterBy="#{leave.endDate}">
+                                <h:outputText value="#{leave.endDate}" />
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </p:panel>
+            </p:panel>
+        </ui:define>
+    </ui:composition>
+</html>

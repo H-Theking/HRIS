@@ -6,6 +6,7 @@
 package Entities;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -24,13 +25,21 @@ public class Organisation implements Serializable {
     @Id
     private String registrationNumber;
     private String name;
+    @Column(nullable = true)
     private int numberOfEmployees;
+    @Column(nullable = true)
     private String country;
+    @Column(nullable = true)
     private String region;
+    @Column(nullable = true)
     private String city;
+    @Column(nullable = true)
     private String street;
+    @Column(nullable = true)
     private String telepone;
+    @Column(nullable = true)
     private String fax;
+    @Column(nullable = true)
     private String email;
 
     /*----------------------------------------------------------------
@@ -46,8 +55,9 @@ public class Organisation implements Serializable {
     public Organisation() {
     }
 
-    public Organisation(String name) {
+    public Organisation(String name, String regNum) {
         this.name = name;
+        this.registrationNumber = regNum;
     }
 
     /*----------------------------------------------------------------

@@ -45,7 +45,7 @@ public class UserManager implements Serializable {
     private Account.Status status;
     private Account[] selectedAccounts;
     protected static final Logger logger = Logger.getGlobal();
-    private HashMap<String, String> workermap;
+    protected HashMap<String, String> workermap;
 
     /**
      * Creates a new instance of UserManager
@@ -54,6 +54,10 @@ public class UserManager implements Serializable {
         types = new ArrayList<>(2);
         types.add(Account.AccountType.Administrateur.toString());
         types.add(Account.AccountType.Superviseur.toString());
+    }
+    
+    public UserManager(HashMap<String, String> map){
+        map = workermap;
     }
     
     public void clearFields(AjaxBehaviorEvent event){

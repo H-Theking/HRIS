@@ -7,11 +7,11 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
-        
+
         <style>
             tab{
                 padding: 0;
-                
+
             }
             tabView{
                 border: 0;
@@ -22,49 +22,57 @@
         <h:outputStylesheet name="common.css" library="css"/>
         <h:outputScript name="calendar.js" library="javascript" />
         <style>
-            .ui-tabs .ui-tabs-panel {
-                padding: 0px;
-            }
-            .ui-tabs-panel .ui-widget-content{
-                border:0;
-                background-color: inherit;
-            }
-        </style>
-        <p:tabView style="border: 0" id="tabview" >
+            
+
+        </style> 
+        <p:panel class="bgimage" style="height: 120px; ">
+            <p:menubar style="float: right; margin-right: 30px; margin-top: 20px" autoDisplay="false" >
+                <p:submenu label="Bienvenue #{connectionManager.userName}" style="border: 0">
+                    <p:menuitem value="Deconnection" url="/admin/login.xhtml" />
+                </p:submenu>
+            </p:menubar>
+        </p:panel>
+
+        <p:tabView style="border: 0; margin: 0;padding: 0" id="tabview" >
             <p:tab title="Admin" id="tab1">
                 <p:menubar autoDisplay="true" style="margin: 0" id="menubar">
                     <f:ajax event="click"  listener="#{interfaceController.reset}">
                         <p:submenu label="Gestion D'utilisateurs" id="manageusers">
-                            <p:menuitem value="Utilisateurs" url="/faces/admin/users.xhtml"/>
+                            <p:menuitem value="Utilisateurs" url="/admin/users.xhtml"/>
                         </p:submenu>
                         <p:submenu label="Emploi" id="job">
-                            <p:menuitem value="Titres de postes" url="/faces/admin/jobtitles.xhtml" />
-                            <p:menuitem value="Niveaux de paye" url="/faces/admin/paygrade.xhtml" />
-                            <p:menuitem value="Statut d'emploi" url="/faces/admin/employmentstatus.xhtml" />
+                            <p:menuitem value="Titres de postes" url="/admin/jobtitles.xhtml" />
+                            <p:menuitem value="Niveaux de paye" url="/admin/paygrade.xhtml" />
+                            <p:menuitem value="Statut d'emploi" url="/admin/employmentstatus.xhtml" />
                         </p:submenu>
                         <p:submenu label="Entreprise" id="org">
-                            <p:menuitem value="Informations générales" url="/faces/admin/organisation.xhtml" />
-                            <p:menuitem value="Sucursales" url="/faces/admin/locations.xhtml" />
+                            <p:menuitem value="Informations générales" url="/admin/organisation.xhtml" />
+                            <p:menuitem value="Sucursales" url="/admin/locations.xhtml" />
                         </p:submenu>
                         <p:submenu label="Qualifications" id="qualifications">
-                            <p:menuitem value="Compétences" url="/faces/admin/skills.xhtml" />
-                            <p:menuitem value="Formations" url="/faces/admin/education.xhtml" />
-                            <p:menuitem value="Langues" url="/faces/admin/languages.xhtml" />
+                            <p:menuitem value="Compétences" url="/admin/skills.xhtml" />
+                            <p:menuitem value="Formations" url="/admin/education.xhtml" />
+                            <p:menuitem value="Langues" url="/admin/languages.xhtml" />
                         </p:submenu>
-                        <p:menuitem value="Nationalités" url="/faces/admin/countries.xhtml" />
+                        <p:menuitem value="Nationalités" url="/admin/countries.xhtml" />
                     </f:ajax>
                 </p:menubar>
 
             </p:tab>
             <p:tab title="MIP" id="tab2">
                 <p:menubar autoDisplay="true" style="margin: 0" >
-                    <p:menuitem value="Raisons de résiliation" url="/faces/pim/terminationreasons.xhtml" />
-                    <p:menuitem value="Liste des employés" url="/faces/pim/employeelist.xhtml" />
-                    <p:menuitem value="Ajouter des employés" url="/faces/pim/addemployee.xhtml" />
+                    <p:menuitem value="Raisons de résiliation" url="/pim/terminationreasons.xhtml" />
+                    <p:menuitem value="Liste des employés" url="/pim/employeelist.xhtml" />
+                    <p:menuitem value="Ajouter des employés" url="/pim/addemployee.xhtml" />
+                    <p:submenu label="Abscences/Congés" >
+                        <p:menuitem value="Abscences" url="/pim/abscence.xhtml" />
+                        <p:menuitem value="Congés" url="/pim/leave.xhtml" />
+                    </p:submenu>
                 </p:menubar>
             </p:tab>
         </p:tabView>
         <ui:insert name="content"></ui:insert>
+        <p:panel class="bgimag" style="height: 100px"/>
     </h:body>
 </html>
 

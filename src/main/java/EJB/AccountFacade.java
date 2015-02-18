@@ -8,10 +8,15 @@ package EJB;
 import Entities.Account;
 import Entities.Account.AccountType;
 import Entities.Account.Status;
+import Entities.Organisation;
 import Entities.Worker;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 
 /**
  *
@@ -19,6 +24,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class AccountFacade extends AbstractFacade<Account> {
+
     @PersistenceContext(unitName = "SampleAppPU")
     private EntityManager em;
 
@@ -30,18 +36,18 @@ public class AccountFacade extends AbstractFacade<Account> {
     public AccountFacade() {
         super(Account.class);
     }
-    
+
     public void createAccount(String workerId, AccountType type, String userName,
-            String password, Status status){
+            String password, Status status) {
         Worker worker = em.find(Worker.class, workerId);
-        Account account =  new Account(type, userName, password, status);
+        Account account = new Account(type, userName, password, status);
         account.setAccountId(workerId);
         account.setWorker(worker);
         em.persist(account);
     }
-    
+
     public void editAccount(String accoutId, AccountType type, String userName,
-            String password, Status status){
+            String password, Status status) {
         Account find = em.find(Account.class, accoutId);
         find.setUserName(userName);
         find.setPassword(password);

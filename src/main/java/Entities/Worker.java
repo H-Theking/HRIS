@@ -13,6 +13,9 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -74,6 +77,8 @@ public class Worker implements Serializable {
     private String nationality;
     @Column(nullable = true)
     private int numberOfChildren;
+    @OneToMany(mappedBy = "worker")
+    private List<Leave> leaves;
 
     /*----------------------------------------------------------------
      ----------------------------------------------------------------
@@ -96,27 +101,26 @@ public class Worker implements Serializable {
         this.middlenames = middlenames;
         this.lastName = lastName;
     }
-    
-    
 
     /*----------------------------------------------------------------
      ----------------------------------------------------------------
      RELATIONAL MAPPING
      ----------------------------------------------------------------
      ----------------------------------------------------------------*/
-            
     @OneToMany(mappedBy = "worker")
     private List<WorkExperience> experiences;
+
+    @OneToMany(mappedBy = "worker")
+    private List<EmployeeSkill> skills;
+
 //    @OneToMany
 //    @JoinColumn
 //    private List<EmployeeHasEducation> degrees;
-    
     /*----------------------------------------------------------------
      ----------------------------------------------------------------
      GETTERS AND SETTERS
      ----------------------------------------------------------------
      ----------------------------------------------------------------*/
-
     @PrePersist
     public void prePersistCallBack() {
 //        if (job != null) {
@@ -213,6 +217,22 @@ public class Worker implements Serializable {
 
     public void setExperiences(List<WorkExperience> experiences) {
         this.experiences = experiences;
+    }
+
+    public List<EmployeeSkill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<EmployeeSkill> skills) {
+        this.skills = skills;
+    }
+
+    public List<Leave> getLeaves() {
+        return leaves;
+    }
+
+    public void setLeaves(List<Leave> leaves) {
+        this.leaves = leaves;
     }
 
     @Override

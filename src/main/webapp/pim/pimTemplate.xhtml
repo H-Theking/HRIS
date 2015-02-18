@@ -5,44 +5,87 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <ui:composition template="/admin/menu.xhtml">
-        <ui:define name="content">
-            <!--<h:outputStylesheet name="./css/common.css" />-->
-            <p:layout>
-                <p:layoutUnit position="west" size="205" style="border:0;  "> 
-                    <p:panel style="border: 0">
-                        <p:panel id="simple" style="width: 188px">
-                            <f:facet name="header">
-                                <h:outputText value="#{employeeManager.firstName} " />
-                                <h:outputText value="#{employeeManager.lastName}" />
-                            </f:facet>
-                            <p:commandLink action="uploadImage">
-                                <h:graphicImage value="/images/default-photo.png" style="width: 188px"
-                                                rendered="#{imageManager.ei.image==null}"/>
-                                <h:graphicImage value="/Imageservlet?ImageId=#{imageManager.ei.id}" 
-                                                style="width: 188px"
-                                                rendered="#{imageManager.ei.image!=null}"/>
-                            </p:commandLink>
-                            <br/><p/>
-                            <p:menu>
-                                <p:menuitem value="Détails personnels" url="/faces/pim/employeeDetails.xhtml"
-                                            action="#{interfaceController.reset}" />
-                                <p:menuitem value="Coordonées" url="/faces/pim/contactDetails.xhtml"
-                                            action="#{interfaceController.reset}" />
-                                <p:menuitem value="Contacts d'urgence" url="/faces/pim/emergencycontact.xhtml"
-                                            action="#{interfaceController.reset}" />
-                                <p:menuitem value="Emploi" url="/faces/pim/employeejob.xhtml"
-                                            action="#{interfaceController.reset}" />
-                                <p:menuitem value="Salaire" url=""
-                                            action="#{interfaceController.reset}" />
-                                <p:menuitem value="Qualifications" url="/faces/pim/degrees.xhtml"
-                                            action="#{interfaceController.reset}" />
-                            </p:menu>
-                        </p:panel>
-                    </p:panel>
-                </p:layoutUnit>
-                <ui:insert name="centerLayoutUnit"></ui:insert>
-            </p:layout>
-        </ui:define>
-    </ui:composition>
+    <h:head></h:head>
+    <h:body>
+        <h:outputStylesheet name="common.css" library="css"/>
+        <h:outputScript name="calendar.js" library="javascript" />
+        <p:panel class="bgimage" style="height: 120px; ">
+            <p:menubar style="float: right; margin-right: 30px; margin-top: 20px" autoDisplay="false" >
+                <p:submenu label="Bienvenue #{connectionManager.userName}" style="border: 0">
+                    <p:menuitem value="Deconnection" url="/admin/login.xhtml" />
+                </p:submenu>
+            </p:menubar>
+        </p:panel>
+
+        <p:tabView style="border: 0; margin: 0;padding: 0" id="tabview" >
+            <p:tab title="Admin" id="tab1">
+                <p:menubar autoDisplay="true" style="margin: 0" id="menubar">
+                    <f:ajax event="click"  listener="#{interfaceController.reset}">
+                        <p:submenu label="Gestion D'utilisateurs" id="manageusers">
+                            <p:menuitem value="Utilisateurs" url="/admin/users.xhtml"/>
+                        </p:submenu>
+                        <p:submenu label="Emploi" id="job">
+                            <p:menuitem value="Titres de postes" url="/admin/jobtitles.xhtml" />
+                            <p:menuitem value="Niveaux de paye" url="/admin/paygrade.xhtml" />
+                            <p:menuitem value="Statut d'emploi" url="/admin/employmentstatus.xhtml" />
+                        </p:submenu>
+                        <p:submenu label="Entreprise" id="org">
+                            <p:menuitem value="Informations générales" url="/admin/organisation.xhtml" />
+                            <p:menuitem value="Sucursales" url="/admin/locations.xhtml" />
+                        </p:submenu>
+                        <p:submenu label="Qualifications" id="qualifications">
+                            <p:menuitem value="Compétences" url="/admin/skills.xhtml" />
+                            <p:menuitem value="Formations" url="/admin/education.xhtml" />
+                            <p:menuitem value="Langues" url="/admin/languages.xhtml" />
+                        </p:submenu>
+                        <p:menuitem value="Nationalités" url="/admin/countries.xhtml" />
+                    </f:ajax>
+                </p:menubar>
+
+            </p:tab>
+            <p:tab title="MIP" id="tab2">
+                <p:menubar autoDisplay="true" style="margin: 0" >
+                    <p:menuitem value="Raisons de résiliation" url="/pim/terminationreasons.xhtml" />
+                    <p:menuitem value="Liste des employés" url="/pim/employeelist.xhtml" />
+                    <p:menuitem value="Ajouter des employés" url="/pim/addemployee.xhtml" />
+                    <p:submenu label="Abscences/Congés" >
+                        <p:menuitem value="Abscences" url="/pim/abscence.xhtml" />
+                        <p:menuitem value="Congés" url="/pim/leave.xhtml" />
+                    </p:submenu>
+                </p:menubar>
+            </p:tab>
+        </p:tabView>
+        <p:panel id="simple" style="width: 13.8%;float: left; margin-top: 8px">
+            <f:facet name="header">
+                <h:outputText value="#{employeeManager.firstName} " />
+                <h:outputText value="#{employeeManager.lastName}" />
+            </f:facet>
+            <p:commandLink action="uploadImage">
+                <h:graphicImage value="/images/default-photo.png" style="width: 185px"
+                                rendered="#{imageManager.ei.image==null}"/>
+                <h:graphicImage value="/Imageservlet?ImageId=#{imageManager.ei.id}" 
+                                style="width: 188px"
+                                rendered="#{imageManager.ei.image!=null}"/>
+            </p:commandLink>
+            <br/><p/>
+            <p:menu>
+                <p:menuitem value="Détails personnels" url="/pim/employeeDetails.xhtml"
+                            action="#{interfaceController.reset}" />
+                <p:menuitem value="Coordonées" url="/pim/contactDetails.xhtml"
+                            action="#{interfaceController.reset}" />
+                <p:menuitem value="Contacts d'urgence" url="/pim/emergencycontact.xhtml"
+                            action="#{interfaceController.reset}" />
+                <p:menuitem value="Emploi" url="/pim/employeejob.xhtml"
+                            action="#{interfaceController.reset}" />
+                <p:menuitem value="Salaire" url=""
+                            action="#{interfaceController.reset}" />
+                <p:menuitem value="Qualifications" url="/pim/degrees.xhtml"
+                            action="#{interfaceController.reset}" />
+            </p:menu>
+        </p:panel>
+        <p:panel style="float: left; width: 85.2%; border: 0">
+            <ui:insert name="centerLayoutUnit"></ui:insert>
+        </p:panel>
+        <p:panel class="bgimag" style="height: 100px;; clear: both"/>
+    </h:body>
 </html>

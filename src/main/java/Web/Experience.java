@@ -5,10 +5,7 @@
  */
 package Web;
 
-import EJB.EducationFacade;
 import EJB.EmployeeFacade;
-import EJB.LanguagesFacade;
-import EJB.SkillFacade;
 import EJB.WorkExperienceFacade;
 import Entities.WorkExperience;
 import javax.inject.Named;
@@ -24,7 +21,7 @@ import javax.faces.event.AjaxBehaviorEvent;
  *
  * @author Harvey
  */
-@Named(value = "experience")
+@Named(value = "qualifications")
 @SessionScoped
 public class Experience implements Serializable {
     
@@ -35,12 +32,6 @@ public class Experience implements Serializable {
     @EJB
     private EmployeeFacade employeeFacade;
 
-    @EJB
-    private EducationFacade educationFacade;
-    @EJB
-    private LanguagesFacade languagesFacade;
-    @EJB
-    private SkillFacade skillFacade;
     private WorkExperience experience;
 
     /**
@@ -70,10 +61,6 @@ public class Experience implements Serializable {
         for (WorkExperience exp : selectedExps) {
             workExperienceFacade.remove(exp);
         }
-    }
-
-    public List<WorkExperience> getExperiences() {
-        return employeeFacade.find(workerId).getExperiences();
     }
 
     public void findExperience(AjaxBehaviorEvent event) {

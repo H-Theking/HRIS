@@ -9,16 +9,15 @@
         <ui:define name="content">
             <h:outputStylesheet name="./css/common.css" />
             <p:panel id="layout" style="border: 0">
-                <p:panel header="Modifier le nom du Pays" 
+                <p:panel header="Modifier un type de congé" 
                          rendered="#{interfaceController.modify}">
                     <h:form>
                         <p:panelGrid columns="2">
-                            <p:outputLabel value="Pays*" />
+                            <p:outputLabel value="Nom*" />
                             <p:inputText class="textWidth" required="true"
-                                         value="#{countryController.country}"/>
-                            <p:outputLabel value="Nationalité*" />
-                            <p:inputText class="textWidth" required="true"
-                                         value="#{countryController.nationality}"/>
+                                         value="#{skillManager.name}"/>
+                            <p:outputLabel value="Description" />
+                            <p:inputTextarea class="textWidth" value="#{skillManager.description}"/>
                         </p:panelGrid>
                         <p />
                         <p:outputLabel value="*" style="color: red; font-size: 11px" />
@@ -26,7 +25,7 @@
                         <hr />
                         <p:commandButton value="Enregistrer" class="topbuttons" 
                                          update=":layout" 
-                                         action="#{countryController.editCountry}"
+                                         action="#{skillManager.addSkill}"
                                          actionListener="#{interfaceController.unrender()}">
                         </p:commandButton>
 
@@ -36,16 +35,15 @@
                         </p:commandButton>
                     </h:form>
                 </p:panel>
-                <p:panel header="Ajouter un pays"
+                <p:panel header="Ajouter une compétence"
                          rendered="#{interfaceController.add}">
                     <h:form>
                         <p:panelGrid columns="2">
-                            <p:outputLabel value="Pays*" />
+                            <p:outputLabel value="Nom*" />
                             <p:inputText class="textWidth" required="true"
-                                         value="#{countryController.country}"/>
-                            <p:outputLabel value="Nationalité*" />
-                            <p:inputText class="textWidth" required="true"
-                                         value="#{countryController.nationality}"/>
+                                         value="#{skillManager.name}"/>
+                            <p:outputLabel value="Description" />
+                            <p:inputTextarea class="textWidth" value="#{skillManager.description}"/>
                         </p:panelGrid>
                         <p />
                         <p:outputLabel value="*" style="color: red; font-size: 11px" />
@@ -54,7 +52,7 @@
                         <p:commandButton value="Enregistrer" class="topbuttons" 
                                          update=":layout"
                                          action="#{interfaceController.unrender}"
-                                         actionListener="#{countryController.addCountry}"/>
+                                         actionListener="#{skillManager.addSkill()}"/>
                         <p:commandButton value="Annuler" id="buttonpad"
                                          action="#{interfaceController.unrender}"
                                          update=":layout" immediate="true">
@@ -62,32 +60,35 @@
                     </h:form>
                 </p:panel>
                 <p:panel style="height: 10px; border: 0" rendered="#{interfaceController.space}"/>
-                <p:panel header="Nationalité">
+                <p:panel header="Compétences">
                     <h:form>
                         <p:commandButton value="Ajouter" class="bottombuttons" 
                                          update=":layout"
                                          actionListener="#{interfaceController.toggleAddModify}"
-                                         action="#{countryController.clearFields}"
+                                         action="#{skillManager.clearFields}"
                                          rendered="#{interfaceController.buttons}"/>
                         <p:commandButton value="Supprimer" 
                                          rendered="#{interfaceController.buttons}"
-                                         action="#{countryController.removeCountries}"
+                                         action="#{skillManager.deleteSkills}"
                                          update=":layout"
                                          style="margin-bottom: 15px"/>
-                        <p:panel style="height: 10px; border: 0" rendered="#{interfaceController.space}"/>
+
                         <p:dataTable id="multipleSelectionCheckbox" rows="10" 
                                      resizableColumns="true"    scrollable="false"
-                                     paginator="true"  pageLinks="5" rowKey="#{country.id}"
-                                     selection="#{countryController.selectedCountries}"
-                                     var="country"  value="#{countryController.coutries}">
+                                     paginator="true"  pageLinks="5" rowKey="#{skill.name}"
+                                     selection="#{skillManager.selectedSkills}"
+                                     var="skill"  value="#{skillManager.allSkills}">
                             <p:column selectionMode="multiple" class="multiplesselectcolwidth" 
                                       rendered="#{interfaceController.buttons}"/>
                             <p:column headerText="Nom" style="text-align: left">
-                                <p:commandLink value="#{country.country}" update=":layout"
+                                <p:commandLink value="#{skill.name}" update=":layout"
                                                actionListener="#{interfaceController.toggleAddModify}">
-                                    <p:ajax listener="#{countryController.findCountry}" />
-                                    <f:param id="country" value="#{country.id}" />
+                                    <p:ajax listener="#{skillManager.findskill}" />
+                                    <f:param id="skill" value="#{skill.name}" />
                                 </p:commandLink>
+                            </p:column>
+                            <p:column headerText="Description" style="text-align: left">
+                                <h:outputText value="#{skill.description}" />
                             </p:column>
                         </p:dataTable>
                     </h:form>

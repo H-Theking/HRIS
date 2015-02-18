@@ -6,9 +6,12 @@
 package Entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -23,6 +26,9 @@ public class Skill implements Serializable {
 
     public Skill() {
     }
+    
+    @OneToOne(mappedBy = "skill")
+    private List<EmployeeSkill> skills;
 
     public Skill(String name, String description){
         this.name = name;
@@ -43,6 +49,14 @@ public class Skill implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<EmployeeSkill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<EmployeeSkill> skills) {
+        this.skills = skills;
     }
 
     @Override

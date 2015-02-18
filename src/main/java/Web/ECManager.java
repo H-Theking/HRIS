@@ -66,8 +66,9 @@ public class ECManager implements Serializable {
     }
 
     public void deleteEmergencyContact() {
-        EmergencyContact find = ecFacade.find(ecId);
-        ecFacade.remove(find);
+        for (EmergencyContact ec: selectedContacts) {
+            ecFacade.remove(ec);
+        }
     }
 
     public List<EmergencyContact> getECs() {

@@ -7,6 +7,7 @@ package EJB;
 
 import Entities.Education;
 import Entities.EmployeeHasEducation;
+import Entities.Worker;
 import java.time.Year;
 import java.util.Date;
 import java.util.List;
@@ -33,27 +34,32 @@ public class EmployeeHasEducationFacade extends AbstractFacade<EmployeeHasEducat
     }
 
     public void addDegree(String workerId, Education level, String school, Year year,
-            String specialty, String score, Date startDate, Date endDate) {
+            String specialty, String score, String maxScore, Date startDate, Date endDate) {
         EmployeeHasEducation employeeHasEducation = new EmployeeHasEducation(level);
         employeeHasEducation.setEndDate(endDate);
         employeeHasEducation.setStartDate(startDate);
         employeeHasEducation.setGradYear(year);
-        employeeHasEducation.setInstitute(score);
+        employeeHasEducation.setInstitute(school);
         employeeHasEducation.setScore(score);
+        employeeHasEducation.setMaxScore(maxScore);
+        employeeHasEducation.setSpecialty(specialty);
+        employeeHasEducation.setWorker(em.find(Worker.class, workerId));
         em.persist(employeeHasEducation);
     }
     
     public void editDegree(Long degreeId, Education level, String school, Year year,
-            String specialty, String score, Date startDate, Date endDate) {
+            String specialty, String score, String maxScore, Date startDate, Date endDate) {
         
         EmployeeHasEducation find = em.find(EmployeeHasEducation.class, degreeId);
         find.setDegree(level);
         find.setEndDate(endDate);
         find.setStartDate(startDate);
         find.setGradYear(year);
-        find.setInstitute(score);
+        find.setInstitute(school);
         find.setScore(score);
-        em.persist(find);
+        find.setMaxScore(maxScore);
+        find.setSpecialty(specialty);
+        em.merge(find);
     }
     
     public List<EmployeeHasEducation> degreeList(String workerId){

@@ -8,6 +8,7 @@
     <ui:composition template="menu.xhtml">
         <ui:define name="content" >
             <h:outputStylesheet name="./css/common.css" />
+            
             <p:panel id="layout" style="border: 0">
                 <p:panel header="Modifier le poste" 
                          rendered="#{interfaceController.modify}">
@@ -104,6 +105,7 @@
                     </h:form> 
                 </p:panel>
             </p:panel>
+            
         </ui:define>
     </ui:composition>
 </html>

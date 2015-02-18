@@ -6,7 +6,6 @@
 package EJB;
 
 import Entities.WorkExperience;
-import Entities.Worker;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;

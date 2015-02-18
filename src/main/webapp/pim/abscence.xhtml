@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/admin/menu.xhtml">
+        <ui:define name="content">
+            <h:outputStylesheet name="./css/common.css" />
+            <p:panel id="layout" style="border: 0">
+                <p:panel header="Modifier l'abscence" 
+                         rendered="#{abscenceManager.controller.modify}">
+                    <h:form>
+                        <p:panelGrid >
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel value="Nom*" /> 
+                                    <p:outputLabel value="*" class="requiredfield" /> 
+                                </p:column>
+                                <p:column>
+                                    <p:inputText disabled="true" value="#{abscenceManager.name}"/>
+                                </p:column>
+                                <p:column>
+                                    <p:message for="autocomplete" />
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel value="Date" />
+                                </p:column>
+                                <p:column>
+                                    <p:calendar id="start" size="30" locale="fr" 
+                                                yearRange="c-70:c+10" navigator="true"
+                                                value="#{abscenceManager.date}"/>  
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                        <p />
+                        <p:outputLabel value="*" style="color: red; font-size: 11px" />
+                        <p:outputLabel value="Champs requis" style="font-size: 11px"/>
+                        <!--<hr />-->
+                        <f:facet name="footer">
+                            <p:commandButton value="Enregistrer" action="#{abscenceManager.editAbscence}"
+                                             update="layout"
+                                             actionListener="#{abscenceManager.controller.unrender()}"/>
+                            <p:commandButton value="Annuler"
+                                             action="#{abscenceManager.controller.unrender()}"
+                                             update="layout"/>
+
+                        </f:facet>
+                    </h:form>
+                </p:panel>
+                <h:form>
+                    <p:panel header="Ajouter une abscence"
+                             rendered="#{abscenceManager.controller.add}">
+
+                        <p:panelGrid>
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel value="Nom" /> 
+                                    <p:outputLabel value="*" class="requiredfield" /> 
+                                </p:column>
+                                <p:column>
+                                    <p:autoComplete id="autocomplete"
+                                                    forceSelection="true"
+                                                    completeMethod="#{abscenceManager.manager.autoComplete}"
+                                                    value="#{abscenceManager.name}"/>
+                                </p:column>
+                                <p:column>
+                                    <p:message for="autocomplete" />
+                                </p:column>
+
+                                <p:column>
+                                    <p:outputLabel value="Date" />
+                                </p:column>
+                                <p:column>
+                                    <p:calendar id="start" size="30" locale="fr" 
+                                                yearRange="c-70:c+10" navigator="true"
+                                                value="#{abscenceManager.date}"/>  
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                        <p />
+                        <p:outputLabel value="*" style="color: red; font-size: 11px" />
+                        <p:outputLabel value="Champs requis" style="font-size: 11px"/>
+                        <f:facet name="footer">
+                            <p:commandButton value="Enregistrer" class="topbuttons" 
+                                             update=":layout"
+                                             action="#{abscenceManager.controller.unrender()}"
+                                             actionListener="#{abscenceManager.addAbscence}"/>
+                            <p:commandButton value="Annuler" id="buttonpad"
+                                             action="#{abscenceManager.controller.unrender}"
+                                             update=":layout" immediate="true">
+                            </p:commandButton>
+                        </f:facet>
+                    </p:panel>
+                </h:form>
+                <p:panel style="height: 10px; border: 0" rendered="#{abscenceManager.controller.space}"/>
+                <p:panel header="Abscences">
+                    <h:form>
+                        <p:commandButton value="Ajouter" class="bottombuttons" 
+                                         update=":layout"
+                                         action="#{abscenceManager.clearFields}"
+                                         actionListener="#{abscenceManager.controller.toggleAddModify}"
+                                         rendered="#{abscenceManager.controller.buttons}"/>
+                        <p:commandButton value="Supprimer" 
+                                         rendered="#{abscenceManager.controller.buttons}"
+                                         action="#{abscenceManager.controller.unrender}"
+                                         update=":layout"
+                                         style="margin-bottom: 15px"/>
+                        <p:panel style="height: 10px; border: 0" rendered="#{abscenceManager.controller.space}"/>
+                        <p:dataTable id="multipleSelectionCheckbox" rows="10" 
+                                     resizableColumns="true"    scrollable="false"
+                                     paginator="true" rowKey="#{abscence.worker.firstName}"
+                                     selection="#{abscenceManager.selectedAbs}"
+                                     var="abscence"  value="#{abscenceManager.abscences}">
+
+                            <p:column selectionMode="multiple" class="multiplesselectcolwidth" 
+                                      rendered="#{abscenceManager.controller.buttons}"/>
+
+                            <p:column headerText="Nom" style="text-align: left"
+                                      sortBy="#{abscence.worker.firstName} 
+                                      #{abscence.worker.lastName}"
+                                      filterBy="#{abscence.worker.firstName}
+                                      #{abscence.worker.middlenames}
+                                      #{abscence.worker.lastName}">
+                                <p:commandLink value="#{abscence.worker.firstName} 
+                                               #{abscence.worker.middlenames} 
+                                               #{abscence.worker.lastName}" 
+                                               update=":layout"
+                                               actionListener="#{abs}">
+                                    <p:ajax listener="#{abscenceManager.findAbscence}" />
+                                    <f:param id="abs" value="#{abscence.id}" />
+                                </p:commandLink>
+                            </p:column>
+
+                            <p:column headerText="Date" style="text-align: left" sortBy="#{abscence.date}"
+                                      filterBy="#{abscence.date}">
+                                <h:outputText value="#{abscence.date}" />
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </p:panel>
+            </p:panel>
+        </ui:define>
+    </ui:composition>
+</html>

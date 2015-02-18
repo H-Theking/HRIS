@@ -7,54 +7,52 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/admin/menu.xhtml">
         <ui:define name="content">
-            <h:outputStylesheet name="./css/common.css" />
-            <p:layout>
-                <p:layoutUnit position="center" style="border: 0">
-                    <p:panel header="Liste d'employees">
-                        <h:form>
-                            <p:commandButton action="addemployee" value="Ajouter" 
-                                             style="margin-top: 10px"/>
-                            <p:commandButton value="Supprimer" id="deletebutton" 
-                                             class="buttonpad"/>
-                        </h:form> <hr />
-                        <p:dataTable id="multipleSelectionCheckbox" rows="10" resizableColumns="true"
-                                     paginator="true" pageLinks="5" 
-                                     rowKey="#{employee.id}" selection="#{employeeManager.selectedWorkers}"
-                                     scrollable="false"
-                                     value="#{employeeManager.employees}" var="employee">
-                            <p:column selectionMode="multiple" class="multiplesselectcolwidth" />
-                            <p:column headerText="Id" style="text-align: left">
-                                <h:outputText value="#{employee.id}" />
-                            </p:column>
-                            <p:column headerText="Prénom(s)" style="text-align: left">
-                                <p:commandLink action="employeeDetails">
-                                    <h:outputText value="#{employee.firstName} " />
-                                    <h:outputText value="#{employee.middlenames}" />
-                                    <f:param id="worker" value="#{employee.id}" />
-                                    <p:ajax listener="#{employeeManager.findEmployee}" />
-                                    <p:ajax listener="#{contactsManager.findEmployeeContact}" />
-                                    <p:ajax listener="#{eCManager.findEmployeeContact}" />
-                                    <p:ajax listener="#{imageManager.getEmployee}" />
-                                    <p:ajax listener="#{qualifications.getEmployee}" />
-                                    <p:ajax listener="#{empEdu.getEmployee}" />
-                                </p:commandLink>
-                            </p:column>
-                            <p:column headerText="Nom de famille" style="text-align: left">
-                                <h:outputText value="#{employee.lastName}" />
-                            </p:column>
-                            <p:column headerText="Titre du poste" style="text-align: left">
-                                <h:outputText value="" />
-                            </p:column>
-                            <p:column headerText="Statut d'emploi" style="text-align: left">
-                                <h:outputText value="" />
-                            </p:column>
-                            <p:column headerText="Sous unité" style="text-align: left">
-                                <h:outputText value="" />
-                            </p:column>
-                        </p:dataTable>
-                    </p:panel>
-                </p:layoutUnit>
-            </p:layout>
+            <p:panel header="Liste d'employees">
+                <h:form style="height: 53px">
+                    <p:commandButton action="addemployee" value="Ajouter" 
+                                     style="margin-top: 10px"/>
+                    <p:commandButton value="Supprimer" id="deletebutton" 
+                                     class="buttonpad"/>
+                    <p:graphicImage value="/images/worker.png" 
+                                    style="float: right; margin-right: 3px" />
+                </h:form> <hr />
+                <p:dataTable id="multipleSelectionCheckbox" rows="10" resizableColumns="true"
+                             paginator="true" pageLinks="5" 
+                             rowKey="#{employee.id}" selection="#{employeeManager.selectedWorkers}"
+                             scrollable="false"
+                             value="#{employeeManager.employees}" var="employee">
+                    <p:column selectionMode="multiple" class="multiplesselectcolwidth" />
+                    <p:column headerText="Id" style="text-align: left">
+                        <h:outputText value="#{employee.id}" />
+                    </p:column>
+                    <p:column headerText="Prénom(s)" style="text-align: left">
+                        <p:commandLink action="employeeDetails">
+                            <h:outputText value="#{employee.firstName} " />
+                            <h:outputText value="#{employee.middlenames}" />
+                            <f:param id="worker" value="#{employee.id}" />
+                            <p:ajax listener="#{employeeManager.findEmployee}" />
+                            <p:ajax listener="#{contactsManager.findEmployeeContact}" />
+                            <p:ajax listener="#{eCManager.findEmployeeContact}" />
+                            <p:ajax listener="#{imageManager.getEmployee}" />
+                            <p:ajax listener="#{qualifications.getEmployee}" />
+                            <p:ajax listener="#{empEdu.getEmployee}" />
+                            <p:ajax listener="#{employeeSkillmanager.getEmployee}" />
+                        </p:commandLink>
+                    </p:column>
+                    <p:column headerText="Nom de famille" style="text-align: left">
+                        <h:outputText value="#{employee.lastName}" />
+                    </p:column>
+                    <p:column headerText="Titre du poste" style="text-align: left">
+                        <h:outputText value="" />
+                    </p:column>
+                    <p:column headerText="Statut d'emploi" style="text-align: left">
+                        <h:outputText value="" />
+                    </p:column>
+                    <p:column headerText="Sous unité" style="text-align: left">
+                        <h:outputText value="" />
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
         </ui:define>
     </ui:composition>
 </html>

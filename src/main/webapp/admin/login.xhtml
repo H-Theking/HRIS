@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body >
+        <h:outputStylesheet name="common.css" library="css"/>
+        <style>
+            body{
+                margin: 0;
+            }
+            /*            body{
+                            background:transparent url("/PrimeFaces/images/grey-line.png")
+                                no-repeat center top ;
+                            input[type="text"]
+                            {
+                                position: fixed;
+                            }
+                            min-width: 600px;
+                            min-height: 560px;
+                        }*/
+            #divLogin {
+                background: transparent url("/PrimeFaces/images/hm.png") no-repeat center top;
+                height: 600px;
+                /*width: 100%;*/
+                min-width: 1300px;
+                border-style: hidden;
+                margin: auto;
+                padding-left: 10px;
+            }
+
+            #divUsername {
+                padding-top: 340px;
+                padding-left: 41.4%;
+                border-style: hidden;
+                background: none
+            }
+            input:not([type="image"]) {
+                background-color: transparent;
+                border: none;
+            }
+
+            .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+                background: #B9442D;
+                color: white;
+            }
+            .ui-state-hover, .ui-widget-content .ui-state-hover{
+                background: #CC3333
+            }
+
+        </style>  
+        <p:growl id="messages" />
+        <p:panel id="divLogin">
+
+            <p:panel id="divUsername" >
+                <h:form> 
+                    <h:inputText size="28" style="height: 25px;"
+                                 value="#{connectionManager.userName}"/><br />
+                    <h:inputSecret size="28" style="height: 25px; margin-top: 25px"
+                                   value="#{connectionManager.password}"/> <br />
+                    <p:commandButton  value="Login"
+                                      style="margin-top: 32px;
+                                      margin-left: 21%;
+                                      border: 1px solid #B9442D;
+                                      border-radius: 3px;
+                                      font-family: Helvetica; font-size: 12px;
+                                      font-weight: bold;
+                                      width: 79px; height: 33px"
+                                      action="/pim/employeelist"
+                                      actionListener="#{connectionManager.login}"/>
+                </h:form>
+            </p:panel>
+            <p:panel style="border: 0; margin-top: 90px; margin-left: 34%; 
+                      ">
+                <h:outputLabel value=" PhoenixHRM ver 1.0 &copy; ">
+                    <a href="http://www.phoenixcameroon.com" target="_blank" 
+                       style="text-decoration: none">Phoenix Cameroon</a>
+                </h:outputLabel>
+                <p:outputLabel value=" 2015 All rights reserved." />
+
+            </p:panel>
+        </p:panel>
+
+    </h:body>
+</html>

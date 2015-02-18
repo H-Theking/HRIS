@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui" 
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <ui:composition template="pimTemplate.xhtml">
+    <ui:composition template="pimTemplate.xhtml" >
         <ui:define name="centerLayoutUnit" id="def">
             <p:layoutUnit position="center" style="border: 0">
                 <p:panel style="border: 0" id="layout">
@@ -43,10 +43,10 @@
                         <f:facet name="footer">
                             <p:commandButton value="Enregistrer" action="#{interfaceController.unrender()}"
                                              actionListener="#{eCManager.addEC}"
-                                             update=":def:layout"/>
+                                             update=":layout"/>
                             <p:commandButton value="Annuler" 
                                              action="#{interfaceController.unrender()}"
-                                             update=":def:layout" immediate="true" />
+                                             update=":layout" immediate="true" />
                         </f:facet>
                     </p:panel>
 
@@ -102,6 +102,7 @@
                                              actionListener="#{interfaceController.toggleAddModify}"
                                              rendered="#{interfaceController.buttons}"/>
                             <p:commandButton value="Supprimer" update=":layout"
+                                             action="#{eCManager.deleteEmergencyContact}"
                                              rendered="#{interfaceController.buttons}"/>
                             <p:panel style="height: 10px; border: 0" rendered="#{interfaceController.buttons}"/>
                             <!--Table-->

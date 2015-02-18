@@ -10,8 +10,20 @@ and open the template in the editor.
 
 body {
     font: 80% "Trebuchet MS", sans-serif;
-    margin: 20px;
+    /*    margin: 20px;*/
 }
+
+.ui-layout-unit{
+    border: 0;
+}
+
+.ui-layout-unit .ui-layout-unit-content {
+    padding: 0.2em 0em;
+    border: 0px none;
+    overflow: hidden !important;
+}
+
+
 li {
     list-style-type: none;
     padding-bottom: 10px;
@@ -46,6 +58,16 @@ ul{
     font-size: 11px;
 }
 
+.ui-button{
+    border-radius: 3px;
+    height: 33px;
+    background: bisque;
+}
+
+/*.ui-corner-all{
+    border-radius: 3px;
+}*/
+
 .ui-panel .ui-panel-content{padding: 0; }
 .ui-panegrid{border-collapse: collapse;}
 .ui-panelgrid .ui-panelgrid-cell{
@@ -57,7 +79,7 @@ ul{
 .ui-autocomplete-panel{
     width: 230px
 }
- .ui-autocomplete-list-item{
+.ui-autocomplete-list-item{
     width: 230px;
 }
 .ui-layout-unit-content{
@@ -80,5 +102,58 @@ ul{
 .bottombuttons{
     margin-right: 20px; 
     margin-top: 10px; 
+}
+
+.ui-tabs .ui-tabs-panel {
+    padding: 0px;
+    background-color: inherit;
+}
+/*            .ui-tabs-panel .ui-widget-content{
+                border:0;
+                background-color: inherit;
+            }*/
+.ui-menubar .ui-widget-content ui-corner-all ui-helper-clearfix{
+
+}
+.ui-tabs-panel .ui-widget-content{
+    border:0;
+    background-color: bisque;
+    background-image: none;
+}
+.ui-tabs-nav .ui-state-active{
+    background: bisque;
+    border: 1px solid bisque;
+}
+/*            .ui- .ui-corner-all{
+                -webkit-border-radius: 0;
+                border-radius: 0;
+            }*/
+.ui-tabs.ui-tabs-top > .ui-tabs-nav{
+    -webkit-border-radius: 0;
+    border-radius: 0;
+}
+.ui-menuitem .ui-state-hover{
+    background: #CC0606;
+}
+/*            .ui-tabs-panel .ui-state-active {
+                background-color: bisque;
+}*/.ui-state-default.ui-tabs-selected.ui-state-active.ui-corner-top{
+    background-color: bisque;
+}
+.bgimage{
+    background: transparent url("/PrimeFaces/images/banner.png") no-repeat center;
+    border-radius: 12px 12px 0px 0px;
+    padding: 0; margin: 0;
+    /*                border: 0;*/
+}
+
+.bgimag{
+    background: transparent url("/PrimeFaces/images/footer.png") no-repeat center;
+    border-radius: 0px 0px 12px 12px;
+    padding: 0; margin: 0;
+    /*                border: 0;*/
+}
+.ui-widget-header{
+    background: #cc0000 url("/PrimeFaces/images/footer.png") 50% 50% repeat-x
 }
 

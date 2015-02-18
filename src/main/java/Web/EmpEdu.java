@@ -50,12 +50,12 @@ public class EmpEdu implements Serializable {
 
     public void addDegree() {
         employeeHasEducationFacade.addDegree(workerId, level, school, year,
-                specialty, score, startDate, endDate);
+                specialty, score, maxScore, startDate, endDate);
     }
 
     public void editdegreee() {
         employeeHasEducationFacade.editDegree(degreeId, level, school, year,
-                specialty, score, startDate, endDate);
+                specialty, score,maxScore, startDate, endDate);
     }
 
     public void removeDegree() {
@@ -71,11 +71,13 @@ public class EmpEdu implements Serializable {
     public void findDegree(AjaxBehaviorEvent event) {
         UIParameter parameter = (UIParameter) event.getComponent().findComponent("degree");
         EmployeeHasEducation degree = (EmployeeHasEducation) parameter.getValue();
+        degreeId = degree.getId();
         level = degree.getDegree();
         school = degree.getInstitute();
         specialty = degree.getSpecialty();
         year = degree.getGradYear();
         score = degree.getScore();
+        maxScore = degree.getMaxScore();
         startDate = degree.getStartDate();
         endDate = degree.getEndDate();
     }
@@ -102,6 +104,26 @@ public class EmpEdu implements Serializable {
     private Long degreeId;
 
     private EmployeeHasEducation[] selectedDegrees;
+
+    private String maxScore;
+
+    /**
+     * Get the value of maxScore
+     *
+     * @return the value of maxScore
+     */
+    public String getMaxScore() {
+        return maxScore;
+    }
+
+    /**
+     * Set the value of maxScore
+     *
+     * @param maxScore new value of maxScore
+     */
+    public void setMaxScore(String maxScore) {
+        this.maxScore = maxScore;
+    }
 
     /**
      * Get the value of selectedDegrees
